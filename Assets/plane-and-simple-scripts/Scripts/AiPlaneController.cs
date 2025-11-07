@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
-
+ 
 public class AiPlaneController : PlaneController {
     [SerializeField] private float angularThreshForGuns;
     [SerializeField] private float sixAngle;
