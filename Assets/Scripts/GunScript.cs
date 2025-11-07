@@ -43,7 +43,7 @@ public class GunScript : MonoBehaviour {
     }
 
     public void setFuseOfBullets(Vector3 target) {
-        bulletFuse = (target - transform.position).magnitude / (bullet.GetComponent<BulletScript>().getInitSpeed());
+        bulletFuse = Mathf.Abs((target - transform.position).x / (Mathf.Cos(Vector3.Angle(target - transform.position, Vector3.right) * Mathf.Deg2Rad) * (bullet.GetComponent<BulletScript>().getInitSpeed())));
     }
 
     public void setShooting(bool b) {
