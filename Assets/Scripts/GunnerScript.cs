@@ -100,7 +100,8 @@ public class GunnerScript : MonoBehaviour {
 
     protected virtual Vector3 positionToTarget() {
         GameObject bullet = transform.GetChild(0).GetComponent<GunScript>().getBullet();
-        return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity) * (targetedObj.transform.position - transform.GetChild(0).position).magnitude / (bullet.GetComponent<BulletScript>().getInitSpeed());
+        float timeOfFlight = (targetedObj.transform.position - transform.GetChild(0).position).magnitude / (bullet.GetComponent<BulletScript>().getInitSpeed());
+        return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - Physics.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
     }
 
     public void setManualControl(bool b) {
