@@ -1,0 +1,1673 @@
+commit 3b7a333e675cef1e63b75708fa60f3b90cff07c9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Nov 6 19:21:33 2025 -0800
+
+    deleted readme
+
+commit f935fa86e5e815b0eb0755c043bcdfbe22572c08
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Nov 5 23:16:33 2025 -0800
+
+    made gunner able to fire if animIndex of plane anim is close to the start of the anim
+
+commit 77210bbfb53b5d1e9fecd9c4b1297f1815352c78
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Nov 5 10:55:17 2025 -0800
+
+    made time between chaches serializable
+
+commit 158083c191e80416aa7c9409c21151e00cbbae94
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Nov 5 10:53:45 2025 -0800
+
+    moved vehicle chaching to specialized script
+
+commit 6e03b4350b2af3a8ac114561c3023fd4e26f89f0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Nov 4 22:56:41 2025 -0800
+
+    lowered oscillation magnitude
+
+commit ddbc71be18f247f673e2b5cbe5c1a1d4e911b827
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Nov 4 22:43:57 2025 -0800
+
+    fixed bug with bombholders
+
+commit 55755b5f11c2484c57831286c213b860f959d673
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Nov 4 19:15:28 2025 -0800
+
+    fixed lag issues almost completely, moved targeting into "VehicleContoller"
+
+commit 264ac79ddbaa571534b019cc88ce618a5a697d6b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Nov 4 09:57:48 2025 -0800
+
+    FIXED LAG EVEN MORE, 32 planes works fine
+
+commit 09f447e1486fd3140417922b52e293d6cde8658e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Nov 3 22:05:15 2025 -0800
+
+    even more owering of lag by using utils in more places
+
+commit 273fbe8dd01043f37e1d39e75a42d3e13eb7b477
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Nov 3 19:06:36 2025 -0800
+
+    lowered lag some more
+
+commit 48362f691b62c9d4742332856801a06ddd6d96c0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Nov 3 16:14:36 2025 -0800
+
+    fixed a lot of lag, still more to go
+
+commit 86ac88474b30d6862717e102f440e98fcc5b809f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Nov 3 11:51:32 2025 -0800
+
+    made ai oscillate in headon
+
+commit 3923fac3ed8a224c418ea6404f48f0750fa8bb11
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Nov 2 19:52:12 2025 -0800
+
+    made hit chance be variable by angle
+
+commit d4418dae92387b245ac5f1ffa07677d78444d73e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Nov 2 15:49:17 2025 -0800
+
+    started on mobile ish controls
+
+commit 57ffdec5dfa5ba40f035b58c613cd52b41346a5f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Nov 2 09:57:57 2025 -0800
+
+    v
+
+commit 93ad572250f8d7f29b3e496fbb9e3a540cd8cdba
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Nov 1 22:17:46 2025 -0700
+
+    fixed bug with dials
+
+commit 0915f305ee4a2d4f1752a11e3941ab26c0f19229
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Nov 1 21:57:31 2025 -0700
+
+    added dials
+
+commit 530376373c06f4cb05efd0069761f4b4ec703ae4
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 31 17:04:22 2025 -0700
+
+    set up a more base framework for objects
+
+commit 9af135c17551ea23f3b2577d02ff4fb05cfe1cc8
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Oct 30 23:50:15 2025 -0700
+
+    changed the way torque scaled with atm density
+
+commit a5b583c0ccc3fa34ba4114b3f30dbc2844c28406
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Oct 30 23:20:27 2025 -0700
+
+    changed air density
+
+commit 627e371351ffefa89a08ad7079aeba37bd838b17
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Oct 30 21:16:56 2025 -0700
+
+    moved sea level to constants
+
+commit d2edb3cd23e4a98b9baaa3e67cbb18a9a1978942
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 26 22:42:49 2025 -0700
+
+    fixed bug with aero
+
+commit 10d479e09d3e6012233d433719d6eeff2d5b34cc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 26 20:33:46 2025 -0700
+
+    made gun basevel use utils maxancestor
+
+commit 897c3681ddf3f952100e1c9466406945a9cb0c7e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 26 20:12:26 2025 -0700
+
+    made aiplanecontroller stop oscillating as much
+
+commit 78655d511d751a9596b7f35ee335d5ab0a1cec23
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 26 18:46:04 2025 -0700
+
+    made turning increase front area
+
+commit b51e2e9a5379145a70edf794b7800e48813ea374
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 24 16:45:46 2025 -0700
+
+    made basic aigv movement
+
+commit e07bbb0ca6e07d6ef3910c6153744f553ab4086e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 24 16:04:22 2025 -0700
+
+    made a "turn time" attribute in aerodynamics and made an "instantaneous turn rate factor" which converts it into itr
+
+commit 0ee0816780a849254291b0f61e3e78c43b92f207
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Oct 22 22:06:16 2025 -0700
+
+    fixed small bug in sqsp
+
+commit 862f4bfbed91842badd607386c31606a768eab7a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 21 22:55:33 2025 -0700
+
+    v
+
+commit 0e6aa652bda46dbfe8b9ea5ccb90b95941947c70
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 21 22:49:57 2025 -0700
+
+    improved water
+
+commit b5583d725c1976df769a6be6933af88fe4fc28b8
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Oct 20 21:28:30 2025 -0700
+
+    removed warnings and added framework for 4 engined bombers (suspect effectiveness)
+
+commit a7c9fef31332780d590681bbf44cdb010f21de9a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Oct 20 19:12:40 2025 -0700
+
+    v
+
+commit 3eb72cbd2bf70c83d1ba3df2df8a7497abf17f74
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Oct 20 19:12:37 2025 -0700
+
+    fixed bug with crew and them lwk bounching off of the water
+
+commit 7dd1791cd3014e71a6c13571688593576f61240b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 19 22:43:34 2025 -0700
+
+    fixed bug in water
+
+commit 4e280e8b554b4ac25e6f9e4fa66c4dbc03209779
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 19 22:06:48 2025 -0700
+
+    made sqsp not destroy selcted spawner if the input field is in focus
+
+commit f40948312ce624d0212e6b8a80ea33a0b183341b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 14 18:23:41 2025 -0700
+
+    fixed bug in enginescript
+
+commit 3b03560a6718356dd77446af600186720cf90151
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 14 18:21:32 2025 -0700
+
+    fixed bug in planecontroller where aiplanecontroller has different vals for throttle and engines than the regular planecontroller component
+
+commit 5215fab552d911564cce1a74ca2f0e80af9d565e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Oct 13 12:41:16 2025 -0700
+
+    added armor
+
+commit 280819bfcb52c6a057ae4c82eba4035dfd9c11d3
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 12 23:01:23 2025 -0700
+
+    created basic ground vehicle movement
+
+commit 5ec540f1f53f001c9462c52c6a0441c5ee1738c6
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 12 13:22:32 2025 -0700
+
+    fixed bug in prop script
+
+commit ac2cdb5af9220ec11589e22c8fac9f385b94fadd
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 12 09:10:33 2025 -0700
+
+    made there be caps on wingless animator speed and tailless rotation speed, also, made a dead tail make the wings have zero area
+
+commit b57cbade9aa2d7a451792175fbf21ed0cd09fbdc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 12 00:52:25 2025 -0700
+
+    fixed bug in dmgmodeldisp with propellers
+
+commit 22b73dd8ea30044388bc4f0bc921e4d4e31ac563
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Oct 11 14:48:49 2025 -0700
+
+    made certain cObjs not disp img in dmgMdlDisp
+
+commit f4ee5f500d64ab079b44b1e1c40fe82251dfe634
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 21:46:56 2025 -0700
+
+    fixed bug in groundvehicle where switching was not switching
+
+commit 7b3600633eb76bb29d8d4f92fe56244351fb214a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 21:00:53 2025 -0700
+
+    fixed bug with groundvehiclegunners
+
+commit 240942d9c82835eafdfa6289024b481be5c1046c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 20:32:27 2025 -0700
+
+    fixed bug in sqsp
+
+commit 28cd2a9ddb06dab807d3fc7ad5665a72728807a9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 20:12:48 2025 -0700
+
+    fixed bugs fixed lag
+
+commit 948e55faa6ce1d8b7149ec4e14dd0cbed5307c5e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 17:33:49 2025 -0700
+
+    fixed bug in damagemodel disp, though the fix is immensly laggy
+
+commit 869597cec9d339c38dd30326c39a9622596e2d2e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 01:20:09 2025 -0700
+
+    fixed some bugs with sprites with different ppu and multiple copies of one thing popping up
+
+commit 5ed160d406fd5ea731f826ff8cc4f05eba5b9dc0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 00:55:46 2025 -0700
+
+    made turreted vehicles have turrets flip around properly
+
+commit fc83a3ac35e84a2a74f3273fb2278eee11575fa3
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Oct 10 00:55:07 2025 -0700
+
+    got damagemodeldisplay working with a far more general structure for vehicles
+
+commit 0281831fda34dcc4fab4feeed58666910f54c390
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Oct 8 23:56:25 2025 -0700
+
+    made ground vehicle gunnery actually work
+
+commit 8cd6250d5c46ce0791af84a1f8600a84299c3fdf
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Oct 8 23:56:13 2025 -0700
+
+    Made control be able to switch to ground units too
+
+commit b9b9ef9daa53580ac318884821cd71c0ff2d7f6e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 7 23:22:15 2025 -0700
+
+    removed unnecessary code
+
+commit df2ee36c2aaf2afdf3f0e1022c465500062aa07d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 7 23:13:43 2025 -0700
+
+    started on a ground vehicle control scheme
+
+commit f0857d3483ef3d61c697379fa1ab0212152992ea
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 7 23:13:29 2025 -0700
+
+    made a tank gunner script
+
+commit 15cf62d3aa8d85b53cece3782829f992544abf9d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Oct 7 17:41:07 2025 -0700
+
+    made bullet spawn area of a given gun variable
+
+commit 2994d7ea77eb4b2e3f9391a918ccf01449e79f0f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 5 22:24:36 2025 -0700
+
+    made stalling make more sense for aero and actually fixed torque! among other small fixes
+
+commit b783e8013288f428461733eebdacce922cd95c00
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Oct 5 19:55:44 2025 -0700
+
+    tried to make engines more accurate
+
+commit ff65f6ed219c4d12be68636b0879e909dad71b5b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Oct 4 22:07:08 2025 -0700
+
+    made crews handle water in a more intuitive way
+
+commit 566acaf08f6b350729ff0064b493d70123914b24
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Oct 4 13:14:20 2025 -0700
+
+    fixed small bug in sqsp
+
+commit 5363f83ed035a77b0b74077e360be6cbcbba15a2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Oct 4 12:07:43 2025 -0700
+
+    changed to new unity editor
+
+commit 2b2addf575de0b9ade2854b231058bb79f93e6bc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Oct 2 22:05:17 2025 -0700
+
+    fixed bug in dmg model
+
+commit cc5430e5b1689d493eb9a5c8129fb1778b595db0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Oct 2 18:23:54 2025 -0700
+
+    made damage model work slightly differently
+
+commit 22d9d3746a95bc9cd86b006e4936b7a61e5f7138
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Sep 30 21:37:55 2025 -0700
+
+    added an idea of a "critical" system
+
+commit 5c5d6a41c8aa39b19cd5c881e7a809e01fd17fbf
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 28 17:40:23 2025 -0700
+
+    fixed bug in gforcescript with water
+
+commit 4863b2be4a4f5288fc415848f1c452576db5b53f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 28 13:28:45 2025 -0700
+
+    made planeinit remove offsets of colliders
+
+commit 945a09767f1a94416566db1cd5fca0a86f84fea9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 28 11:52:06 2025 -0700
+
+    made a firescript to handle fiery effects and water
+
+commit fac29deec233564356d80405750ca3a726a07d70
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 28 09:17:57 2025 -0700
+
+    made rollowver not work if pilot cant "rollover"
+
+commit 6cdf8a85996217b4c01e7b9d83d50505f8367933
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Sep 27 22:50:39 2025 -0700
+
+    moar safety in squadron spawner
+
+commit d1a5655b03c776eccb0f7371fc3a66ae81cbc49d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Sep 26 18:47:48 2025 -0700
+
+    made minimum g calc speed not rely on control effectiveness of plane
+
+commit f8fc18e5e7b2ea4614f2364c65918956c45d28dc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Sep 26 14:40:55 2025 -0700
+
+    fixed bug in gforcescript
+
+commit 295b0904cc95dd75ae4b4cc6100831cb5b76bf23
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 24 22:54:51 2025 -0700
+
+    made gforces script make more sense
+
+commit 933f069209ba9af6b8935c5ce3a67eea39c64205
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 24 17:02:08 2025 -0700
+
+    made sqsp code more readable
+
+commit e4c9485f0c8edd4651c8e2cce496fd331e5ca4f3
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 24 16:53:19 2025 -0700
+
+    added extra safety to squadron spawner script
+
+commit bdd28cbb8926c97fc9c8575080c3d34964227457
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Sep 23 21:31:38 2025 -0700
+
+    made dead planes disappear in arcade scene
+
+commit e86681965756150759d707f6f5535b7b64966408
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Sep 23 21:19:20 2025 -0700
+
+    added damage variation to bullets
+
+commit b90174d57310dd076b8fc36baaaa6ecaea848b54
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Sep 23 00:35:16 2025 -0700
+
+    made a constants class to hold constants to not have to commit and push every small change to constants
+
+commit 17aea32357d14edcba7e86b9c6910f7e79a221e1
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Sep 22 20:15:37 2025 -0700
+
+    if youre sleepy theyre sleepy, put them in the microwave (made gunners not work if person is sleepy)
+
+commit 5599ddc01b5f7ce2c73307cb6bbd1bec2f91745e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Sep 22 20:09:39 2025 -0700
+
+    made blackout completely blind and disable pilot
+
+commit 886d4791bcdcd9cb4ae603661659b75299281350
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 21:19:59 2025 -0700
+
+    made gloc incapacitation amount scalable
+
+commit 21e2e500a8fb00f4a8628b78310f3519a7b26f76
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 20:16:27 2025 -0700
+
+    reverted change
+
+commit 53e4052f1afe1776f1e8c6c24255a23616272965
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 20:15:01 2025 -0700
+
+    made the same for gaining gs
+
+commit 863927d8fcdf393b18de35399f57bfe95155e380
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 20:02:18 2025 -0700
+
+    made pilot become unsleepy faster if undergoing lower gs
+
+commit 592eb60c2f0523f3363e1171ae8e16816dc7f5b6
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 19:28:12 2025 -0700
+
+    improved gforces by adding a darkening effect
+
+commit 781c1f36585d76b6c11b914b62dc702dcccb9abe
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 17:46:12 2025 -0700
+
+    fixed small bug with aagunner
+
+commit d7f2660025126a8980f624e5c8be4db41801f837
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 16:27:18 2025 -0700
+
+    made bullets make splashes too
+
+commit 84e67424cedf9059362e7be763974a86b62f843c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 16:01:47 2025 -0700
+
+    made the splash effect destroy itself eventually
+
+commit c799b506a27226ca56df0ded862e88a985450bdf
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 16:01:31 2025 -0700
+
+    made crew less laggy underwater by doing the todoongound() method once
+
+commit e6862b84100b0382909f26d83687785c9f0b6827
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 16:00:53 2025 -0700
+
+    reverted change to plane, plane no longer is destroyed after time
+
+commit 436d35bae2c3b305945a6d0ccf470dc464357541
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 15:37:02 2025 -0700
+
+    made debris and dead planes be destroyed 10sec after breaking
+
+commit ece55d61c33543d53ce3c0f68b12f89b8ab3dee4
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 21 14:44:57 2025 -0700
+
+    made crew float up in water
+
+commit d271f7089ea601d8c3f6b24da0a9e9918989cf85
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 17 21:13:44 2025 -0700
+
+    made unconcious pilots stop shooting
+
+commit 7de641b138cba3955b8735761addbf7e6fcf48a3
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 17 15:26:39 2025 -0700
+
+    made zooming in and out when in spectator not move cam, same with wasd freecam
+
+commit 95069a239cb3dc5fc0a4eb92a2e4579499da9ab0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 17 15:20:02 2025 -0700
+
+    made camera "zoom" from mouse position
+
+commit 4fe125a34da322acfd193f69a3fb1bbd0500cf48
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 17 10:03:22 2025 -0700
+
+    reverted change bc that change was pointless
+
+commit 576aa62a60ffb8972d97483539c74f9c3327794e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 17 10:01:10 2025 -0700
+
+    made gunners stop firing when target is gone
+
+commit 7d450daab6c6eefe35ab1e103f37b15a743c68a9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Sep 15 23:19:38 2025 -0700
+
+    reverted prev change
+
+commit 81b485dfb3710fe6aeadf35b200417d3908711f4
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Sep 15 22:04:00 2025 -0700
+
+    made front area depend on the boxcollider on the plane
+
+commit 291da260a307ad865bb0edf415cc9f6bdc09cc48
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Sep 15 19:31:59 2025 -0700
+
+    made gear and flaps and gunners ask for the plane's sprite to make it so they cant shoot or are hidden or what they must be if the plane is not its orig sprite
+
+commit d9663093a554fcf04071b86088b192ed7faf70be
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 14 20:49:47 2025 -0700
+
+    made the destructive effect generate in a more accurate point (center of hitbox)
+
+commit 8003d474b4fe18738a4f23a6c0d6074e6b44d094
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 14 20:31:18 2025 -0700
+
+    made the destructive effect general and not just for engines
+
+commit 5498b18628c1726223deb2f702caafff4d814922
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 14 20:13:45 2025 -0700
+
+    made gunners stop shooting when dead
+
+commit 0e28580e5d1f5b8e153e10f5e5024e57e3816ff2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Sep 14 19:34:06 2025 -0700
+
+    fixed bailouthandler to work with the fact that the hitboxes' transforms are at a relative 0 0 0
+
+commit 9ff69e48a31554b5bb5c3f1d5c40ab69282a11b1
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 10 22:58:34 2025 -0700
+
+    added max splash to water
+
+commit 6cb380f21759bee2e96b58835ae25a09d99c7969
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 10 17:49:31 2025 -0700
+
+    added a start to how crew will interact w water
+
+commit a85f6592af2afad4a9421bf1844b058c80f75bb0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Sep 10 17:34:33 2025 -0700
+
+    Added a possibility of "auxillary" gear (note that wing damage will only remove gear with the name "Gear")
+
+commit 8c41e244370fad5d439bbe87d8839bbad4f8dc7e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Aug 31 19:25:04 2025 -0700
+
+    added splash effect and made fire and explosions not happen when in water
+
+commit 8ffbf40e0cdeacb46ea749d920e069e46b339c50
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 30 21:22:12 2025 -0700
+
+    made terrain generate in editor
+
+commit 71c9bc63d53c00a2745fb70479885e716a2fd733
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Aug 24 17:32:09 2025 -0700
+
+    made the bounds of sprite more accurate
+
+commit 2c029463b536fda5e6f52b4bb985572794e0f7cc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Aug 24 13:43:27 2025 -0700
+
+    added water
+
+commit 9511cad23c5639a3e349fb1e82db245b940ff31e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Aug 24 13:35:58 2025 -0700
+
+    added base terrain with animationcurve
+
+commit 91d7ac16c0d83dc79260ad330b3d64e739830aa2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 22:05:56 2025 -0700
+
+    made plane scrolling more intuitive such that if the spectated plane is uncoontrollable and you scroll planes instead of taking control of a dead plane and immediately leaving bc it is uncontrollable
+
+commit 67ba9bd286420777a29933ead0ce6a8c841c5fa9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 20:10:06 2025 -0700
+
+    made size multiplier rely on origsprite for the non ui plane because of a bug that may or may not have happened (i tried it once and saw it and tried it again the next time and didn't see it)
+
+commit 5a28006e61f0bb35185f7b454dca8830be32667b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 19:39:44 2025 -0700
+
+    added a lifetime to bullets so they dont last too long and hit performance
+
+commit 931345ec5f3bad52f88e52624b40d88013a1d395
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 19:34:14 2025 -0700
+
+    fixed bug with gunner when plane is "rolled over"
+
+commit 2ee9e263aa41d128e729c4e37cdf24609c64213f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 18:22:10 2025 -0700
+
+    image of dmg model starts off and moved getting of orig sprite into awake of planecontroller so it runs regardless of whether or not it is enabled
+
+commit 2c72cc201a0426f5ab0104fb9b25bff7ed143c40
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 18:12:47 2025 -0700
+
+    added a damage model display
+
+commit afc118dbd5ea5b6f7a145ccbfd1bd1a741309c98
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 18:12:38 2025 -0700
+
+    when one propeller is destroyed both are destroyed
+
+commit ff0a138eb4585eb228f9104eb36e91f5ea7b94cb
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 12:37:17 2025 -0700
+
+    effect spawns w quaternion identity
+
+commit e9022e17f51261e7026938ebd7cf7731a5b34774
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 16 11:42:24 2025 -0700
+
+    destroys bullet hit effect with delay
+
+commit 99586fff4a5d110391d635f7d8f0a2e0c9799497
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Aug 15 22:54:57 2025 -0700
+
+    added a hit effect
+
+commit 0423e1afa864595695095c456831ab1411209e2f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 13 16:38:12 2025 -0700
+
+    improved finding of base vel to make it rely on change in position rather than rigidbodies
+
+commit d1452b7b8dbb05062bd92e6825217fd5396afef4
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 13 11:00:24 2025 -0700
+
+    added a fuse to bullets
+
+commit 4f0ef41e2fdb27d26a0929605ff3bd4ebebeecd2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 12 14:06:37 2025 -0700
+
+    added aagunnerscript
+
+commit c90a1dcae55eb12721da29dcbe670e7c78cad94e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 20:44:53 2025 -0700
+
+    made dead crew able to move
+
+commit a449f4cb0afe19b8da17224cd439907fe5528b05
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 20:32:56 2025 -0700
+
+    made everything but bombs only damage obj hit
+
+commit c007f65f7d87661ae7c47fb4c80ccf63c715b140
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 19:59:12 2025 -0700
+
+    made bullets only damage the target they hit
+
+commit 9646570ddd4a74ceb7833826608f5ced8f94fe9b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 19:35:38 2025 -0700
+
+    added a "maxFlyPastDist" where a bullet can "fly past" some parts of a plane a random distance
+
+commit 529e963818738170ef014da5950aba8b7fd3ed83
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 12:49:18 2025 -0700
+
+    added a max range to gunners
+
+commit ae3d6e053ead7067fc0881968e049644d6b93599
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 11:51:20 2025 -0700
+
+    improved gunner script to have shooting work for all 360 degrees and made it so it the gunner could not feasibly shoot where pointing it wouldnt shoot
+
+commit 1c034f31e389a7de8cc9285ee7b5e054f2c55f39
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 11:50:32 2025 -0700
+
+    changed from arming time to arming dist
+
+commit 041bc30897fb5b184a2f48e6de638d775ac3938c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Aug 7 11:50:19 2025 -0700
+
+    made first 5 wingless val holders be the same as the winged val holders
+
+commit ee7f8b5d5818d9c0f03f950417f78cc9ee7c5808
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 18:41:13 2025 -0700
+
+    made planes with no forward gunners act as bombers
+
+commit 4aa91510b327473207f5241344a86c638c85f54b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 18:32:25 2025 -0700
+
+    made ai able to handle having bombs
+
+commit e7056adb12162e2835bf2d7c43780fea8dd8192d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 15:41:33 2025 -0700
+
+    added an arming delay for extra flexebility when it comes to making bombs collide with bomber. A delay of 0 means it collides always, a delay of a few seconds means you are immune to your own bombs colliding for a few secnds, and a delay of infinity means it never collides with the player
+
+commit 2690c6bbd8c02f673a9ca407baaca8525bc89007
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 15:07:32 2025 -0700
+
+    added a point to where a certain explosive radius means certain hit
+
+commit 707292ad1871b2a6f365ff18ec0e22c8b2f431f5
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 14:51:25 2025 -0700
+
+    made bombholder disappear when sprite of plane is not the one it is at the start of the game
+
+commit ccd0cdce8aa36e627fcd24df5a589c8660215ec6
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 14:45:05 2025 -0700
+
+    made bombs drop with fixed delay even through different bomb holders
+
+commit 6f040e4e3e34723f9ab49f2e311bea6b2773d33b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 13:11:40 2025 -0700
+
+    made a basic bomb holder script
+
+commit 3b5523e682bf2e8ac17c14d222e405f4bb6aeda8
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 12:00:34 2025 -0700
+
+    fixed bug where in rollover the order in renderer of a prop is different so the wrong prop is put onto the falen wing
+
+commit e9dac96ed21a0a7e1365535730c075c74a351434
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Aug 6 11:59:55 2025 -0700
+
+    added back button to mission editor
+
+commit d1e3b054a0c658917f7b72a6d3beb246fc2a3404
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 22:02:16 2025 -0700
+
+    uncoupling cam now also not allowed in arcade
+
+commit 1d302cfffddc0648475a93594559cdcd768fa23a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 21:31:47 2025 -0700
+
+    if in hammerhead and enemy is faster it goes out of it
+
+commit 278a4ce8d24671e10e8c00d0b0a9dc4452297cff
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 21:15:25 2025 -0700
+
+    makes crew stop on contact with ground
+
+commit ea0a69374498542b73d1835e00c1937ba779048c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 20:30:27 2025 -0700
+
+    fixed bug where it could select non squadron spawner objs
+
+commit fef3ab4b2ba82c48d3c688d447a724be405c6ae1
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 20:17:09 2025 -0700
+
+    made alliance a selectable thing
+
+commit d9831a684204abff6076345eeb7e2303d7eb3374
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 17:19:49 2025 -0700
+
+    fixed bug in propeller attatched to fallen wing where it would not have its prop script off
+
+commit 6b45ea633701edc1e3a84067a8e8ed4a2e831524
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Aug 5 00:14:35 2025 -0700
+
+    fixed aiplanecontroller targeting
+
+commit 906ff4e4260124d2c8e22e1d7c0e7e7a616fe6fa
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Aug 4 23:14:15 2025 -0700
+
+    changed renderer bounds so the terrain is actually rendered while on camera. (Bounds could be useful since they contain two vector3s and are serializable)
+
+commit 662cb9bc6d2c7d017940b58df7a0db8ffc038d32
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Aug 3 18:50:59 2025 -0700
+
+    fixed small bug in cloud script
+
+commit 9d2cb1a32e362c66402e1a9e00e64d05306de2e5
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Aug 3 18:38:04 2025 -0700
+
+    added basic clouds
+
+commit 31ba30de19abf8f74f93b70d665126c240a8898d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Aug 2 22:33:32 2025 -0700
+
+    small fix in crew script for larger "standing angle" when dead so it consideres a higher angle as being "up" and changes that
+
+commit 8e272eb1836b14f202b094a4fd14c491f47d7ba5
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 26 20:56:00 2025 -0700
+
+    added a min speed to broken tail adding random vel
+
+commit b42704a419ffbd6d1251c25d97ed03818c190a18
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 26 19:52:17 2025 -0700
+
+    fixed bug in crewscript with dead crew
+
+commit 47f08da662361ce42a889ee47250d64593c72add
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 25 22:48:41 2025 -0700
+
+    made crew point up towards normal of the terrain they are on
+
+commit 7be07df319029cccc78b3c342ce98c63bf6d8c62
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 25 21:14:22 2025 -0700
+
+    fixed bug in cam switching
+
+commit a42b80114053efed27e7b0c0d19521e77ef633a8
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 24 10:47:13 2025 -0700
+
+    made pilotless planes considered dead
+
+commit 2837279e454f9c1a8c8171f48ee2700f3fe13f67
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 24 10:13:21 2025 -0700
+
+    cleaned up dmg model code
+
+commit 8776c6ede93e01599e7491f31cec2f30288a0335
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 24 09:14:18 2025 -0700
+
+    made propellors fall off with wing if that is a thing that should happen
+
+commit e21538b010a360090e298365b04d0e63b6dadc02
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 23 22:05:59 2025 -0700
+
+    made plane overg destoy tail too
+
+commit 573a7c37132cfa76e73f9b93e685a7723ad3b5cc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 23 20:03:48 2025 -0700
+
+    fixed a bug with bailouts and returning the target
+
+commit c9c070fef201e2ad0e51d340ac04cb0908d1dac0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 22 22:17:55 2025 -0700
+
+    improved hammerhead mode more (needs non-magic vals)
+
+commit ce6859b8159b1660b9812a2ffb70944ebb2f68e3
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 22 21:47:11 2025 -0700
+
+    added an engineamt to make it not change positions when there is only one engine
+
+commit cade5c32fcc5a4c7236094fc1977d260c83f58c2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 22 21:37:21 2025 -0700
+
+    made a framework for 2 engined planes
+
+commit 6193a5bf96ef9c3b33969ce87566525e3ff4b3d4
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 22 19:16:05 2025 -0700
+
+    fixed a small bug in rollover
+
+commit e239824838a6cd3cb75a37ee768e43d6994b7902
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Jul 21 19:27:51 2025 -0700
+
+    fixed a bug in camscript
+
+commit 98676468c6ef9b749b777dad90bf6dc27641d9fe
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 20 23:35:31 2025 -0700
+
+    fixed a bug with gunnerscript where it only toggled the first gunner, removed crosshair when in gunner mode
+
+commit 43cfb3736aa17c0433c382f138d1f2a97bbe6591
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 20 13:57:24 2025 -0700
+
+    improved hammerhead mode of ai
+
+commit a8a66a67cbfefe4a46a5c14d7ccb2471691e3cee
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 18 21:00:57 2025 -0700
+
+    added a crosshair
+
+commit c6768eda8a222ef765a61e23037232e63c92323d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 18 16:34:28 2025 -0700
+
+    fixed a bug in bulletscript where penetration went in the opposite direction
+
+commit fcbb41f663abf48cf39ad817e8305c5493dd5ae2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 18 15:46:10 2025 -0700
+
+    fixed bug in engine damagemodel
+
+commit 301ed43ee993a7f847047cdde004cca63cd9ec95
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 18 11:46:47 2025 -0700
+
+    made arrow not do things if there is no arrow
+
+commit 6468d3197fe4a4867ca7671df7988b5bdd975b57
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 17 21:03:11 2025 -0700
+
+    made bullets not hit the plane that fired them
+
+commit 154775b195f8a886f46674598c6833a7670fb779
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 17 19:57:28 2025 -0700
+
+    made ai planecontroller use angles and not dot products
+
+commit 1fa80380d6a9308422f4813995bd9cd2774231f9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 17 14:35:27 2025 -0700
+
+    made camera switching available only in missioneditor mode
+
+commit d4d98521e12535907e83d0e8fdf1164fb34171c6
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 17 12:36:05 2025 -0700
+
+    added an arcade mode
+
+commit f703ddad0d354b77e8d099946fade1ac5cecb871
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 17 10:56:52 2025 -0700
+
+    fixed bug where it was trying to check for nonexistent spawners
+
+commit 4d9ac32a702baf848e4f4cf7f77a53d58128cb14
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 17 10:11:00 2025 -0700
+
+    made terrain generate from maxheight/2 to maxheight
+
+commit ecbe7bcf47f16697f1a175a420dfee797c811329
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 16 21:58:42 2025 -0700
+
+    added terraingeneration
+
+commit cc2e3590d80d752cb1bf86adb4d86f1970f8f2d2
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 16 19:53:01 2025 -0700
+
+    made controls ineffective when plane destroyed
+
+commit 53bbd99d58c589dcaf9ba702409769fb792c4825
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 16 19:42:10 2025 -0700
+
+    used dot product instead of what was previously used, same exact result just more accurate
+
+commit 37e5954625e45f380db9fecca6c28c6ca2edf965
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 16 12:25:42 2025 -0700
+
+    changed sorting order of propeller went off to always be in front
+
+commit 40a61e06fbdb3c9efa14f9f7e68a6a8dd63b8bf1
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 16 12:21:39 2025 -0700
+
+    made values start at basespawner vals
+
+commit 17375c69ffdfbcbbb86fba31b35c76492b72dd83
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 15 18:43:18 2025 -0700
+
+    fixed bug with propeller
+
+commit fab3d0387019933ae3f2ad14a8d4e1524dd7a808
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 15 09:23:42 2025 -0700
+
+    made ai not shoot on headon
+
+commit 71f89e0a7bcd31205a3ce8c5b85e8b780e3bd661
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 15 08:59:47 2025 -0700
+
+    fixed that very same bug better
+
+commit 08022f519d08522cdb97ff7a98dea2e2e3630e48
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 15 08:26:51 2025 -0700
+
+    fixed bug where it makes y localeuler 180 on occasion when facing towards cursor
+
+commit 9329069ef46e52cffc65db8fec0e357b48d74fe3
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 15 07:34:05 2025 -0700
+
+    made the below change a bit more "one source of truth"-y
+
+commit 8df193923fb5852c1c2eaa2004060e5f65333303
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 15 07:29:25 2025 -0700
+
+    fixed bug where it doesnt display plane name on the dropdown at start
+
+commit ad098bae98b4dbbdfeb35622a84c9bc45eb9c87f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Jul 14 21:36:09 2025 -0700
+
+    made a mission editor
+
+commit f1aa68e94a874e6d339089180810ecbe280f6821
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 13 19:56:54 2025 -0700
+
+    made effect of damagemodel rely on the name of the object
+
+commit 2fdb88ccc898bed9abda8b358a0f6203c355931c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 13 14:32:19 2025 -0700
+
+    made a squadron spawner which spawns a squadron on the click of a button
+
+commit 453b3ae26adb81afc8a88c1f4b534405ab2019ec
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 13 00:13:18 2025 -0700
+
+    Made camera switching with a manual and automatic mode
+
+commit 2664afc20f22a4f9e70047a4093d9f12c7eddac9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 12 13:08:22 2025 -0700
+
+    made gunners work only when not spinning out and made the deadplane bool check if there are any critical systems damage or if ALL crew is dead
+
+commit 9e488c84aa91acc06100dfe1b2b81715cdcd4b20
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 12 12:45:29 2025 -0700
+
+    made gunner only be able to fire if plane is whole
+
+commit 172db9315d864b933ddbb1ed0dd82b7e7d0b8c03
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 12 09:05:02 2025 -0700
+
+    improved bulletscript to run with circlecast
+
+commit fa89cf5ff5cae1093eb2359dcae9730f49d01f0a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 20:01:59 2025 -0700
+
+    made freecam scale with cam fov
+
+commit a10e41f024f9e0f2e24566b0859159782b74cddb
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 19:42:20 2025 -0700
+
+    removed pilot status check and made gforces apply to all crew
+
+commit 02c10ae283a0691c6b5807c79827030131ba74c6
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 19:14:59 2025 -0700
+
+    moved pilot status check directly into aerodynamics
+
+commit 5af11a73b0dcbeb29f4cf7b1c77e44d25706ac91
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 14:48:20 2025 -0700
+
+    made cam go free when pilot dead
+
+commit 70f935a67d8f6acf7a10c1862789141fa2718b09
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 14:24:49 2025 -0700
+
+    destoryed planes no longer make extra fireballs
+
+commit df3cb53f9e482c2009e499287163ea561a3f1775
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 14:24:36 2025 -0700
+
+    same as prev commit
+
+commit 925e89f07276a807691c264904d5586191587cfb
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 14:24:21 2025 -0700
+
+    made taildeath apply spin
+
+commit b48fb50d715cbb0a0d08dfdd96234bd6d5bebaab
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 13:51:41 2025 -0700
+
+    fixed small bug in camera where if it doesnt start with parent it breaks
+
+commit 52564887d9a6f5b30e25c0fe1593d68a6524635a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 13:36:23 2025 -0700
+
+    removed default camscript vals
+
+commit e7e3a9c8654a9e157e73008c17220d9c4470167a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 13:35:01 2025 -0700
+
+    removed spectator
+
+commit 5eff2be33ecda47f519fd80db64e473d6533c316
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 13:34:54 2025 -0700
+
+    added alliances and now ai can search for their target
+
+commit e30c95b03dd5f1d47fafbde1f1ccadec5eeb66c0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 11 11:44:05 2025 -0700
+
+    added gunners
+
+commit 81d5786af3c8cd5c9bce5d9ccb9175514967c782
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 21:45:12 2025 -0700
+
+    added ripspeed
+
+commit 32ab54bffa3220ec9563a7b1108ce0e2760f9d9e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 21:42:01 2025 -0700
+
+    made atmospheric density scale inverse exp with height
+
+commit 7eaabf0fc432ece3510e71901f8302c3fbbdd2bc
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 21:24:27 2025 -0700
+
+    made bailout have a delay
+
+commit 279f104209aedc8672a579af2a84f3f3c53c06a8
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 21:05:46 2025 -0700
+
+    made ai plane not go for dead planes
+
+commit 61f49dcd5041bda51c9af033b69c4cd441ed9e0a
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 20:43:19 2025 -0700
+
+    made crewscript set chance of hit of damage model to 1
+
+commit a9e97a1e12ac4ba6307ea8704ff3e63b235e6a03
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 19:16:00 2025 -0700
+
+    made a better crew death
+
+commit 22d4372fe717bce43bd56741a6d038e08b218466
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 19:04:03 2025 -0700
+
+    added a bailout mechanic
+
+commit ea786b626217c9a130c817a366b613290ff505de
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 13:06:21 2025 -0700
+
+    made death of plane spawn a fire
+
+commit ec12b16f0b01eac09a705113ca7172ceac2a11c5
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 10 10:51:46 2025 -0700
+
+    no rollover with minspeed
+
+commit bcb09645578c18c1cd2d751a0073e10b332fce8c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 22:28:25 2025 -0700
+
+    added a spectator mode
+
+commit 494eecce036591b25c735c48a1ba8c56d90d37bb
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 22:13:13 2025 -0700
+
+    made algorithm not querey shooting when targeted obj is null
+
+commit daca7cd797dcc85f132ee72a2a86ad2b53840f0f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 21:29:28 2025 -0700
+
+    made broken pieces fall off with vel of whole body
+
+commit b48e974b4921b66aebe741afe402372bfb6f68a7
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 21:13:35 2025 -0700
+
+    changed effect of no tail
+
+commit d9a98db4eec6e0929ca896ee43c70dfad98f5c09
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 19:05:51 2025 -0700
+
+    made animationspeed dependent on vel
+
+commit 462f06d937f6743f8d6d75433bd98816fbc62e56
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 18:52:27 2025 -0700
+
+    made animations stop if speed is too low (on ground)
+
+commit 15c9614ed8b7d5e4434c5dda3cbce0202cf033ea
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 18:16:13 2025 -0700
+
+    made the tail falling off change the collider of the plane
+
+commit afce083e5ee50db5beddf2938dbf24436c895676
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 9 14:55:51 2025 -0700
+
+    made tail and wings able to fall off
+
+commit a61ebe17250874aa7918d43c24c434ff04241ea5
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 8 23:03:28 2025 -0700
+
+    made aerodynamics find the proper controller instead of needing to remove the unneeded component
+
+commit cf64ecfca1acf373a4c0dadfbdc5f288ada99e9d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 8 22:43:52 2025 -0700
+
+    removed ortho settings
+
+commit 58e1d8e238a8c19e82773e7ab758a17858b15519
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 8 21:59:02 2025 -0700
+
+    made it defensive when being pointed toward along with all other stuff
+
+commit f433bfa72432a40c2db53c2f72fd87861b1a689e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 8 20:37:08 2025 -0700
+
+    removed unused piece of code in ai controller
+
+commit 80f4d9b9099f6a7993ed075fdec4f8b18a87b7fa
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 8 18:32:55 2025 -0700
+
+    made "rollover()" be called in fixedupdate to make it more fluid
+
+commit 57fa86444705d3b1abe83ca1b0494c072c924d62
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 8 18:02:44 2025 -0700
+
+    removed a log
+
+commit b6db65aa0c87600347b933a66040b2f9ecc28c3d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 6 21:55:29 2025 -0700
+
+    fixed a bug in damage model
+
+commit 51952af8fdc34e7de6d55ec8dd054aab2a43a99f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sun Jul 6 21:55:20 2025 -0700
+
+    added more modes to AI
+
+commit a7fd89d81bbdda487194ea2efc9c5d9cc094d06b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 5 11:06:11 2025 -0700
+
+    added basic defense where throttle is simply cut
+
+commit 16e878fef46d1c32824e0b8b0fe2b2a6ae21aff9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 5 10:50:37 2025 -0700
+
+    small change to how tail health works (it never fully dies)
+
+commit 7317ed010b3f0fa094511ca4cd1f9400ce7990b0
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Sat Jul 5 10:35:30 2025 -0700
+
+    made propeller oscillate between being in front of plane and behind it
+
+commit 1ccfa444609fc7afc8a1547902bbf220acac8c6c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 22:57:25 2025 -0700
+
+    fixed bug in gforce script
+
+commit c89406748ec8bd20ef10c29f34c4acb7324c2c20
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 22:52:27 2025 -0700
+
+    deleted planemodel script because i use layer collisions matrix to do its job
+
+commit 9afe11e1f394e63205639f241a850a6738caec87
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 22:52:09 2025 -0700
+
+    modified gforces script to work in fixedupdate
+
+commit 72d765b6871badfa69fde1c801369a9dfdfaf636
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 19:31:21 2025 -0700
+
+    improved ai and modified flapscript
+
+commit ec3b8bbf65839360381bd79e9d469514693d0746
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 18:58:37 2025 -0700
+
+    modified flap script and made a dead engine param in propscript
+
+commit 0270c187c6e3a1dc23ce7f3665ae624c721fce6c
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 18:29:16 2025 -0700
+
+    added death to ai
+
+commit bbc51f6fbf3130fc1a6247ba06f9c29692671308
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 17:59:31 2025 -0700
+
+    made a plane model script to handle lack of collision between planes
+
+commit 9546e633f4dec31cc683eea0e409a3f0ecaae327
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Fri Jul 4 17:59:11 2025 -0700
+
+    improved ai
+
+commit 43553f52014962dd7d9aa92e937139939d7f0c98
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 23:06:24 2025 -0700
+
+    fixed AI (it works now)
+
+commit b23f9eee19290d88d7aa4d9a57c5b73a4f62ef87
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 23:06:04 2025 -0700
+
+    made a plane init script
+
+commit f90cb9292c94c22a4fe77c92714b86a84b2a7da9
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 23:05:55 2025 -0700
+
+    fixed gear to start out properly
+
+commit 5165ca205823f4141e203fa6afad23014b3b69cf
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 21:45:03 2025 -0700
+
+    made a gforce script to handle g forces that were previously in planecontroller
+
+commit 6c4d995aa9e8980d624db826bea42a4bb568d93b
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 20:37:02 2025 -0700
+
+    made flipping the plane rely on scale and not on rotation because the rotation method causeda very odd bug where it wouldnt collide with grnd properly
+
+commit 0ad3358455646ed6b521d3297b361fbbbe9998eb
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 16:00:00 2025 -0700
+
+    added pilot death and modified shootingscript
+
+commit 23a39ef1be502ed153ea7dcdc8a827c4efc29143
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 15:31:48 2025 -0700
+
+    made gear undeployable on ground
+
+commit 3cb8dccd8f19c36c24f28f11bc05cbd82dee9f1f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 15:22:26 2025 -0700
+
+    fixed small bug
+
+commit 215a48559d2a31225996f51bdba8c075c2eb88ce
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 15:21:07 2025 -0700
+
+    made almost everything destructible (except the plane itself)
+
+commit 5f0c77ae59f2634fa4450b34e899ca01aa925043
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 15:20:41 2025 -0700
+
+    added damage model and bullet logic
+
+commit 0aef717bf3c8b41bc389e6d369e9181c82caae99
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 11:36:15 2025 -0700
+
+    made an ai plane controller child class i will work on later
+
+commit e8bdda592578bf615594927bd7f319095e6fd9ce
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 11:35:56 2025 -0700
+
+    made an aerodynamics script to handle aerodynamics
+
+commit 9c7babbb605c9f6c1d2243bc097a2f0b46ccff61
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Thu Jul 3 10:54:07 2025 -0700
+
+    added basic gforces
+
+commit e65654b38cca4e3e4fd1806bf6bae85f76c4594d
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 21:37:38 2025 -0700
+
+    small change to how braking works (insignificant)
+
+commit a7a50792c8a8f41864e721998119e2b174294003
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 21:31:33 2025 -0700
+
+    added WEP
+
+commit 4615a9795a2e41c973791e6d5caea639651ba0e7
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 20:56:30 2025 -0700
+
+    fixed realignment
+
+commit e9baa972100b6ce25c6a0267f1d709778c34f486
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 17:50:39 2025 -0700
+
+    added basic bullets and guns
+
+commit 0976155b33455a9100acea5467500a61805b1c15
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 17:06:54 2025 -0700
+
+    changed camscript to be for the parent
+
+commit 42fc25525a1d7bde703ae8a540262bfbb919f7fb
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 17:01:29 2025 -0700
+
+    added gear drag, made a seperate flap script, improved flap script by making it rotate around an rp, renamed scripts
+
+commit 391b560bd863b7b7a622be27754145a21fbbef45
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 16:34:54 2025 -0700
+
+    added flaps
+
+commit 824ed32ce292ac57f2cc9b09364f0a5ad9305e1e
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 15:40:22 2025 -0700
+
+    improved prop and engine controls
+
+commit d9cce8f70ec16d10c47e9b2c4ca209d02b9d15ca
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 15:13:33 2025 -0700
+
+    made rollover thresh scale by sqrt of speeed
+
+commit 83e1dda644801541a1e122d58bb4c1883357bf3f
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 15:05:56 2025 -0700
+
+    fixed gear anim bug where it played at the start
+
+commit 94c0124fe7751a6dde5b9d426336c8a67668f014
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 14:38:17 2025 -0700
+
+    smal stuff abt realignment
+
+commit 7de625f9d764a0277a586865fb9204c85c1b2008
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 14:07:40 2025 -0700
+
+    hide gear during rollover
+
+commit 5177cbec13614efb7b91b96d49b5435b5f61a5aa
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Wed Jul 2 10:06:10 2025 -0700
+
+    added a "rollover"
+
+commit 9055142c72d025166fabf0000cb313a1851ecaca
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 1 23:27:32 2025 -0700
+
+    made the most barebones prop control
+
+commit 023dc9727adeed1683f248eace7bdbe3036ea812
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 1 23:27:17 2025 -0700
+
+    added gear controls
+
+commit 59335e32963c75af3adcf06b7fac91af2fea4256
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 1 21:24:55 2025 -0700
+
+    changed alignment slightly
+
+commit b0c97819518305b0758a984c470a3af0a3203fbf
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 1 18:40:23 2025 -0700
+
+    added alignment when stalling
+
+commit 1a8a0f18646045d6690de87f0f18edc1e55ba547
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 1 17:12:46 2025 -0700
+
+    made a camera script
+
+commit ec056186cdc30d3bcb107e6492d09e05c2c936cf
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Tue Jul 1 17:12:37 2025 -0700
+
+    made a planecontroller script
+
+commit 0aee83d28d3036dd280b52f9d196a29b6b436290
+Author: Tim Shmidt <timsh007@gmail.com>
+Date:   Mon Jun 30 23:12:54 2025 -0700
+
+    made a scripts folder and added readme
+
+commit 92fda9e227ba8ab0052a0400545e2cc817af76b9
+Author: Timakris101 <115914709+Timakris101@users.noreply.github.com>
+Date:   Mon Jun 30 23:07:57 2025 -0700
+
+    Initial commit
