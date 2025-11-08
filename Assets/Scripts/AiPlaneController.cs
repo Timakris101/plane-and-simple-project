@@ -11,21 +11,23 @@ public class AiPlaneController : PlaneController {
     [SerializeField] private float gunRange;
     private float headonOscillationMagnitude = 10f;
     private GameObject primaryBullet;
+    private bool isBomber = false;
 
     protected override float wantedDir() {
         primaryBullet = null;
         foreach (GameObject gunOrBh in progenyWithScript<GunScript>(gameObject)) {
-            if (!gunOrBh.TryGetComponent<BombHolderScript>(out BombHolderScript component) && gunOrBh.transform.parent == transform) {
+            if (gunOrBh.transform.parent == transform) {
+                isBomber = gunOrBh.TryGetComponent<BombHolderScript>(out BombHolderScript component);
                 primaryBullet = gunOrBh.GetComponent<GunScript>().getBullet();
                 break;
             }
         }
 
-        if (primaryBullet == null) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
+        if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
         
         if (transform.position.y < minAltitude + Constants.Water.seaLevel) return pointTowards(transform.position + Vector3.up);
 
-        if (targetedObj == null || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
+        if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
 
         if (Mathf.Abs(angleTo(targetedObj.transform.position)) > 180f - sixAngle && Mathf.Abs(Vector2.SignedAngle(targetedObj.transform.right, transform.right)) < 90f) {
             mode = "defensive";
@@ -84,11 +86,14 @@ public class AiPlaneController : PlaneController {
         if (targetedObj != null && primaryBullet != null) {
             if (targetInSights(primaryBullet) && (transform.position - positionToTarget(primaryBullet, transform.right)).magnitude < gunRange/* && mode != "headon"*/) {
                 setGuns(true);
+                if (isBomber) setBombs(true);
             } else {
                 setGuns(false);
+                if (isBomber) setBombs(false);
             }
         } else {
             setGuns(false);
+            if (isBomber) setBombs(false);
         }
     }
 

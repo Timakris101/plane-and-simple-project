@@ -63,7 +63,14 @@ public class BulletScript : MonoBehaviour {
             }
             index++;
         }
-        if (explosionRad < explosiveRangeOfCertainHit && armorHitCount == 1 && effectiveArmorPen <= 0f && objClosestToBullet.GetComponent<ArmorScript>() != null || objClosestToBullet == null) return;
+        if (objClosestToBullet == null) {
+            if (col.transform.GetComponent<BoxCollider2D>() != null) {
+                GetComponent<Rigidbody2D>().linearVelocity = prevVel;
+                Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), col.transform.GetComponent<Collider2D>());
+                return;
+            }
+        }
+        if (explosionRad < explosiveRangeOfCertainHit && armorHitCount == 1 && effectiveArmorPen <= 0f && objClosestToBullet.GetComponent<ArmorScript>() != null) return;
         hits = Physics2D.CircleCastAll(beginningHitPos - (Vector3) col.relativeVelocity.normalized * Random.Range(0f, maxFlyPastDist), explosionRad == 0 ? transform.localScale.x : explosionRad, -col.relativeVelocity, newPenVal);
         int counter = 0;
         foreach (RaycastHit2D hit in hits) {

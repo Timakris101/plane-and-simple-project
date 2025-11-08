@@ -204,7 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0303471b7c3da4414933d6af2f8f52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVehicles: []
   targetedObj: {fileID: 0}
   tagsToTarget: []
   angularThreshForGuns: 5
@@ -224,10 +223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1037361d7540a6be5e0a194ca7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVehicles: []
   targetedObj: {fileID: 0}
   tagsToTarget:
   - Plane
+  - GroundVehicle
 --- !u!114 &3728597093868562233
 MonoBehaviour:
   m_ObjectHideFlags: 0
