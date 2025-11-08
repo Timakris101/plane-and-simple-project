@@ -34,29 +34,36 @@ public class BulletScript : MonoBehaviour {
     }
 
     void dealDamage(Collision2D col) {
-        Vector3 beginningHitPos = transform.position - (Vector3) GetComponent<Rigidbody2D>().linearVelocity * Time.deltaTime;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(beginningHitPos, -col.relativeVelocity, penetrationVal);
+        Vector3 beginningHitPos = transform.position - prevVel * Time.fixedDeltaTime;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(beginningHitPos, -col.relativeVelocity);
         float newPenVal = penetrationVal;
         int armorHitCount = 0;
-        bool armorHitFirst = false;
         int index = 0;
         float effectiveArmorPen = armorPenMeters * col.relativeVelocity.magnitude / initSpeed;
+        GameObject objClosestToBullet = null;
         foreach (RaycastHit2D hit in hits) {
+            if (hit.transform == transform) continue;
+            if (hit.transform.gameObject != maxAncestor(col.gameObject)) continue;
+
+            if (objClosestToBullet == null) objClosestToBullet = hit.collider.gameObject;
+            if ((hit.point - (Vector2) transform.position).magnitude < (objClosestToBullet.transform.position - transform.position).magnitude) {
+                objClosestToBullet = hit.collider.gameObject;
+            }
+
             if (hit.collider.transform.GetComponent<ArmorScript>() != null) {
                 float effArmorThickness = hit.collider.transform.GetComponent<BoxCollider2D>().size.x / Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(col.relativeVelocity, hit.normal));
                 armorHitCount++;
                 if (effArmorThickness < effectiveArmorPen) {
                     effectiveArmorPen -= effArmorThickness;
                 } else {
-                    if (index == 0) armorHitFirst = true;
                     effectiveArmorPen = 0f;
                     newPenVal = ((Vector3) hit.point - beginningHitPos).magnitude;
                     break;
                 }
             }
-            if (hit.collider.transform != transform) index++;
+            index++;
         }
-        if (armorHitCount == 1 && effectiveArmorPen <= 0f && armorHitFirst) return;
+        if (armorHitCount == 1 && effectiveArmorPen <= 0f && objClosestToBullet.GetComponent<ArmorScript>() != null || objClosestToBullet == null) return;
         hits = Physics2D.CircleCastAll(beginningHitPos - (Vector3) col.relativeVelocity.normalized * Random.Range(0f, maxFlyPastDist), explosionRad == 0 ? transform.localScale.x : explosionRad, -col.relativeVelocity, newPenVal);
         int counter = 0;
         foreach (RaycastHit2D hit in hits) {
@@ -73,11 +80,11 @@ public class BulletScript : MonoBehaviour {
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), col.transform.GetComponent<Collider2D>());
             return;
         }
-        makeEffectAndDestroyObj(beginningHitPos);
+        makeEffectAndDestroyObj(transform.position);
     }
 
     void dealDamage() {
-        Vector3 beginningHitPos = transform.position + (Vector3) GetComponent<Rigidbody2D>().linearVelocity.normalized * Random.Range(0f, maxFlyPastDist);
+        Vector3 beginningHitPos = transform.position + (Vector3) GetComponent<Rigidbody2D>().linearVelocity.normalized * Random.Range(0f, maxFlyPastDist) - prevVel * Time.fixedDeltaTime;
         RaycastHit2D[] hits = Physics2D.CircleCastAll(beginningHitPos, explosionRad == 0 ? transform.localScale.x : explosionRad, GetComponent<Rigidbody2D>().linearVelocity.normalized, penetrationVal);
         foreach (RaycastHit2D hit in hits) {
             if (hit.collider.transform.GetComponent<DamageModel>() != null) {
@@ -86,7 +93,7 @@ public class BulletScript : MonoBehaviour {
                 d.damage(Random.Range((1f - damageVariation) * damage, (1f + damageVariation) * damage));
             }
         }
-        makeEffectAndDestroyObj(beginningHitPos);
+        makeEffectAndDestroyObj(transform.position);
     }
 
     private void makeEffectAndDestroyObj(Vector3 effectPos) {
