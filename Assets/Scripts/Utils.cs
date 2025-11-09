@@ -89,4 +89,34 @@ public class Utils {
         if (obj.transform.parent.gameObject == ancestor) return obj.transform.localPosition;
         return localPositionFrom(ancestor, obj.transform.parent.gameObject) + obj.transform.localPosition;
     }
+
+    public static float newtonRaphson(float startVal, int iterations, float precisionOfValidity, params float[] coefficients) {
+        float val = startVal;
+        float newVal = 0;
+        for (int i = 0; i < iterations; i++) {
+            newVal = val - (polynomialEquation(val, coefficients) / polynomialEquation(val, coefficientsOfDerivative(coefficients)));
+
+            float temp = val;
+            val = newVal;
+            newVal = temp;
+        }
+        if (Mathf.Abs(polynomialEquation(newVal, coefficients)) < precisionOfValidity) return newVal;
+        return -Mathf.Infinity;
+    }
+
+    public static float polynomialEquation(float x, params float[] coefficients) {
+        float sum = 0;
+        for (int i = 0; i < coefficients.Length; i++) {
+            sum += coefficients[coefficients.Length - 1 - i] * Mathf.Pow(x, i);
+        }
+        return sum;
+    }
+
+    public static float[] coefficientsOfDerivative(params float[] coefficientsOfRegular) {
+        float[] newCoeffs = new float[coefficientsOfRegular.Length - 1];
+        for (int i = 0; i < newCoeffs.Length; i++) {
+            newCoeffs[i] = (newCoeffs.Length - i) * coefficientsOfRegular[i];
+        }
+        return newCoeffs;
+    }
 }

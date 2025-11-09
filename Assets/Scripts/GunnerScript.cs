@@ -100,8 +100,23 @@ public class GunnerScript : MonoBehaviour {
 
     protected virtual Vector3 positionToTarget() {
         GameObject bullet = transform.GetChild(0).GetComponent<GunScript>().getBullet();
-        float timeOfFlight = (targetedObj.transform.position - transform.GetChild(0).position).magnitude / (bullet.GetComponent<BulletScript>().getInitSpeed());
-        return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - Physics.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
+        
+        Vector3 a = new Vector3(0,0,0);
+        Vector3 v = targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity;
+        Vector3 p = targetedObj.transform.position - transform.GetChild(0).position;
+        float s = bullet.GetComponent<BulletScript>().getInitSpeed();
+
+        float[] coefficients = new float[5];
+        coefficients[0] = (Mathf.Pow(a.x, 2f) + Mathf.Pow(a.y, 2f) + Mathf.Pow(a.z, 2f)) / 4f;
+        coefficients[1] = (a.x * v.x + a.y * v.y + a.z * v.z);
+        coefficients[2] = (Mathf.Pow(v.x, 2f) + p.x * a.x + Mathf.Pow(v.y, 2f) + p.y * a.y + Mathf.Pow(v.z, 2f) + p.z * a.z - Mathf.Pow(s, 2f));
+        coefficients[3] = 2f * (p.x * v.x + p.y * v.y + p.z * v.z);
+        coefficients[4] = (Mathf.Pow(p.x, 2f) + Mathf.Pow(p.y, 2f) + Mathf.Pow(p.z, 2f));
+
+        float timeOfFlight = newtonRaphson(s == 0 ? 0f : p.magnitude / s, 10, 5f, coefficients);
+
+        if (timeOfFlight == -Mathf.Infinity) return targetedObj.transform.position;
+        return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
     }
 
     public void setManualControl(bool b) {

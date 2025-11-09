@@ -19,7 +19,7 @@ public class BulletScript : MonoBehaviour {
     [SerializeField] private float lifeTime;
     [SerializeField] private float damageVariation;
     private float effectLifeTime = .2f;
-    private float timer;
+    [SerializeField] private float timer;
     
     [Header("Plane")]
     [SerializeField] private GameObject planeFired;
