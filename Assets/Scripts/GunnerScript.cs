@@ -113,7 +113,7 @@ public class GunnerScript : MonoBehaviour {
         coefficients[3] = 2f * (p.x * v.x + p.y * v.y + p.z * v.z);
         coefficients[4] = (Mathf.Pow(p.x, 2f) + Mathf.Pow(p.y, 2f) + Mathf.Pow(p.z, 2f));
 
-        float timeOfFlight = newtonRaphson(s == 0 ? 0f : p.magnitude / s, 10, 5f, coefficients);
+        float timeOfFlight = newtonRaphson(s == 0 ? 0f : p.magnitude / s, 5, 5f, coefficients);
 
         if (timeOfFlight == -Mathf.Infinity) return targetedObj.transform.position;
         return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
