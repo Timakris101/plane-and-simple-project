@@ -81,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fbb0db632a8844246ad705d5ae3172ab, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -154,7 +154,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!114 &9121292326369807059
 MonoBehaviour:
@@ -179,4 +179,5 @@ MonoBehaviour:
   effect: {fileID: 5274905710233930441, guid: eecb9ac7e8d764ed2a50a24085132a7a, type: 3}
   lifeTime: Infinity
   damageVariation: 0
+  timer: 0
   planeFired: {fileID: 0}
