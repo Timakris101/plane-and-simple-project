@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: c5af6ddead3a848209f565c2e8474f0f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4494964530267387238
+    second: b17WinglessTaillessSprite-_0
+  - first:
+      213: 2569740198938018160
+    second: b17WinglessTaillessSprite-_1
+  - first:
+      213: 8645349521249756749
+    second: b17WinglessTaillessSprite-_2
+  - first:
+      213: -7327099903604051378
+    second: b17WinglessTaillessSprite-_3
+  - first:
+      213: -4652815968603469838
+    second: b17WinglessTaillessSprite-_4
+  - first:
+      213: 1427046716831498948
+    second: b17WinglessTaillessSprite-_5
+  - first:
+      213: -8463493749412702519
+    second: b17WinglessTaillessSprite-_6
+  - first:
+      213: 7151482025464051591
+    second: b17WinglessTaillessSprite-_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_0
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 4749
+        width: 262
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6657198cc62516e30800000000000000
+      internalID: 4494964530267387238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_1
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 4129
+        width: 262
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0710eba881d89a320800000000000000
+      internalID: 2569740198938018160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_2
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 3489
+        width: 262
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d466f25a5937af770800000000000000
+      internalID: 8645349521249756749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_3
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 2829
+        width: 262
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e42b1e35579e05a90800000000000000
+      internalID: -7327099903604051378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_4
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 2179
+        width: 262
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f7002a3780ed6fb0800000000000000
+      internalID: -4652815968603469838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_5
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1549
+        width: 262
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c201aa9d63edc310800000000000000
+      internalID: 1427046716831498948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_6
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 749
+        width: 262
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c65483c641ab8a80800000000000000
+      internalID: -8463493749412702519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: b17WinglessTaillessSprite-_7
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 219
+        width: 262
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7873061130b2f3360800000000000000
+      internalID: 7151482025464051591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      b17WinglessTaillessSprite-_0: 4494964530267387238
+      b17WinglessTaillessSprite-_1: 2569740198938018160
+      b17WinglessTaillessSprite-_2: 8645349521249756749
+      b17WinglessTaillessSprite-_3: -7327099903604051378
+      b17WinglessTaillessSprite-_4: -4652815968603469838
+      b17WinglessTaillessSprite-_5: 1427046716831498948
+      b17WinglessTaillessSprite-_6: -8463493749412702519
+      b17WinglessTaillessSprite-_7: 7151482025464051591
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

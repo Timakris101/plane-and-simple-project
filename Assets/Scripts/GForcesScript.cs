@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GForcesScript : MonoBehaviour {
     [SerializeField] private float rollOverThresh;
@@ -18,19 +19,15 @@ public class GForcesScript : MonoBehaviour {
     private float timeToGloc = 4f;
     private float inSleepTimer;
     private float timeToUnsleep = 1f;
+    [SerializeField] private Sprite[] rolloverAllowingSprites;
 
     [Header("DestructiveEffects")]
     [SerializeField] private GameObject fire;
     [SerializeField] private GameObject explosion;
     private bool destroyed = false;
-    private Sprite origSprite;
-
-    void Start() {
-        origSprite = GetComponent<SpriteRenderer>().sprite;
-    }
-
+    
     void FixedUpdate() {
-        if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && GetComponent<SpriteRenderer>().sprite == origSprite) {
+        if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)) {
             rollover();
         }
         if (overGPlaneToDeath() && !destroyed) {
