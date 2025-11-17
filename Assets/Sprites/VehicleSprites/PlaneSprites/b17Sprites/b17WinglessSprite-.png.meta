@@ -72,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,177 +121,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: b17WinglessSpriteL_0
+      name: b17WinglessSprite-_0
       rect:
         serializedVersion: 2
-        x: 89
-        y: 4749
-        width: 452
-        height: 152
+        x: 0
+        y: 4480
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cb5d24b052ed4b830800000000000000
-      internalID: 4086135012615968188
+      spriteID: e2fc239f1a87f44af831edaf9f1cca85
+      internalID: 1749999437
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_1
+      name: b17WinglessSprite-_1
       rect:
         serializedVersion: 2
-        x: 89
-        y: 4119
-        width: 452
-        height: 132
+        x: 0
+        y: 3840
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5ee3785787831b780800000000000000
-      internalID: -8669085717692465435
+      spriteID: 30661ffdd998d416eb9eaed23ab76e72
+      internalID: 1901234559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_2
+      name: b17WinglessSprite-_2
       rect:
         serializedVersion: 2
-        x: 89
-        y: 3439
-        width: 452
-        height: 292
+        x: 0
+        y: 3200
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 63f5835c7d1a31a60800000000000000
-      internalID: 7643630940676710198
+      spriteID: afcf778410205492c9362c27c4407b93
+      internalID: -1266282941
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_3
+      name: b17WinglessSprite-_3
       rect:
         serializedVersion: 2
-        x: 89
-        y: 2789
-        width: 452
-        height: 192
+        x: 0
+        y: 2560
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9664170867c160c40800000000000000
-      internalID: 5478097292029412969
+      spriteID: c3cc547a797bd48d6bc21b0502d2e21a
+      internalID: 139216501
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_4
+      name: b17WinglessSprite-_4
       rect:
         serializedVersion: 2
-        x: 89
-        y: 2139
-        width: 452
-        height: 152
+        x: 0
+        y: 1920
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 10e785f8023e428a0800000000000000
-      internalID: -6330685447192674815
+      spriteID: 76abc8497a8404887a3a9cead023c6e3
+      internalID: -2132081726
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_5
+      name: b17WinglessSprite-_5
       rect:
         serializedVersion: 2
-        x: 89
-        y: 1509
-        width: 452
-        height: 142
+        x: 0
+        y: 1280
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b349d14ca03051380800000000000000
-      internalID: -9001284935455239109
+      spriteID: 0ae177aae75cb46aeb50c2864b931426
+      internalID: -100666708
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_6
+      name: b17WinglessSprite-_6
       rect:
         serializedVersion: 2
-        x: 89
-        y: 749
-        width: 452
-        height: 292
+        x: 0
+        y: 640
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c84cc597e9b816df0800000000000000
-      internalID: -188716196615633780
+      spriteID: 52a8a63fbc6bc45a6ba22dc36b1283c6
+      internalID: 114282674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: b17WinglessSpriteL_7
+      name: b17WinglessSprite-_7
       rect:
         serializedVersion: 2
-        x: 89
-        y: 219
-        width: 452
-        height: 192
+        x: 0
+        y: 0
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 14e27d729874f9210800000000000000
-      internalID: 1341869868384202305
+      spriteID: a75b546a78c0c430e86ac0a3236dab50
+      internalID: -202615935
       vertices: []
       indices: 
       edges: []
@@ -300,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 05ffb8f75bb254b5ba4b8d0121a42269
     internalID: 0
     vertices: []
     indices: 
@@ -308,16 +308,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":8.0},"gridSpriteSize":{"x":640.0,"y":640.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      b17WinglessSpriteL_0: 4086135012615968188
-      b17WinglessSpriteL_1: -8669085717692465435
-      b17WinglessSpriteL_2: 7643630940676710198
-      b17WinglessSpriteL_3: 5478097292029412969
-      b17WinglessSpriteL_4: -6330685447192674815
-      b17WinglessSpriteL_5: -9001284935455239109
-      b17WinglessSpriteL_6: -188716196615633780
-      b17WinglessSpriteL_7: 1341869868384202305
+      b17WinglessSprite-_0: 1749999437
+      b17WinglessSprite-_1: 1901234559
+      b17WinglessSprite-_2: -1266282941
+      b17WinglessSprite-_3: 139216501
+      b17WinglessSprite-_4: -2132081726
+      b17WinglessSprite-_5: -100666708
+      b17WinglessSprite-_6: 114282674
+      b17WinglessSprite-_7: -202615935
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -72,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -124,12 +124,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_0
       rect:
         serializedVersion: 2
-        x: 279
-        y: 4749
-        width: 262
-        height: 112
+        x: 0
+        y: 4480
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -146,12 +146,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_1
       rect:
         serializedVersion: 2
-        x: 279
-        y: 4129
-        width: 262
-        height: 112
+        x: 0
+        y: 3840
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,12 +168,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_2
       rect:
         serializedVersion: 2
-        x: 279
-        y: 3489
-        width: 262
-        height: 242
+        x: 0
+        y: 3200
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -190,12 +190,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_3
       rect:
         serializedVersion: 2
-        x: 279
-        y: 2829
-        width: 262
-        height: 152
+        x: 0
+        y: 2560
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -212,12 +212,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_4
       rect:
         serializedVersion: 2
-        x: 279
-        y: 2179
-        width: 262
-        height: 112
+        x: 0
+        y: 1920
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -234,12 +234,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_5
       rect:
         serializedVersion: 2
-        x: 279
-        y: 1549
-        width: 262
-        height: 92
+        x: 0
+        y: 1280
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -256,12 +256,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_6
       rect:
         serializedVersion: 2
-        x: 279
-        y: 749
-        width: 262
-        height: 242
+        x: 0
+        y: 640
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -278,12 +278,12 @@ TextureImporter:
       name: b17WinglessTaillessSprite+_7
       rect:
         serializedVersion: 2
-        x: 279
-        y: 219
-        width: 262
-        height: 152
+        x: 0
+        y: 0
+        width: 640
+        height: 640
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -300,7 +300,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: b4e1fb992c87d4bb990ec4cbbefe41da
     internalID: 0
     vertices: []
     indices: 
@@ -308,7 +308,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":8.0},"gridSpriteSize":{"x":640.0,"y":640.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       b17WinglessTaillessSprite+_0: 1576008043702497606
       b17WinglessTaillessSprite+_1: 6528228942564140432

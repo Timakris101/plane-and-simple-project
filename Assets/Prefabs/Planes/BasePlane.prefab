@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.005
-  maxAmmunition: 0
+  maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
 --- !u!1 &1105318143887221207
@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 4211843475484767718}
   - component: {fileID: 7501113421609273390}
   - component: {fileID: 3744693343319391900}
+  - component: {fileID: 5167984673548076726}
   m_Layer: 3
   m_Name: BasePlane
   m_TagString: Plane
@@ -541,7 +542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0303471b7c3da4414933d6af2f8f52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVehicles: []
   targetedObj: {fileID: 0}
   tagsToTarget: []
   angularThreshForGuns: 5
@@ -561,7 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1037361d7540a6be5e0a194ca7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVehicles: []
   targetedObj: {fileID: 0}
   tagsToTarget:
   - Plane
@@ -755,6 +754,7 @@ MonoBehaviour:
   killingGs: 100
   planeStructDestroyingGs: 100
   planeDestroyingGs: 100
+  rolloverAllowingSprites: []
   fire: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   explosion: {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
 --- !u!95 &4211843475484767718
@@ -807,6 +807,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crew: {fileID: 6995507021632064973, guid: e7d534dcfa29a47a79b89e36601a4619, type: 3}
   bailOutDelay: 2
+--- !u!114 &5167984673548076726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015567163552028216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccfc987ee047a42dc96d863f41dc5805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AllianceHolder
+  alliance: 
 --- !u!1 &2220887884205304699
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,6 +2118,6 @@ MonoBehaviour:
   manualControl: 0
   targetedObj: {fileID: 0}
   angularThreshForGuns: 5
-  minDeflection: 180
-  maxDeflection: 270
-  maxRange: 0
+  minDeflection: 0
+  maxDeflection: 0
+  maxRange: 500
