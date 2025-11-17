@@ -229,12 +229,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 110
   maxDeflection: 250
+  fixedToOtherGun: 1
 --- !u!1 &231363295619074531
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,12 +438,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 180
+  fixedToOtherGun: 1
 --- !u!1 &565685814322282526
 GameObject:
   m_ObjectHideFlags: 0
@@ -670,12 +672,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 270
   maxDeflection: 10
+  fixedToOtherGun: 1
 --- !u!1 &676150580114594808
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,12 +724,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 180
+  fixedToOtherGun: 1
 --- !u!1 &708564665043295300
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,6 +783,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!212 &8929523993944533178
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -882,12 +887,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 180
   maxDeflection: 0
+  fixedToOtherGun: 1
 --- !u!1 &1105318143887221207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,12 +1240,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 90
   maxDeflection: 160
+  fixedToOtherGun: 0
 --- !u!1 &2015567163552028216
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,12 +2126,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 270
   maxDeflection: 10
+  fixedToOtherGun: 1
 --- !u!1 &3442317494921561381
 GameObject:
   m_ObjectHideFlags: 0
@@ -2170,12 +2178,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 180
   maxDeflection: 0
+  fixedToOtherGun: 1
 --- !u!1 &3694822689836821861
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,12 +2230,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.005
+  fireRate: 0.015
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 110
   maxDeflection: 270
+  fixedToOtherGun: 1
 --- !u!1 &4372706445091148658
 GameObject:
   m_ObjectHideFlags: 0

@@ -58,9 +58,10 @@ public class GunnerScript : MonoBehaviour {
 
     protected void attemptToShoot(Vector3 posToShoot, bool b) {
         foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
-            bool tooFarFromSight = Mathf.Abs(Vector2.SignedAngle(posToShoot - gun.transform.position, gun.transform.right)) > angularThreshForGuns;
+            GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
+            bool tooFarFromSight = Mathf.Abs(Vector2.SignedAngle(posToShoot - gunToLookAt.transform.position, gunToLookAt.transform.right)) > angularThreshForGuns;
             bool hitsOwnPlane = false;
-            RaycastHit2D[] hits = Physics2D.RaycastAll(positionToCheckShotFrom, gun.transform.right);
+            RaycastHit2D[] hits = Physics2D.RaycastAll(positionToCheckShotFrom, gunToLookAt.transform.right);
             foreach (RaycastHit2D hit in hits) {
                 if (hit.collider.transform == transform.parent) { //checks if the specific collider is of the parent and not of the children. Hit.transform would return parent transform
                     hitsOwnPlane = true;
@@ -79,15 +80,17 @@ public class GunnerScript : MonoBehaviour {
 
     protected virtual void pointGunAt(Vector3 pos) {
         foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
-            gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - gun.transform.position).y, (pos - gun.transform.position).x) * Mathf.Rad2Deg);
-            gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gun.transform.localEulerAngles.z, gun.GetComponent<GunScript>().minDeflection, gun.GetComponent<GunScript>().maxDeflection));
+            GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
+            gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - gunToLookAt.transform.position).y, (pos - gunToLookAt.transform.position).x) * Mathf.Rad2Deg);
+            gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gunToLookAt.transform.localEulerAngles.z, gunToLookAt.GetComponent<GunScript>().minDeflection, gunToLookAt.GetComponent<GunScript>().maxDeflection));
         }
     }
 
     protected virtual void pointGunAt(Vector3 pos, Vector3 pointFromPos) {
         foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+            GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
             gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - pointFromPos).y, (pos - pointFromPos).x) * Mathf.Rad2Deg);
-            gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gun.transform.transform.localEulerAngles.z, gun.GetComponent<GunScript>().minDeflection, gun.GetComponent<GunScript>().maxDeflection));
+            gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gunToLookAt.transform.transform.localEulerAngles.z, gunToLookAt.GetComponent<GunScript>().minDeflection, gunToLookAt.GetComponent<GunScript>().maxDeflection));
         }
     }
 

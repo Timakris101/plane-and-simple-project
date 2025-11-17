@@ -13,6 +13,7 @@ public class GunScript : MonoBehaviour {
     [SerializeField] private float bulletFuse;
     [SerializeField] public float minDeflection;
     [SerializeField] public float maxDeflection;
+    [SerializeField] public bool fixedToOtherGun;
     private bool shooting;
     private Vector3 baseVel;
 
