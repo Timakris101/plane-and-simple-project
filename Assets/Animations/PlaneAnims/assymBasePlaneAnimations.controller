@@ -42,7 +42,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6635110603462636442}
-    m_Position: {x: 410, y: -70, z: 0}
+    m_Position: {x: 150, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4909449769937649284}
     m_Position: {x: 410, y: 30, z: 0}
@@ -69,7 +69,7 @@ AnimatorStateMachine:
     m_Position: {x: 150, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 868854325554905105}
-    m_Position: {x: 150, y: -70, z: 0}
+    m_Position: {x: 410, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3587625817287845131}
     m_Position: {x: 280, y: 130, z: 0}
@@ -414,7 +414,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RollingAnim-
+  m_Name: RollingAnim+
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -688,7 +688,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RollingAnim+
+  m_Name: RollingAnim-
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
