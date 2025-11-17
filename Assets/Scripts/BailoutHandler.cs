@@ -35,19 +35,21 @@ public class BailoutHandler : MonoBehaviour {
             if (!transform.GetChild(i).GetComponent<DamageModel>().isCrewRole()) continue;
             if (!transform.GetChild(i).GetComponent<DamageModel>().isAlive()) continue;
 
-            GameObject hitbox = transform.GetChild(i).gameObject;
-
-            GameObject newCrew = Instantiate(crew, hitbox.transform.position, Quaternion.identity);
-            newCrew.GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity;
-
-            if (transform.Find("Camera") != null) transform.Find("Camera").parent = null;
-
-            hitbox.GetComponent<BoxCollider2D>().size = newCrew.GetComponent<BoxCollider2D>().size;
-            hitbox.GetComponent<BoxCollider2D>().offset = newCrew.GetComponent<BoxCollider2D>().offset;
-            hitbox.transform.rotation = newCrew.transform.rotation;
-            hitbox.transform.parent = newCrew.transform;
+            bailCrewMember(transform.GetChild(i).gameObject);
             
             i--;
         }
+    }
+
+    public void bailCrewMember(GameObject crewToBail) {
+        GameObject newCrew = Instantiate(crew, crewToBail.transform.position, Quaternion.identity);
+        newCrew.GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity;
+
+        if (transform.Find("Camera") != null) transform.Find("Camera").parent = null;
+
+        crewToBail.GetComponent<BoxCollider2D>().size = newCrew.GetComponent<BoxCollider2D>().size;
+        crewToBail.GetComponent<BoxCollider2D>().offset = newCrew.GetComponent<BoxCollider2D>().offset;
+        crewToBail.transform.rotation = newCrew.transform.rotation;
+        crewToBail.transform.parent = newCrew.transform;
     }
 }

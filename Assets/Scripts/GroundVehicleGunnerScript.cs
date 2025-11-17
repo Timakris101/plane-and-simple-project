@@ -64,7 +64,7 @@ public class GroundVehicleGunnerScript : GunnerScript {
                 eulersZ = Mathf.Atan2((reflectedPos - gunPivotPrevPos).y, (reflectedPos - gunPivotPrevPos).x) * Mathf.Rad2Deg - rotOfBase();
                 if (eulersZ < 0) eulersZ += 360f;
             }
-            transform.GetChild(0).eulerAngles = new Vector3(0, transform.parent.eulerAngles.y, boundedGunAngle(eulersZ, minDeflection, maxDeflection) + rotOfBase());
+            transform.GetChild(0).eulerAngles = new Vector3(0, transform.parent.eulerAngles.y, boundedGunAngle(eulersZ, transform.GetChild(0).GetComponent<GunScript>().minDeflection, transform.GetChild(0).GetComponent<GunScript>().maxDeflection) + rotOfBase());
         } else {
             base.pointGunAt(pos, gunPivotPrevPos);
         }

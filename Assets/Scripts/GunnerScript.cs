@@ -8,9 +8,8 @@ public class GunnerScript : MonoBehaviour {
     [SerializeField] protected bool manualControl;
     [SerializeField] protected GameObject targetedObj;
     [SerializeField] protected float angularThreshForGuns;
-    [SerializeField] protected float minDeflection;
-    [SerializeField] protected float maxDeflection;
     [SerializeField] protected float maxRange;
+    [SerializeField] private bool isInTail;
 
     private Sprite origSpriteOfPlane;
 
@@ -22,6 +21,7 @@ public class GunnerScript : MonoBehaviour {
 
     protected virtual void Update() {
         if (transform.parent.gameObject.layer == LayerMask.NameToLayer("Vehicle")) { //if in plane
+            if (isInTail && transform.parent.GetComponent<Animator>().GetBool("Tailless") && GetComponent<DamageModel>().isAlive()) transform.parent.GetComponent<BailoutHandler>().bailCrewMember(gameObject);
             int animIndex = int.Parse(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Substring(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Length - 1));
             if (GetComponent<DamageModel>().isAlive() && !transform.parent.GetComponent<GForcesScript>().isPersonSleepy() && animIndex <= 1) { //if concious and alive and plane is not spinning out
                 setTargetedObj(transform.parent.GetComponent<AiPlaneController>().getTargetedObj());
@@ -49,36 +49,46 @@ public class GunnerScript : MonoBehaviour {
             }
         } else {
             if (transform.childCount != 0) {
-                Destroy(transform.GetChild(0).gameObject);
+                foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+                    Destroy(gun);
+                }
             }
         }
     }
 
     protected void attemptToShoot(Vector3 posToShoot, bool b) {
-        bool tooFarFromSight = Mathf.Abs(Vector2.SignedAngle(posToShoot - transform.GetChild(0).position, transform.GetChild(0).right)) > angularThreshForGuns;
-        bool hitsOwnPlane = false;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(positionToCheckShotFrom, transform.GetChild(0).right);
-        foreach (RaycastHit2D hit in hits) {
-            if (hit.collider.transform == transform.parent) { //checks if the specific collider is of the parent and not of the children. Hit.transform would return parent transform
-                hitsOwnPlane = true;
-                break;
+        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+            bool tooFarFromSight = Mathf.Abs(Vector2.SignedAngle(posToShoot - gun.transform.position, gun.transform.right)) > angularThreshForGuns;
+            bool hitsOwnPlane = false;
+            RaycastHit2D[] hits = Physics2D.RaycastAll(positionToCheckShotFrom, gun.transform.right);
+            foreach (RaycastHit2D hit in hits) {
+                if (hit.collider.transform == transform.parent) { //checks if the specific collider is of the parent and not of the children. Hit.transform would return parent transform
+                    hitsOwnPlane = true;
+                    break;
+                }
             }
+            gun.GetComponent<GunScript>().setShooting(b && !hitsOwnPlane && !tooFarFromSight);
         }
-        transform.GetChild(0).GetComponent<GunScript>().setShooting(b && !hitsOwnPlane && !tooFarFromSight);
     }
 
     protected void attemptToShoot(bool b) {
-        transform.GetChild(0).GetComponent<GunScript>().setShooting(b);
+        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+            gun.GetComponent<GunScript>().setShooting(b);
+        }
     }
 
     protected virtual void pointGunAt(Vector3 pos) {
-        transform.GetChild(0).eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - transform.GetChild(0).position).y, (pos - transform.GetChild(0).position).x) * Mathf.Rad2Deg);
-        transform.GetChild(0).localEulerAngles = new Vector3(0, 0, boundedGunAngle(transform.GetChild(0).localEulerAngles.z, minDeflection, maxDeflection));
+        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+            gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - gun.transform.position).y, (pos - gun.transform.position).x) * Mathf.Rad2Deg);
+            gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gun.transform.localEulerAngles.z, gun.GetComponent<GunScript>().minDeflection, gun.GetComponent<GunScript>().maxDeflection));
+        }
     }
 
     protected virtual void pointGunAt(Vector3 pos, Vector3 pointFromPos) {
-        transform.GetChild(0).eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - pointFromPos).y, (pos - pointFromPos).x) * Mathf.Rad2Deg);
-        transform.GetChild(0).localEulerAngles = new Vector3(0, 0, boundedGunAngle(transform.GetChild(0).localEulerAngles.z, minDeflection, maxDeflection));
+        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+            gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - pointFromPos).y, (pos - pointFromPos).x) * Mathf.Rad2Deg);
+            gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gun.transform.transform.localEulerAngles.z, gun.GetComponent<GunScript>().minDeflection, gun.GetComponent<GunScript>().maxDeflection));
+        }
     }
 
     protected float boundedGunAngle(float unboundedAngle, float minDeflection, float maxDeflection) {
@@ -94,8 +104,12 @@ public class GunnerScript : MonoBehaviour {
     }
 
     protected bool targetInSights() {
-        GameObject bullet = transform.GetChild(0).GetComponent<GunScript>().getBullet();
-        return Mathf.Abs(Vector3.SignedAngle((positionToTarget() - transform.GetChild(0).position).normalized, transform.GetChild(0).right, transform.GetChild(0).forward)) < angularThreshForGuns;
+        bool inSights = false;
+        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+            GameObject bullet = gun.transform.GetComponent<GunScript>().getBullet();
+            if (!inSights) inSights = Mathf.Abs(Vector3.SignedAngle((positionToTarget() - gun.transform.position).normalized, gun.transform.right, gun.transform.forward)) < angularThreshForGuns;
+        }
+        return inSights;
     }
 
     protected virtual Vector3 positionToTarget() {
