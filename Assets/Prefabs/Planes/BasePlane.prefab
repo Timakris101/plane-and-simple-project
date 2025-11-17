@@ -49,6 +49,9 @@ MonoBehaviour:
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &1105318143887221207
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,9 +758,9 @@ MonoBehaviour:
   currentGs: {x: 0, y: 0, z: 0}
   feltGs: 0
   sleepyGs: 17
-  killingGs: 100
-  planeStructDestroyingGs: 100
-  planeDestroyingGs: 100
+  killingGs: 80
+  planeStructDestroyingGs: 80
+  planeDestroyingGs: 80
   rolloverAllowingSprites: []
   fire: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   explosion: {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
@@ -1415,6 +1418,9 @@ MonoBehaviour:
   maxAmmunition: 0
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &5046145914265758846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,7 +2144,5 @@ MonoBehaviour:
   manualControl: 0
   targetedObj: {fileID: 0}
   angularThreshForGuns: 5
-  minDeflection: 0
-  maxDeflection: 0
   maxRange: 500
   isInTail: 0

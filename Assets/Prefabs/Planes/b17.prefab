@@ -1665,9 +1665,9 @@ MonoBehaviour:
   currentGs: {x: 0, y: 0, z: 0}
   feltGs: 0
   sleepyGs: 17
-  killingGs: 100
-  planeStructDestroyingGs: 100
-  planeDestroyingGs: 100
+  killingGs: 50
+  planeStructDestroyingGs: 50
+  planeDestroyingGs: 50
   rolloverAllowingSprites:
   - {fileID: -4422963397178782669, guid: 070220b57ddcc4b4399a16c29f30391a, type: 3}
   - {fileID: 4058821084657731212, guid: a643f1505936d4cd08cfed99dfc6b194, type: 3}

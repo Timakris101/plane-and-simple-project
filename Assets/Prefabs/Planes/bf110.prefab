@@ -535,6 +535,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &917941646517885023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1612,6 +1613,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &3117095770162761310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,6 +1665,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &4259130684599262036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1717,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &5260353808647239221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,6 +1945,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &6037392057558064875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,7 +2282,7 @@ MonoBehaviour:
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 190
-  wingPos: {fileID: 5318000950192467951, guid: 4c8f20878271d4cfa90723845e611545, type: 3}
+  wingPos: {fileID: 5318000950192467951, guid: ef12932cb4d1c460aa4d6a49804d4b26, type: 3}
   wingNeg: {fileID: 0}
   animatorSpeedFactor: 100
 --- !u!1 &7396697809509093973
@@ -2331,6 +2336,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &7602324295703443113
 GameObject:
   m_ObjectHideFlags: 0
@@ -2756,6 +2762,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &8592176838398574121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2839,6 +2846,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!212 &8340460667093583674
 SpriteRenderer:
   m_ObjectHideFlags: 0
