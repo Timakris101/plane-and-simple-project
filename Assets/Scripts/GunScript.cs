@@ -11,6 +11,8 @@ public class GunScript : MonoBehaviour {
     [SerializeField] private int maxAmmunition;
     [SerializeField] protected int ammunition;
     [SerializeField] private float bulletFuse;
+    [SerializeField] public float minDeflection;
+    [SerializeField] public float maxDeflection;
     private bool shooting;
     private Vector3 baseVel;
 

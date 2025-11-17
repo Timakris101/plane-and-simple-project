@@ -417,6 +417,8 @@ MonoBehaviour:
   killingGs: 100
   planeStructDestroyingGs: 100
   planeDestroyingGs: 100
+  rolloverAllowingSprites:
+  - {fileID: 1446790724, guid: 01c0d10c87cf04ee9a03a22e2042d777, type: 3}
   fire: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   explosion: {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
 --- !u!95 &5320713050326851960
@@ -531,6 +533,8 @@ MonoBehaviour:
   maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &917941646517885023
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +717,7 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
+  allowableSprites: []
 --- !u!1 &1046891922513576776
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +829,7 @@ MonoBehaviour:
   flapEffectiveness: 0.1
   flapDrag: 0.05
   breakSpeed: 80
+  allowableSprites: []
 --- !u!61 &7305610467207076010
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -961,6 +967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1020,9 +1027,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.8
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!1 &2019701947590335741
 GameObject:
@@ -1115,6 +1124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1174,9 +1184,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
-  tail: {fileID: 3329704741098306423, guid: 94940c5a2a0154d96a9fd7636db5d903, type: 3}
+  tailPos: {fileID: 3329704741098306423, guid: 94940c5a2a0154d96a9fd7636db5d903, type: 3}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!1 &2077652475337383150
 GameObject:
@@ -1270,6 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1329,9 +1342,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!114 &5025021362594751727
 MonoBehaviour:
@@ -1525,6 +1540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve: []
@@ -1539,9 +1555,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!1 &2622601837312843629
 GameObject:
@@ -1592,6 +1610,8 @@ MonoBehaviour:
   maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &3117095770162761310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1641,6 +1661,8 @@ MonoBehaviour:
   maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &4259130684599262036
 GameObject:
   m_ObjectHideFlags: 0
@@ -1690,6 +1712,8 @@ MonoBehaviour:
   maxAmmunition: 200
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &5260353808647239221
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,6 +1807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1842,9 +1867,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.8
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!114 &3080562393147886930
 MonoBehaviour:
@@ -1861,9 +1888,8 @@ MonoBehaviour:
   manualControl: 0
   targetedObj: {fileID: 0}
   angularThreshForGuns: 5
-  minDeflection: 105
-  maxDeflection: 180
   maxRange: 300
+  isInTail: 0
 --- !u!1 &5953699594379039582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,6 +1939,8 @@ MonoBehaviour:
   maxAmmunition: 200
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &6037392057558064875
 GameObject:
   m_ObjectHideFlags: 0
@@ -2186,6 +2214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -2245,9 +2274,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 190
-  wing: {fileID: 5318000950192467951, guid: ef12932cb4d1c460aa4d6a49804d4b26, type: 3}
+  wingPos: {fileID: 5318000950192467951, guid: 4c8f20878271d4cfa90723845e611545, type: 3}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 100
 --- !u!1 &7396697809509093973
 GameObject:
@@ -2298,6 +2329,8 @@ MonoBehaviour:
   maxAmmunition: 2000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &7602324295703443113
 GameObject:
   m_ObjectHideFlags: 0
@@ -2671,6 +2704,7 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
+  allowableSprites: []
 --- !u!1 &8334623907460690347
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,6 +2754,8 @@ MonoBehaviour:
   maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &8592176838398574121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2801,6 +2837,8 @@ MonoBehaviour:
   maxAmmunition: 1
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!212 &8340460667093583674
 SpriteRenderer:
   m_ObjectHideFlags: 0

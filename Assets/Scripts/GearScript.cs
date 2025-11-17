@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GearScript : MonoBehaviour {
 
@@ -21,7 +22,7 @@ public class GearScript : MonoBehaviour {
     private float timeBraking;
     private float time;
 
-    private Sprite origSpriteOfPlane;
+   [SerializeField] private Sprite[] allowableSprites;
 
     void OnCollisionEnter2D(Collision2D col) {
         if (transform.parent != null) {
@@ -38,8 +39,6 @@ public class GearScript : MonoBehaviour {
         }
         GetComponent<Animator>().SetBool("gearDownAtStart", gearDownAtStart);
         GetComponent<Animator>().SetBool("gearDeployed", gearDownAtStart);
-
-        origSpriteOfPlane = transform.parent.GetComponent<SpriteRenderer>().sprite;
     }
 
     public float getGearDrag() {
@@ -110,7 +109,7 @@ public class GearScript : MonoBehaviour {
             if (isGearDown() && transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude > breakSpeed) breakGear();
         }
         if (transform.parent != null) {
-            if (transform.parent.GetComponent<SpriteRenderer>().sprite == origSpriteOfPlane) {
+            if (allowableSprites.Contains(transform.parent.GetComponent<SpriteRenderer>().sprite)) {
                 unhideGear();
             } else {
                 hideGear();

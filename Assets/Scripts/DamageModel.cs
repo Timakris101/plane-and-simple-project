@@ -6,6 +6,7 @@ using static Utils;
 public class DamageModel : MonoBehaviour {
 
     private string effect;
+    [SerializeField] private bool assym;
     [SerializeField] private AnimationCurve hitChanceByAngle;
     [SerializeField] private float maxHealth;
     [SerializeField] private float health;
@@ -20,11 +21,13 @@ public class DamageModel : MonoBehaviour {
     [SerializeField] private float fireDamagePerSec;
 
     [Header("Tail")]
-    [SerializeField] private GameObject tail;
+    [SerializeField] private GameObject tailPos;
+    [SerializeField] private GameObject tailNeg;
 
     [Header("Wing")]
     [SerializeField] private float ripSpeed;
-    [SerializeField] private GameObject wing;
+    [SerializeField] private GameObject wingPos;
+    [SerializeField] private GameObject wingNeg;
     [SerializeField] private float animatorSpeedFactor;
 
     private Aerodynamics aero;
@@ -41,6 +44,7 @@ public class DamageModel : MonoBehaviour {
 
     void Awake() {
         health = maxHealth;
+        if (!assym) wingNeg = wingPos;
     }
 
     void Start() {
@@ -161,7 +165,7 @@ public class DamageModel : MonoBehaviour {
     }
 
     private void handleSpawningTail() {
-        GameObject obj = Instantiate(tail, transform.position, transform.rotation);
+        GameObject obj = Instantiate(transform.parent.localScale.y > 0 ? tailPos : tailNeg, transform.position, transform.rotation);
         obj.GetComponent<Rigidbody2D>().linearVelocity = transform.parent.GetComponent<Rigidbody2D>().linearVelocity;
         obj.transform.localScale = transform.parent.localScale;
         transform.parent.GetComponent<Animator>().SetBool("Tailless", true);
@@ -173,7 +177,7 @@ public class DamageModel : MonoBehaviour {
     }
 
     private void handleSpawningWing() {
-        GameObject obj = Instantiate(wing, transform.position, transform.rotation);
+        GameObject obj = Instantiate(transform.parent.localScale.y > 0 ? wingPos : wingNeg, transform.position, transform.rotation);
         obj.GetComponent<Rigidbody2D>().linearVelocity = transform.parent.GetComponent<Rigidbody2D>().linearVelocity;
         obj.transform.localScale = transform.parent.localScale;
         transform.parent.GetComponent<Animator>().SetBool("Wingless", true);
@@ -194,6 +198,7 @@ public class DamageModel : MonoBehaviour {
                         possibleProp.transform.position = obj.transform.GetChild(fallenPropIndex).position;
                         possibleProp.transform.parent = obj.transform.GetChild(fallenPropIndex);
                         fallenPropIndex++;
+                        i--;
                     }
                 }
             }

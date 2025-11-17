@@ -183,6 +183,7 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
+  allowableSprites: []
 --- !u!1 &1315684399629354001
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -334,9 +336,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!114 &1830547784322922267
 MonoBehaviour:
@@ -574,7 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0303471b7c3da4414933d6af2f8f52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVehicles: []
   targetedObj: {fileID: 0}
   tagsToTarget: []
   angularThreshForGuns: 5
@@ -594,7 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1037361d7540a6be5e0a194ca7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyVehicles: []
   targetedObj: {fileID: 0}
   tagsToTarget:
   - Plane
@@ -788,6 +790,8 @@ MonoBehaviour:
   killingGs: 100
   planeStructDestroyingGs: 100
   planeDestroyingGs: 100
+  rolloverAllowingSprites:
+  - {fileID: 396521211, guid: a9d04a55f6999474ba425a9a4e6fe2b0, type: 3}
   fire: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   explosion: {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
 --- !u!95 &5852199569656759248
@@ -1066,6 +1070,7 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
+  allowableSprites: []
 --- !u!1 &2353974389075262910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1120,8 @@ MonoBehaviour:
   maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &2804501695066204172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,6 +1171,8 @@ MonoBehaviour:
   maxAmmunition: 29
   ammunition: 0
   bulletFuse: 0
+  minDeflection: 0
+  maxDeflection: 0
 --- !u!1 &3201522167870730070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,6 +1264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1314,9 +1324,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 190
-  wing: {fileID: 5318000950192467951, guid: 2d4f88ef030a14de78c4f77984dc8e97, type: 3}
+  wingPos: {fileID: 5318000950192467951, guid: 2d4f88ef030a14de78c4f77984dc8e97, type: 3}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 60
 --- !u!1 &3863140200900791612
 GameObject:
@@ -1409,6 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1468,9 +1481,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!1 &4754677196235654956
 GameObject:
@@ -1614,6 +1629,7 @@ MonoBehaviour:
   flapEffectiveness: 0.1
   flapDrag: 0.05
   breakSpeed: 80
+  allowableSprites: []
 --- !u!61 &1947271301384509534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1928,6 +1944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve:
@@ -1987,9 +2004,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
-  tail: {fileID: 3329704741098306423, guid: 7b08aa26a643f4b0983eee19d4f44986, type: 3}
+  tailPos: {fileID: 3329704741098306423, guid: 7b08aa26a643f4b0983eee19d4f44986, type: 3}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!1 &7863016997290100207
 GameObject:
@@ -2082,6 +2101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  assym: 0
   hitChanceByAngle:
     serializedVersion: 2
     m_Curve: []
@@ -2096,9 +2116,11 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  tail: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
   ripSpeed: 0
-  wing: {fileID: 0}
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
 --- !u!1 &8387892085689745774
 GameObject:

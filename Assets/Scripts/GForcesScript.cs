@@ -27,6 +27,7 @@ public class GForcesScript : MonoBehaviour {
     private bool destroyed = false;
     
     void FixedUpdate() {
+        GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
         if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)) {
             rollover();
         }

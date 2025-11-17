@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FlapScript : MonoBehaviour {
     [SerializeField] private float maxDeflection; //note: includes base 90 deg offset
@@ -10,11 +11,7 @@ public class FlapScript : MonoBehaviour {
     [SerializeField] private float flapDrag;
     [SerializeField] private float breakSpeed;
 
-    private Sprite origSpriteOfPlane;
-
-    void Start() {
-        origSpriteOfPlane = transform.parent.GetComponent<SpriteRenderer>().sprite;
-    }
+    [SerializeField] private Sprite[] allowableSprites;
 
     void Update() {
         handleFlaps();
@@ -22,7 +19,7 @@ public class FlapScript : MonoBehaviour {
             if (deflection() >= maxDeflection && transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude > breakSpeed) breakFlaps();
         }
         if (transform.parent != null) {
-            if (transform.parent.GetComponent<SpriteRenderer>().sprite == origSpriteOfPlane) {
+            if (allowableSprites.Contains(transform.parent.GetComponent<SpriteRenderer>().sprite)) {
                 unhideFlaps();
             } else {
                 hideFlaps();
