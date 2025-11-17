@@ -116,10 +116,16 @@ public class AiPlaneController : PlaneController {
 
         float timeOfFlight = newtonRaphson(s == 0 ? 0f : p.magnitude / s, 5, 5f, coefficients);
 
-        if (timeOfFlight == -Mathf.Infinity) { //really hacky and dumb solution for bombs
+        if (s == 0f) { //really hacky and dumb solution for bombs
             timeOfFlight = (targetedObj.transform.position - transform.position).x / ((Vector3) GetComponent<Rigidbody2D>().linearVelocity).x;
             return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
         }
+
+        if (timeOfFlight == -Mathf.Infinity) {
+            return targetedObj.transform.position;
+        }
+
+        Debug.DrawRay(targetedObj.transform.position, targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f - targetedObj.transform.position, Color.yellow);
 
         return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
     }

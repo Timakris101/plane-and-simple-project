@@ -44,7 +44,10 @@ public class DamageModel : MonoBehaviour {
 
     void Awake() {
         health = maxHealth;
-        if (!assym) wingNeg = wingPos;
+        if (!assym) {
+            wingNeg = wingPos;
+            tailNeg = tailPos;
+        }
     }
 
     void Start() {
