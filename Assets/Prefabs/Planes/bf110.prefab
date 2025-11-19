@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3019009712286538744}
   - component: {fileID: 8944509215963707104}
   - component: {fileID: 8456735272975681994}
+  - component: {fileID: 276455320235593979}
   m_Layer: 3
   m_Name: bf110
   m_TagString: Plane
@@ -484,6 +485,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllianceHolder
   alliance: Axis
+--- !u!114 &276455320235593979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232945582501730601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f573240ad1baf4a2186cabef9838f321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
+  acceleration: {x: 0, y: 0, z: 0}
 --- !u!1 &872669484970968795
 GameObject:
   m_ObjectHideFlags: 0

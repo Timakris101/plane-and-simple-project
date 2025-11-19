@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 7501113421609273390}
   - component: {fileID: 3744693343319391900}
   - component: {fileID: 5167984673548076726}
+  - component: {fileID: 5838010587459599507}
   m_Layer: 3
   m_Name: BasePlane
   m_TagString: Plane
@@ -827,6 +828,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllianceHolder
   alliance: 
+--- !u!114 &5838010587459599507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015567163552028216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f573240ad1baf4a2186cabef9838f321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
+  acceleration: {x: 0, y: 0, z: 0}
 --- !u!1 &2220887884205304699
 GameObject:
   m_ObjectHideFlags: 0

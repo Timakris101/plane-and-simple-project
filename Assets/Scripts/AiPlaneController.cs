@@ -102,7 +102,7 @@ public class AiPlaneController : PlaneController {
     }
 
     private Vector3 positionToTarget(GameObject bullet, Vector3 gunDir) {
-        Vector3 a = new Vector3(0,0,0);
+        Vector3 a = targetedObj.GetComponent<AccelerationHolder>().getAccel() - gameObject.GetComponent<AccelerationHolder>().getAccel();
         Vector3 v = targetedObj.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity;
         Vector3 p = targetedObj.transform.position - transform.position;
         float s = bullet.GetComponent<BulletScript>().getInitSpeed();
@@ -125,8 +125,6 @@ public class AiPlaneController : PlaneController {
             return targetedObj.transform.position;
         }
 
-        Debug.DrawRay(targetedObj.transform.position, targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f - targetedObj.transform.position, Color.yellow);
-
-        return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
+        return targetedObj.transform.position + (Vector3) v * timeOfFlight + (Vector3) (a - (Vector3) Physics2D.gravity) * Mathf.Pow(timeOfFlight, 2) / 2f;
     }
 }

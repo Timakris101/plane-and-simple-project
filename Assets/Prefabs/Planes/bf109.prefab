@@ -248,6 +248,7 @@ GameObject:
   - component: {fileID: 7805222797914924948}
   - component: {fileID: 826197825341143987}
   - component: {fileID: 4677812592195434679}
+  - component: {fileID: 5813322775090896208}
   m_Layer: 3
   m_Name: bf109
   m_TagString: Plane
@@ -705,6 +706,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllianceHolder
   alliance: Axis
+--- !u!114 &5813322775090896208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816276849039170280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f573240ad1baf4a2186cabef9838f321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
+  acceleration: {x: 0, y: 0, z: 0}
 --- !u!1 &2189509621910733523
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +770,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &3170284440047984674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1168,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &6153382272557036740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1666,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &7860655489912124732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,6 +1749,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &7985115814902423378
 GameObject:
   m_ObjectHideFlags: 0

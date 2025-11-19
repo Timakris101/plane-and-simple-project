@@ -1292,6 +1292,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 270
   maxDeflection: 90
+  fixedToOtherGun: 0
 --- !u!1 &3488705174814332154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1343,6 +1344,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 270
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!1 &4052534827614570441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1397,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 0
+  fixedToOtherGun: 0
 --- !u!212 &1254857069763923864
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1661,6 +1664,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 0
   maxDeflection: 180
+  fixedToOtherGun: 0
 --- !u!1 &6711285493155228981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1681,6 +1685,7 @@ GameObject:
   - component: {fileID: 5058989673316328037}
   - component: {fileID: 7686682908284012265}
   - component: {fileID: 5473171223152240599}
+  - component: {fileID: 3634150679687256999}
   m_Layer: 3
   m_Name: he111
   m_TagString: Plane
@@ -2141,6 +2146,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AllianceHolder
   alliance: Axis
+--- !u!114 &3634150679687256999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711285493155228981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f573240ad1baf4a2186cabef9838f321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
+  acceleration: {x: 0, y: 0, z: 0}
 --- !u!1 &6983959884324612852
 GameObject:
   m_ObjectHideFlags: 0
@@ -3054,6 +3072,7 @@ MonoBehaviour:
   bulletFuse: 0
   minDeflection: 180
   maxDeflection: 270
+  fixedToOtherGun: 0
 --- !u!1 &8996819355294326338
 GameObject:
   m_ObjectHideFlags: 0

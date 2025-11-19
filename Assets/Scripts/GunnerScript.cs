@@ -118,7 +118,7 @@ public class GunnerScript : MonoBehaviour {
     protected virtual Vector3 positionToTarget() {
         GameObject bullet = transform.GetChild(0).GetComponent<GunScript>().getBullet();
         
-        Vector3 a = new Vector3(0,0,0);
+        Vector3 a = targetedObj.GetComponent<AccelerationHolder>().getAccel() - parentWithScript<AccelerationHolder>(gameObject).GetComponent<AccelerationHolder>().getAccel();
         Vector3 v = targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity;
         Vector3 p = targetedObj.transform.position - transform.GetChild(0).position;
         float s = bullet.GetComponent<BulletScript>().getInitSpeed();
@@ -132,8 +132,10 @@ public class GunnerScript : MonoBehaviour {
 
         float timeOfFlight = newtonRaphson(s == 0 ? 0f : p.magnitude / s, 5, 5f, coefficients);
 
+        Debug.DrawRay(targetedObj.transform.position, (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity/* - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().GetComponent<Rigidbody2D>().linearVelocity*/) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f, Color.yellow);
+
         if (timeOfFlight == -Mathf.Infinity) return targetedObj.transform.position;
-        return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
+        return targetedObj.transform.position + (Vector3) v * timeOfFlight + (Vector3) (a - (Vector3) Physics2D.gravity) * Mathf.Pow(timeOfFlight, 2) / 2f;
     }
 
     public void setManualControl(bool b) {
