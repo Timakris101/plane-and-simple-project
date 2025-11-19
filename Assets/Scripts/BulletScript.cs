@@ -67,6 +67,7 @@ public class BulletScript : MonoBehaviour {
             if (col.transform.GetComponent<BoxCollider2D>() != null) {
                 GetComponent<Rigidbody2D>().linearVelocity = prevVel;
                 Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), col.transform.GetComponent<Collider2D>());
+                col.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(col.relativeVelocity * GetComponent<Rigidbody2D>().mass, transform.position);
                 return;
             }
         }
@@ -85,6 +86,7 @@ public class BulletScript : MonoBehaviour {
         if (counter == 0 && col.transform.GetComponent<BoxCollider2D>() != null) {
             GetComponent<Rigidbody2D>().linearVelocity = prevVel;
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), col.transform.GetComponent<Collider2D>());
+            col.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(col.relativeVelocity * GetComponent<Rigidbody2D>().mass, transform.position);
             return;
         }
         makeEffectAndDestroyObj(transform.position);
