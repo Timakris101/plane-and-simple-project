@@ -25,6 +25,9 @@ public class Aerodynamics : MonoBehaviour {
     [SerializeField] private AnimationCurve cT;
     [SerializeField] private AnimationCurve torqueStrength;
     [SerializeField] private float irlTurnTime;
+    [SerializeField] private float elevatorDeflection;
+    private float maxElevatorDeflection = 30f;
+    private float elevatorSpeed = 240f;
     private float baseTorque;
     private float instantaneousTurnRateFactor = 1.5f;
     [SerializeField] private float speedOfControlEffectiveness;
@@ -87,7 +90,7 @@ public class Aerodynamics : MonoBehaviour {
 
     private void updateTrueFrontArea() {
         trueFrontArea = baseFrontArea + 
-                        elevatorArea * Mathf.Abs(pc.getDir()) * torqueStrength.Evaluate(rb.linearVelocity.magnitude) +
+                        elevatorArea * Mathf.Abs(elevatorDeflection / maxElevatorDeflection) * torqueStrength.Evaluate(rb.linearVelocity.magnitude) +
                         (fs == null ? 0 : (fs.getFlapDrag() * fs.deflection() / fs.getMaxDeflection())) + 
                         (gs == null ? 0 : gs.getGearDrag());
     }
@@ -115,9 +118,13 @@ public class Aerodynamics : MonoBehaviour {
         if (pc != null) {
             float dirToTurn = pc.getDir();
 
+            elevatorDeflection += dirToTurn * elevatorSpeed * Time.deltaTime;
+            elevatorDeflection = Mathf.Clamp(elevatorDeflection, -maxElevatorDeflection, maxElevatorDeflection);
+            if (dirToTurn == 0) elevatorDeflection = 0f;
+
             if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
                 
-            rb.angularVelocity = dirToTurn * torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque;
+            rb.angularVelocity = dirToTurn * torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque * Mathf.Abs(elevatorDeflection / maxElevatorDeflection);
 
             float torque = .5f * cT.Evaluate(AoA()) * transform.localScale.y * Mathf.Pow(rb.linearVelocity.magnitude, 2) * Mathf.Max(wingArea, startWingArea / 2f) * wingSpan * getAirDensity();
             if (Mathf.Abs(AoA()) > 3f) {
