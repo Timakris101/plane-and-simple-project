@@ -65,9 +65,9 @@ public class BulletScript : MonoBehaviour {
         }
         if (objClosestToBullet == null) {
             if (col.transform.GetComponent<BoxCollider2D>() != null) {
+                col.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(-(prevVel - (Vector3) GetComponent<Rigidbody2D>().linearVelocity) * GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Impulse);
                 GetComponent<Rigidbody2D>().linearVelocity = prevVel;
                 Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), col.transform.GetComponent<Collider2D>());
-                col.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(-prevVel * GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Impulse);
                 return;
             }
         }
@@ -84,9 +84,9 @@ public class BulletScript : MonoBehaviour {
             }
         }
         if (counter == 0 && col.transform.GetComponent<BoxCollider2D>() != null) {
+            col.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(-(prevVel - (Vector3) GetComponent<Rigidbody2D>().linearVelocity) * GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Impulse);
             GetComponent<Rigidbody2D>().linearVelocity = prevVel;
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), col.transform.GetComponent<Collider2D>());
-            col.transform.GetComponent<Rigidbody2D>().AddForceAtPosition(-prevVel * GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Impulse);
             return;
         }
         makeEffectAndDestroyObj(transform.position);
