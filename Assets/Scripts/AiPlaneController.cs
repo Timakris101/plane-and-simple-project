@@ -22,10 +22,10 @@ public class AiPlaneController : PlaneController {
                 break;
             }
         }
-
-        if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
         
         if (transform.position.y < minAltitude + Constants.Water.seaLevel) return pointTowards(transform.position + Vector3.up);
+
+        if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
 
         if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
 
@@ -58,7 +58,7 @@ public class AiPlaneController : PlaneController {
         return 0;
     }
 
-    private float pointTowards(Vector3 pos) {
+    public float pointTowards(Vector3 pos) {
         return Mathf.Clamp(-Mathf.Pow(angleTo(pos), 3), -1, 1);
     }
 
@@ -95,6 +95,11 @@ public class AiPlaneController : PlaneController {
             setGuns(false);
             if (isBomber) setBombs(false);
         }
+        if (isBomber && Vector3.Dot(transform.up * transform.localScale.y, Vector3.up) < -.9f) GetComponent<GForcesScript>().rollover();
+    }
+
+    public float getMinAlt() {
+        return minAltitude;
     }
 
     private bool targetInSights(GameObject bullet) {

@@ -59,6 +59,13 @@ public class PlaneController : VehicleController {
 
     public float getDir() {
         if (!pilotDeadOrGone()) {
+            if (altitudeFromTerrain() == Mathf.Infinity) {
+                if (Vector3.Dot(transform.right, Vector3.up) <= 0 && transform.position.y < GetComponent<AiPlaneController>().getMinAlt() + Constants.Water.seaLevel) {
+                    return GetComponent<AiPlaneController>().pointTowards(transform.position + Vector3.up);
+                } else {
+                    return GetComponent<AiPlaneController>().pointTowards(new Vector3(0, transform.position.y ,0));
+                }
+            }
             if (gunnersAreManual()) {
                 return GetComponent<AiPlaneController>().wantedDir() * (unconcious ? Constants.GForceEffectConstants.unconciousPilotEffectiveness : 1f);
             } else {
@@ -66,6 +73,17 @@ public class PlaneController : VehicleController {
             }
         }
         return 0;
+    }
+
+    public float altitudeFromTerrain() {
+        float altitude = Mathf.Infinity;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down);
+        foreach (RaycastHit2D hit in hits) {
+            if (hit.transform.tag == "Ground") {
+                altitude = (hit.point - (Vector2) transform.position).y;
+            }
+        }
+        return altitude;
     }
 
     protected virtual float wantedDir() {

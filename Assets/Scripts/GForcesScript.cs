@@ -69,7 +69,7 @@ public class GForcesScript : MonoBehaviour {
         }
     }
 
-    private void rollover() {
+    public void rollover() {
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y * -1, transform.localScale.z);
         GetComponent<Animator>().SetTrigger("Rollover");
     }
