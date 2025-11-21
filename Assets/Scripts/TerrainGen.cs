@@ -25,7 +25,7 @@ public class TerrainGen : MonoBehaviour {
         GetComponent<SpriteShapeRenderer>().localBounds = new Bounds(Vector3.zero, new Vector3(terrainLength * transform.localScale.x, maxHeight * transform.localScale.y + maxBaseTerrHeight(0.01f), 0)); 
 
         if (transform.childCount != 0) {
-            transform.GetChild(0).GetComponent<SpriteRenderer>().size = new Vector2(terrainLength, Constants.Water.seaLevel * 2f);
+            transform.GetChild(0).GetComponent<SpriteRenderer>().size = new Vector2(terrainLength * 2f, Constants.Water.seaLevel * 2f);
             transform.GetChild(0).GetComponent<BoxCollider2D>().size = new Vector2(terrainLength, Constants.Water.seaLevel * 2f);
         }
     }
