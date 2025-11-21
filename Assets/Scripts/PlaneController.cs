@@ -80,7 +80,8 @@ public class PlaneController : VehicleController {
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down);
         foreach (RaycastHit2D hit in hits) {
             if (hit.transform.tag == "Ground") {
-                altitude = (hit.point - (Vector2) transform.position).y;
+                altitude = (hit.point - (Vector2) transform.position).magnitude;
+                break;
             }
         }
         return altitude;

@@ -23,7 +23,7 @@ public class AiPlaneController : PlaneController {
             }
         }
         
-        if (transform.position.y < minAltitude + Constants.Water.seaLevel) return pointTowards(transform.position + Vector3.up);
+        if (altitudeFromTerrain() < minAltitude) return pointTowards(transform.position + Vector3.up);
 
         if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
 
