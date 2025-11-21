@@ -1473,7 +1473,10 @@ MonoBehaviour:
   flapEffectiveness: 0.1
   flapDrag: 0.05
   breakSpeed: 80
-  allowableSprites: []
+  allowableSprites:
+  - {fileID: -362616589, guid: 9ff5847b005c04af9b488b0dd28ace12, type: 3}
+  - {fileID: 1748376172, guid: 97e90cf24174c4775942f6825b326aab, type: 3}
+  - {fileID: -356436635, guid: 97e90cf24174c4775942f6825b326aab, type: 3}
 --- !u!61 &5725487832386690281
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1915,6 +1918,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   irlTurnTime: 15
+  elevatorDeflection: 0
   speedOfControlEffectiveness: 3
 --- !u!114 &3079395003072882029
 MonoBehaviour:
@@ -2250,7 +2254,10 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
-  allowableSprites: []
+  allowableSprites:
+  - {fileID: -362616589, guid: 9ff5847b005c04af9b488b0dd28ace12, type: 3}
+  - {fileID: 1748376172, guid: 97e90cf24174c4775942f6825b326aab, type: 3}
+  - {fileID: -356436635, guid: 97e90cf24174c4775942f6825b326aab, type: 3}
 --- !u!1 &9166829005007892829
 GameObject:
   m_ObjectHideFlags: 0

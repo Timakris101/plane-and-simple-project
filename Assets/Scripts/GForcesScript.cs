@@ -40,7 +40,7 @@ public class GForcesScript : MonoBehaviour {
         }
         if (overGPlane()) {
             if (transform.Find("WingHitbox") != null) transform.Find("WingHitbox").GetComponent<DamageModel>().kill();
-            if (transform.Find("TailHitbox") != null) transform.Find("TailHitbox").GetComponent<DamageModel>().kill();
+            //if (transform.Find("TailHitbox") != null) transform.Find("TailHitbox").GetComponent<DamageModel>().kill();
         }
         if (overGPersonToDeath()) {
             for (int i = 0; i < transform.childCount; i++) {
@@ -80,7 +80,7 @@ public class GForcesScript : MonoBehaviour {
             Vector3 currentForces = (curVel - prevVel) / Time.fixedDeltaTime / 9.8f;
 
             if (currentForces.magnitude != 0) currentGs = transform.localScale.y * (currentForces + Vector3.up);
-            feltGs = (transform.up.x != 0 ? Vector3.Project(currentGs, transform.up).x / transform.up.x : Vector3.Project(currentGs, transform.up).y / transform.up.y);
+            feltGs = Vector3.Dot(currentGs, transform.up);
         }
         
         prevVel = GetComponent<Rigidbody2D>().linearVelocity;

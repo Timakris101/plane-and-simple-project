@@ -183,7 +183,13 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
-  allowableSprites: []
+  allowableSprites:
+  - {fileID: -4422963397178782669, guid: 070220b57ddcc4b4399a16c29f30391a, type: 3}
+  - {fileID: 4058821084657731212, guid: a643f1505936d4cd08cfed99dfc6b194, type: 3}
+  - {fileID: -1142087557902539910, guid: 4a21771857c694bdba962e6c4182a92f, type: 3}
+  - {fileID: 186746739, guid: 4a21771857c694bdba962e6c4182a92f, type: 3}
+  - {fileID: -8061588406960930777, guid: 56f15392409344b278c513badf23aa37, type: 3}
+  - {fileID: -2123454007, guid: 56f15392409344b278c513badf23aa37, type: 3}
 --- !u!1 &103062921276761501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,7 +1011,13 @@ MonoBehaviour:
   flapEffectiveness: 0.1
   flapDrag: 0.05
   breakSpeed: 80
-  allowableSprites: []
+  allowableSprites:
+  - {fileID: -4422963397178782669, guid: 070220b57ddcc4b4399a16c29f30391a, type: 3}
+  - {fileID: 4058821084657731212, guid: a643f1505936d4cd08cfed99dfc6b194, type: 3}
+  - {fileID: -1142087557902539910, guid: 4a21771857c694bdba962e6c4182a92f, type: 3}
+  - {fileID: 186746739, guid: 4a21771857c694bdba962e6c4182a92f, type: 3}
+  - {fileID: -8061588406960930777, guid: 56f15392409344b278c513badf23aa37, type: 3}
+  - {fileID: -2123454007, guid: 56f15392409344b278c513badf23aa37, type: 3}
 --- !u!61 &8438089779085783271
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1649,6 +1661,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   irlTurnTime: 36
+  elevatorDeflection: 0
   speedOfControlEffectiveness: 3
 --- !u!114 &5593220574017246992
 MonoBehaviour:
@@ -1662,12 +1675,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf668b4f245784c349e66c2f685a3f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rollOverThresh: -4
+  rollOverThresh: -2
   currentGs: {x: 0, y: 0, z: 0}
   feltGs: 0
   sleepyGs: 17
   killingGs: 50
-  planeStructDestroyingGs: 50
+  planeStructDestroyingGs: 7
   planeDestroyingGs: 50
   rolloverAllowingSprites:
   - {fileID: -4422963397178782669, guid: 070220b57ddcc4b4399a16c29f30391a, type: 3}

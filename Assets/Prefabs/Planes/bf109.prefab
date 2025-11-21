@@ -619,6 +619,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   irlTurnTime: 20
+  elevatorDeflection: 0
   speedOfControlEffectiveness: 3
 --- !u!114 &2104584351362944559
 MonoBehaviour:
@@ -1039,7 +1040,10 @@ MonoBehaviour:
   flapEffectiveness: 0.1
   flapDrag: 0.05
   breakSpeed: 80
-  allowableSprites: []
+  allowableSprites:
+  - {fileID: 1941338302, guid: b1ed099966ce544ed82a83385bcfbe2d, type: 3}
+  - {fileID: 1633548856, guid: d11130c3625a74526b59ad2327057c12, type: 3}
+  - {fileID: 752871576, guid: d11130c3625a74526b59ad2327057c12, type: 3}
 --- !u!61 &4141627861045813360
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2090,4 +2094,7 @@ MonoBehaviour:
   rollMat: {fileID: 6200000, guid: fea0897d39a914ea28b5b205016d4a42, type: 2}
   gearDownSprite: {fileID: 1195087113, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
   gearUpSprite: {fileID: -823897497, guid: 2e930df17cba3402d82eaf419298a6a8, type: 3}
-  allowableSprites: []
+  allowableSprites:
+  - {fileID: 1941338302, guid: b1ed099966ce544ed82a83385bcfbe2d, type: 3}
+  - {fileID: 1633548856, guid: d11130c3625a74526b59ad2327057c12, type: 3}
+  - {fileID: 752871576, guid: d11130c3625a74526b59ad2327057c12, type: 3}
