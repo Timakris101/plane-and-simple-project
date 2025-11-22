@@ -10,7 +10,7 @@ public class AccelerationHolder : MonoBehaviour {
 
     private void calculateAccel() {
         Vector3 curVel = GetComponent<Rigidbody2D>().linearVelocity;
-        acceleration = (curVel - prevVel) / Time.fixedDeltaTime;
+        if (prevVel.magnitude != 0) acceleration = (curVel - prevVel) / Time.fixedDeltaTime;
         
         prevVel = GetComponent<Rigidbody2D>().linearVelocity;
     }

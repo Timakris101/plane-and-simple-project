@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using static Utils;
 
 public class GForcesScript : MonoBehaviour {
     [SerializeField] private float rollOverThresh;
@@ -25,29 +26,42 @@ public class GForcesScript : MonoBehaviour {
     [SerializeField] private GameObject fire;
     [SerializeField] private GameObject explosion;
     private bool destroyed = false;
+
+    bool justRolledOver = false;
+    int counterPastRollover = 0;
     
     void FixedUpdate() {
         GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
         if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)) {
             rollover();
+            justRolledOver = true;
+        }
+        if (justRolledOver) {
+            counterPastRollover++;
+        }
+        if (counterPastRollover == 10) {
+            justRolledOver = false;
+            counterPastRollover = 0;
         }
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
             Instantiate(explosion, transform.position, Quaternion.identity);
-            Instantiate(fire, transform, false);
+            //Instantiate(fire, transform, false);
             GetComponent<Aerodynamics>().setSpeedOfControlEff(Mathf.Infinity);
             if (SceneManager.GetActiveScene().name == "Arcade") Destroy(gameObject, 10f);
+            
+            foreach (GameObject dm in progenyWithScript<DamageModel>(gameObject)) {
+                dm.GetComponent<DamageModel>().kill();
+            }
         }
-        if (overGPlane()) {
+        if (overGPlane() && !justRolledOver) {
             if (transform.Find("WingHitbox") != null) transform.Find("WingHitbox").GetComponent<DamageModel>().kill();
             //if (transform.Find("TailHitbox") != null) transform.Find("TailHitbox").GetComponent<DamageModel>().kill();
         }
         if (overGPersonToDeath()) {
-            for (int i = 0; i < transform.childCount; i++) {
-                if (transform.GetChild(i).GetComponent<DamageModel>() == null) continue;
-                if (!transform.GetChild(i).GetComponent<DamageModel>().isCrewRole()) continue;
-
-                transform.GetChild(i).GetComponent<DamageModel>().kill();
+            foreach (GameObject dm in progenyWithScript<DamageModel>(gameObject)) {
+                if (!dm.GetComponent<DamageModel>().isCrewRole()) continue;
+                dm.GetComponent<DamageModel>().kill();
             }
         }
         updateSleepy();
