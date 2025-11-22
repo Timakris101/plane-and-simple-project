@@ -26,22 +26,11 @@ public class GForcesScript : MonoBehaviour {
     [SerializeField] private GameObject fire;
     [SerializeField] private GameObject explosion;
     private bool destroyed = false;
-
-    bool justRolledOver = false;
-    int counterPastRollover = 0;
     
     void FixedUpdate() {
         GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
         if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)) {
             rollover();
-            justRolledOver = true;
-        }
-        if (justRolledOver) {
-            counterPastRollover++;
-        }
-        if (counterPastRollover == 10) {
-            justRolledOver = false;
-            counterPastRollover = 0;
         }
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
@@ -54,7 +43,7 @@ public class GForcesScript : MonoBehaviour {
                 dm.GetComponent<DamageModel>().kill();
             }
         }
-        if (overGPlane() && !justRolledOver) {
+        if (overGPlane()) {
             if (transform.Find("WingHitbox") != null) transform.Find("WingHitbox").GetComponent<DamageModel>().kill();
             //if (transform.Find("TailHitbox") != null) transform.Find("TailHitbox").GetComponent<DamageModel>().kill();
         }

@@ -27,7 +27,7 @@ public class Aerodynamics : MonoBehaviour {
     [SerializeField] private float irlTurnTime;
     [SerializeField] private float elevatorDeflection;
     private float maxElevatorDeflection = 30f;
-    private float elevatorSpeed = 240f;
+    private float elevatorSpeed = 480f;
     private float baseTorque;
     private float instantaneousTurnRateFactor = 1.5f;
     [SerializeField] private float speedOfControlEffectiveness;
@@ -118,13 +118,11 @@ public class Aerodynamics : MonoBehaviour {
         if (pc != null) {
             float dirToTurn = pc.getDir();
 
-            elevatorDeflection += dirToTurn * elevatorSpeed * Time.deltaTime;
-            elevatorDeflection = Mathf.Clamp(elevatorDeflection, -maxElevatorDeflection, maxElevatorDeflection);
-            if (dirToTurn == 0) elevatorDeflection = 0f;
+            elevatorDeflection = Mathf.MoveTowards(elevatorDeflection, dirToTurn * maxElevatorDeflection, elevatorSpeed * Time.deltaTime);
 
             if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
                 
-            rb.angularVelocity = dirToTurn * torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque * Mathf.Abs(elevatorDeflection / maxElevatorDeflection);
+            rb.angularVelocity = torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque * (elevatorDeflection / maxElevatorDeflection);
 
             float torque = .5f * cT.Evaluate(AoA()) * transform.localScale.y * Mathf.Pow(rb.linearVelocity.magnitude, 2) * Mathf.Max(wingArea, startWingArea / 2f) * wingSpan * getAirDensity();
             if (Mathf.Abs(AoA()) > 3f) {
