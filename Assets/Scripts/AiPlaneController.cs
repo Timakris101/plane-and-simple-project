@@ -62,7 +62,7 @@ public class AiPlaneController : PlaneController {
 
         if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) {
             mode = "formation";
-            if (squadronLead == gameObject) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
+            if (squadronLead == gameObject || squadronLead == null) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
             return pointTowards(squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject) + squadronLead.transform.right * 100f);
         }
 
