@@ -12,6 +12,39 @@ public class AiPlaneController : PlaneController {
     private float headonOscillationMagnitude = 10f;
     private GameObject primaryBullet;
     private bool isBomber = false;
+    private List<GameObject> squadronList;
+    private Vector2 offset;
+    private GameObject squadronLead;
+
+    public void setSquadronList(List<GameObject> list) {
+        squadronList = list;
+    }
+
+    public void setOffset(Vector2 offset) {
+        this.offset = offset;
+    }
+
+    public GameObject squadronLeader() {
+        for (int i = 0; i < squadronList.Count; i++) {
+            if (squadronList[i].GetComponent<VehicleController>().vehicleDead()) {
+                squadronList.Remove(squadronList[i]);
+                i--;
+            }
+        }
+        return squadronList.Count != 0 ? squadronList[0] : gameObject;
+    }
+
+    void Start() {
+        squadronLead = squadronLeader();
+        base.Start();
+    }
+
+    void Update() {
+        if ((frameCounter + (int) ((float) (index) * ((float) framesBeforeTargetUpdate / (float) allVehicles.Length))) % (framesBeforeTargetUpdate) == 0 || squadronLead.GetComponent<VehicleController>().vehicleDead()) {
+            squadronLead = squadronLeader();
+        }
+        base.Update();
+    }
 
     protected override float wantedDir() {
         primaryBullet = null;
@@ -27,7 +60,11 @@ public class AiPlaneController : PlaneController {
 
         if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
 
-        if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
+        if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) {
+            mode = "formation";
+            if (squadronLead == gameObject) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
+            return pointTowards(squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject) + squadronLead.transform.right * 100f);
+        }
 
         if (Mathf.Abs(angleTo(targetedObj.transform.position)) > 180f - sixAngle && Mathf.Abs(Vector2.SignedAngle(targetedObj.transform.right, transform.right)) < 90f) {
             mode = "defensive";
@@ -82,7 +119,19 @@ public class AiPlaneController : PlaneController {
 
     protected override void handleControls() {
         setThrottle(1f);
+        inWEP = false;
         if (mode == "overshoot") setThrottle(0f);
+        
+        if (mode == "formation") {
+            if (Vector3.Dot(transform.position - (squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject)), squadronLead.transform.right) > 0f) {
+                setThrottle(0f);
+                inWEP = false;
+            } else {
+                setThrottle(1f);
+                inWEP = true;
+            }
+        }
+
         if (targetedObj != null && primaryBullet != null) {
             if (targetInSights(primaryBullet) && (transform.position - positionToTarget(primaryBullet, transform.right)).magnitude < gunRange/* && mode != "headon"*/) {
                 setGuns(true);
@@ -95,7 +144,7 @@ public class AiPlaneController : PlaneController {
             setGuns(false);
             if (isBomber) setBombs(false);
         }
-        if (isBomber && Vector3.Dot(transform.up * transform.localScale.y, Vector3.up) < -.9f) GetComponent<GForcesScript>().rollover();
+        if ((isBomber || mode == "formation") && Vector3.Dot(transform.up * transform.localScale.y, Vector3.up) < -.9f) GetComponent<GForcesScript>().rollover();
     }
 
     public float getMinAlt() {

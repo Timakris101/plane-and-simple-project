@@ -31,7 +31,10 @@ public class GForcesScript : MonoBehaviour {
     int counterPastRollover = 0;
     
     void FixedUpdate() {
-        GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
+        for (int i = 0; i < GetComponent<Animator>().parameterCount; i++) {
+            if (GetComponent<Animator>().GetParameter(i).name == "yScale") GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
+        }
+        
         if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)) {
             rollover();
             justRolledOver = true;

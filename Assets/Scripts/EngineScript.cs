@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EngineScript : MonoBehaviour {
     protected VehicleController vc;
-    protected float throttle;
+    [SerializeField] protected float throttle;
     [SerializeField] protected bool enginesOn;
 
     void Start() {

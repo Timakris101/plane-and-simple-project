@@ -12,9 +12,9 @@ public class VehicleController : MonoBehaviour {
     [SerializeField] protected GameObject targetedObj;
     [Tooltip("Put into [nonAi]Controller only")]
     [SerializeField] protected string[] tagsToTarget;
-    private int framesBeforeTargetUpdate => allVehicles.Length;
-    private int frameCounter;
-    private int index;
+    protected int framesBeforeTargetUpdate => allVehicles.Length;
+    protected int frameCounter;
+    protected int index;
 
     VehicleCacheScript vcs;
     
@@ -51,7 +51,7 @@ public class VehicleController : MonoBehaviour {
         return origSprite;
     }
 
-    void Start() {
+    protected virtual void Start() {
         vcs = GameObject.Find("VehicleCache").GetComponent<VehicleCacheScript>();
         if (this == aiControllerOfVehicle(gameObject)) tagsToTarget = nonAiControllerOfVehicle(gameObject).tagsToTarget;
         vcs.forceUpdate();

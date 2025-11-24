@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -175,8 +176,10 @@ public class SquadronSpawner : MonoBehaviour {
     }
 
     public void spawnVehicles() {
+        List<GameObject> planes = new List<GameObject>();
         for (int i = 0; i < amt; i++) {
             GameObject newVehicle = Instantiate(vehicle, transform.position + (Vector3) offset * i, transform.rotation);
+            planes.Add(newVehicle);
             newVehicle.GetComponent<AllianceHolder>().setAlliance(alliance);
             if (containsPlayer && i == 0) {
                 camera.GetComponent<CamScript>().takeControlOfVehicle(newVehicle);
@@ -189,6 +192,10 @@ public class SquadronSpawner : MonoBehaviour {
                     vc.enabled = false;
                 }
             }
+        }
+        foreach (GameObject plane in planes) {
+            ((AiPlaneController) aiControllerOfVehicle(plane)).setSquadronList(planes);
+            ((AiPlaneController) aiControllerOfVehicle(plane)).setOffset(offset);
         }
     }
 
