@@ -57,7 +57,7 @@ public class AiPlaneController : PlaneController {
         }
         
         if (altitudeFromTerrain() < minAltitude) return pointTowards(transform.position + Vector3.up);
-        
+
         if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) {
             mode = "formation";
             if (squadronLead == gameObject || squadronLead == null) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
@@ -122,13 +122,15 @@ public class AiPlaneController : PlaneController {
         inWEP = false;
         if (mode == "overshoot") setThrottle(0f);
         
-        if (mode == "formation" && gameObject != squadronLead) {
-            if (Vector3.Dot(transform.position - (squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject)), squadronLead.transform.right) > 0f) {
-                setThrottle(0f);
-                inWEP = false;
-            } else {
-                setThrottle(1f);
-                inWEP = true;
+        if (squadronLead != null) {
+            if (mode == "formation" && gameObject != squadronLead) {
+                if (Vector3.Dot(transform.position - (squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject)), squadronLead.transform.right) > 0f) {
+                    setThrottle(0f);
+                    inWEP = false;
+                } else {
+                    setThrottle(1f);
+                    inWEP = true;
+                }
             }
         }
 
