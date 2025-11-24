@@ -57,14 +57,14 @@ public class AiPlaneController : PlaneController {
         }
         
         if (altitudeFromTerrain() < minAltitude) return pointTowards(transform.position + Vector3.up);
-
-        if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
-
+        
         if (targetedObj == null/* || targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 1f*/) {
             mode = "formation";
             if (squadronLead == gameObject || squadronLead == null) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
             return pointTowards(squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject) + squadronLead.transform.right * 100f);
         }
+
+        if (primaryBullet == null || isBomber) return pointTowards(transform.position + Vector3.Project(transform.right, Vector3.right));
 
         if (Mathf.Abs(angleTo(targetedObj.transform.position)) > 180f - sixAngle && Mathf.Abs(Vector2.SignedAngle(targetedObj.transform.right, transform.right)) < 90f) {
             mode = "defensive";
