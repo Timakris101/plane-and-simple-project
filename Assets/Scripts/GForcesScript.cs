@@ -35,7 +35,7 @@ public class GForcesScript : MonoBehaviour {
             if (GetComponent<Animator>().GetParameter(i).name == "yScale") GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
         }
         
-        if (feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)) {
+        if (ableToRollover()) {
             rollover();
             justRolledOver = true;
         }
@@ -69,6 +69,10 @@ public class GForcesScript : MonoBehaviour {
         }
         updateSleepy();
         calculateGs();
+    }
+
+    public bool ableToRollover() {
+        return feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite);
     }
 
     private void updateSleepy() {

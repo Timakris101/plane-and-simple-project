@@ -146,7 +146,7 @@ public class AiPlaneController : PlaneController {
             setGuns(false);
             if (isBomber) setBombs(false);
         }
-        if ((isBomber || mode == "formation") && Vector3.Dot(transform.up * transform.localScale.y, Vector3.up) < -.9f) GetComponent<GForcesScript>().rollover();
+        if ((isBomber || mode == "formation") && Vector3.Dot(transform.up * transform.localScale.y, Vector3.up) < -.9f && GetComponent<GForcesScript>().ableToRollover()) GetComponent<GForcesScript>().rollover();
     }
 
     public float getMinAlt() {
