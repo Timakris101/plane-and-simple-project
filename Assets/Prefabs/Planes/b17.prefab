@@ -1680,7 +1680,7 @@ MonoBehaviour:
   feltGs: 0
   sleepyGs: 17
   killingGs: 50
-  planeStructDestroyingGs: 7
+  planeStructDestroyingGs: 50
   planeDestroyingGs: 50
   rolloverAllowingSprites:
   - {fileID: -4422963397178782669, guid: 070220b57ddcc4b4399a16c29f30391a, type: 3}
@@ -2609,6 +2609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99aaa4bfaf4ed4098b05c10e014b35e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PistonEngineScript
+  throttle: 0
   enginesOn: 0
   enginePowerByAlt:
     serializedVersion: 2
