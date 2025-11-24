@@ -122,7 +122,7 @@ public class AiPlaneController : PlaneController {
         inWEP = false;
         if (mode == "overshoot") setThrottle(0f);
         
-        if (mode == "formation") {
+        if (mode == "formation" && gameObject != squadronLead) {
             if (Vector3.Dot(transform.position - (squadronLead.transform.position + (Vector3) offset * squadronList.IndexOf(gameObject)), squadronLead.transform.right) > 0f) {
                 setThrottle(0f);
                 inWEP = false;
