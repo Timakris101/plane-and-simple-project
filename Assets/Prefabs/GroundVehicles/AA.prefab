@@ -548,7 +548,7 @@ MonoBehaviour:
   manualControl: 0
   targetedObj: {fileID: 0}
   angularThreshForGuns: 5
-  maxRange: 1000
+  maxRange: 2500
   isInTail: 0
   rotatableTurret: 0
   ammoHasFuse: 1

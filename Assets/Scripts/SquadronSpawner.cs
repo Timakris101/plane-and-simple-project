@@ -193,9 +193,11 @@ public class SquadronSpawner : MonoBehaviour {
                 }
             }
         }
-        foreach (GameObject plane in planes) {
-            ((AiPlaneController) aiControllerOfVehicle(plane)).setSquadronList(planes);
-            ((AiPlaneController) aiControllerOfVehicle(plane)).setOffset(offset);
+        if (aiControllerOfVehicle(planes[0]).GetType().ToString() == "AiPlaneController") {
+            foreach (GameObject plane in planes) {
+                ((AiPlaneController) aiControllerOfVehicle(plane)).setSquadronList(planes);
+                ((AiPlaneController) aiControllerOfVehicle(plane)).setOffset(offset);
+            }
         }
     }
 
