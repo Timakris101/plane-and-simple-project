@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initSpeed: 200
-  damage: 200
+  damage: 300
   explosionRad: 3
   penetrationVal: 8
   armorPenMeters: 0
