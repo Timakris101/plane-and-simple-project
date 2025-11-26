@@ -6,6 +6,7 @@ using static Utils;
 public class CamScript : MonoBehaviour {
 
     private Vector3 offset;
+    [SerializeField] private Bounds bounds;
     [Header("Mode")]
     [SerializeField] private bool missionEditor;
 
@@ -31,15 +32,16 @@ public class CamScript : MonoBehaviour {
     }
 
     void Update() {
-        handleArrow();
         handleVehicleSwitching();
         handleCam();
-        handleCrosshair();
         handleGForceDisp();
     }
 
     void FixedUpdate() {
         transform.eulerAngles = new Vector3(0, 0, 0);
+
+        handleCrosshair();
+        handleArrow();
     }
 
     private void handleArrow() {
@@ -54,6 +56,8 @@ public class CamScript : MonoBehaviour {
                 }
                 
                 transform.Find("Canvas").Find("ArrowHolder").right = (nearestEnemy().transform.position - vehicleToControl.transform.position).normalized;
+
+                transform.Find("Canvas").Find("ArrowHolder").GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
             } else {
                 transform.Find("Canvas").Find("ArrowHolder").GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
             }
@@ -63,6 +67,7 @@ public class CamScript : MonoBehaviour {
     private void handleCrosshair() {
         if (transform.Find("Canvas") != null && vehicleToControl != null) {
             if (vehicleToControl.GetComponent<PlaneController>() != null) {
+                transform.Find("Canvas").Find("CrosshairHolder").GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
                 if (!vehicleToControl.GetComponent<PlaneController>().gunnersAreManual()) {
                     transform.Find("Canvas").Find("CrosshairHolder").right = vehicleToControl.transform.right;
                     for (int i = 0; i < transform.Find("Canvas").Find("CrosshairHolder").childCount; i++) {
@@ -177,6 +182,16 @@ public class CamScript : MonoBehaviour {
             }
         }
         transform.eulerAngles = new Vector3(0, 0, 0);
+
+        if (camera.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.min.y, 0)).x > 0) {
+            transform.position = new Vector3(bounds.min.x - (camera.ScreenToWorldPoint(new Vector3(0, 0, -transform.position.z)) - transform.position).x, transform.position.y, transform.position.z);
+        } 
+        if (camera.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, 0)).x < camera.pixelWidth) {
+            transform.position = new Vector3(bounds.max.x - (camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, -transform.position.z)) - transform.position).x, transform.position.y, transform.position.z);
+        }
+        if (camera.WorldToScreenPoint(new Vector3(0, bounds.min.y, 0)).y > 0) {
+            transform.position = new Vector3(transform.position.x, bounds.min.y - (camera.ScreenToWorldPoint(new Vector3(0, 0, -transform.position.z)) - transform.position).y, transform.position.z);
+        }
     }
 
     private void scrollSpectatableVehicles() {
