@@ -88,6 +88,16 @@ public class SquadronSpawner : MonoBehaviour {
                 GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : 1)).ToString();
             }
         }
+        if (GetComponent<SpriteRenderer>() != null) {
+            GetComponent<LineRenderer>().material = new Material(Shader.Find("Sprites/Default"));
+            if (GetComponent<SpriteRenderer>().enabled) {
+                GetComponent<LineRenderer>().SetPosition(0, transform.position);
+                GetComponent<LineRenderer>().SetPosition(1, new Vector3(camera.transform.position.x, camera.transform.position.y, 0));
+            } else {
+                GetComponent<LineRenderer>().SetPosition(0, transform.position);
+                GetComponent<LineRenderer>().SetPosition(1, transform.position);
+            }
+        }
     }
 
     public bool anyVehiclesLeft(string alliance) {
