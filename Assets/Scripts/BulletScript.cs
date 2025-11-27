@@ -7,7 +7,6 @@ public class BulletScript : MonoBehaviour {
     [Header("Base Stats")]
     [SerializeField] private float initSpeed;
     [SerializeField] private float damage;
-    [SerializeField] private float explosionRad;
     [SerializeField] private float penetrationVal;
     [SerializeField] private float fragmentationAmt;
     [SerializeField] private float fragmentationStrength;
@@ -18,6 +17,7 @@ public class BulletScript : MonoBehaviour {
     [SerializeField] private GameObject effect;
     [SerializeField] private float lifeTime;
     [SerializeField] private float damageVariation;
+    [SerializeField] private bool bulletRicochets;
     private float effectLifeTime = .2f;
     [SerializeField] private float timer;
     
@@ -40,7 +40,7 @@ public class BulletScript : MonoBehaviour {
         GameObject objClosestToBullet;
         handleArmor(col, out armorHitCount, out effectiveArmorPen, out newPenVal, out objClosestToBullet);
 
-        if (armorHitCount == 1 && effectiveArmorPen <= 0f && objClosestToBullet.GetComponent<ArmorScript>() != null) return;
+        if (armorHitCount == 1 && effectiveArmorPen <= 0f && objClosestToBullet.GetComponent<ArmorScript>() != null && bulletRicochets) return;
 
         if (objClosestToBullet == null && col.transform.GetComponent<BoxCollider2D>() != null) {
             missObj(col);
@@ -148,7 +148,7 @@ public class BulletScript : MonoBehaviour {
     private void makeEffectAndDestroyObj(Vector3 effectPos) {
         GameObject newEffect = Instantiate(effect, effectPos, Quaternion.identity);
         var mainModule = newEffect.GetComponent<ParticleSystem>().main;
-        if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, explosionRad / mainModule.startLifetime.constant);
+        if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
         Destroy(newEffect, effectLifeTime);
         Destroy(gameObject);
     }

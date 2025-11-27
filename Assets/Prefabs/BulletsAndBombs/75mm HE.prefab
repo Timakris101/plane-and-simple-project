@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8563061458024520261}
   - component: {fileID: 599347481085760991}
   m_Layer: 6
-  m_Name: 75mm
+  m_Name: 75mm HE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,16 +170,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initSpeed: 200
   damage: 200
+  explosionRad: 8
   penetrationVal: 6
-  fragmentationAmt: 10
-  fragmentationStrength: 30
-  armorPenMeters: 0.095
-  armorFuseSec: 0.0005
+  fragmentationAmt: 200
+  fragmentationStrength: 100
+  armorPenMeters: 0.005
+  armorFuseSec: 0
   armingDist: 0
   fuseTimeSec: Infinity
   effect: {fileID: 5274905710233930441, guid: eecb9ac7e8d764ed2a50a24085132a7a, type: 3}
   lifeTime: 5
   damageVariation: 0.1
-  bulletRicochets: 1
+  bulletRicochets: 0
   timer: 0
   planeFired: {fileID: 0}
