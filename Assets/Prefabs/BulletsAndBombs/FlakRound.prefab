@@ -172,6 +172,8 @@ MonoBehaviour:
   damage: 200
   explosionRad: 8
   penetrationVal: 6
+  fragmentationAmt: 50
+  fragmentationStrength: 10
   armorPenMeters: 0
   maxFlyPastDist: 0
   armingDist: Infinity

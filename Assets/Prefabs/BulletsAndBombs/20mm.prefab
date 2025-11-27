@@ -169,9 +169,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initSpeed: 200
-  damage: 50
+  damage: 10
   explosionRad: 1
   penetrationVal: 6
+  fragmentationAmt: 40
+  fragmentationStrength: 30
   armorPenMeters: 0
   maxFlyPastDist: 0
   armingDist: Infinity

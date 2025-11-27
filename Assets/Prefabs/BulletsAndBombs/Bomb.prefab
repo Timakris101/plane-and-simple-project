@@ -172,7 +172,7 @@ MonoBehaviour:
   damage: 1000
   explosionRad: 20
   penetrationVal: 0
-  armorPenMeters: 0
+  armorPenMeters: 10
   maxFlyPastDist: 0
   armingDist: 30
   fuseTimeSec: 0

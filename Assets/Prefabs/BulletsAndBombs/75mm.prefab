@@ -172,8 +172,10 @@ MonoBehaviour:
   damage: 200
   explosionRad: 0.6
   penetrationVal: 6
+  fragmentationAmt: 10
+  fragmentationStrength: 30
   armorPenMeters: 0.095
-  maxFlyPastDist: 0
+  armorFuseSec: 0.0005
   armingDist: 0
   fuseTimeSec: Infinity
   effect: {fileID: 5274905710233930441, guid: eecb9ac7e8d764ed2a50a24085132a7a, type: 3}
