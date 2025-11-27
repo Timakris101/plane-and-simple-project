@@ -172,7 +172,7 @@ MonoBehaviour:
   damage: 10
   explosionRad: 1
   penetrationVal: 10
-  fragmentationAmt: 80
+  fragmentationAmt: 30
   fragmentationStrength: 30
   armorPenMeters: 0
   armorFuseSec: 0
