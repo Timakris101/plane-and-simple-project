@@ -171,9 +171,11 @@ MonoBehaviour:
   initSpeed: 0
   damage: 1000
   explosionRad: 20
-  penetrationVal: 0
+  penetrationVal: 20
+  fragmentationAmt: 100
+  fragmentationStrength: 1000
   armorPenMeters: 10
-  maxFlyPastDist: 0
+  armorFuseSec: 0
   armingDist: 30
   fuseTimeSec: 0
   effect: {fileID: 5274905710233930441, guid: eecb9ac7e8d764ed2a50a24085132a7a, type: 3}
