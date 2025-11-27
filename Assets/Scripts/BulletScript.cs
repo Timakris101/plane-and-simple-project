@@ -66,13 +66,12 @@ public class BulletScript : MonoBehaviour {
     }
 
     bool didMiss(Collision2D col, float effectiveArmorPen, float newPenVal) {
-        Vector3 beginningHitPos = transform.position - prevVel * Time.fixedDeltaTime;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(beginningHitPos - (Vector3) col.relativeVelocity.normalized, -col.relativeVelocity, penetrationVal);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(col.contacts[0].point, -col.relativeVelocity, penetrationVal);
         foreach (RaycastHit2D hit in hits) {
             if (hit.transform.gameObject != maxAncestor(col.gameObject)) continue;
             if (hit.collider.transform.GetComponent<DamageModel>() != null) {
                 DamageModel d = hit.collider.transform.GetComponent<DamageModel>();
-                if (Random.Range(0f, 1f) > (d.getHitChance(Vector3.Angle(-col.relativeVelocity, d.transform.right)))) continue;
+                if (!(Random.Range(0f, 1f) < (d.getHitChance(Vector3.Angle(col.relativeVelocity, d.transform.right))))) continue;
                 return false;
             }
         }
@@ -98,7 +97,7 @@ public class BulletScript : MonoBehaviour {
             foreach (RaycastHit2D hit in hits) {
                 if (hit.collider.transform.GetComponent<DamageModel>() != null) {
                     DamageModel d = hit.collider.transform.GetComponent<DamageModel>();
-                    if (!(Random.Range(0f, 1f) < (d.getHitChance(Vector3.Angle(fragVecPlusVel, d.transform.right))))) continue;
+                    if (!(Random.Range(0f, 1f) < (d.getHitChance(Vector3.Angle(-fragVecPlusVel, d.transform.right))))) continue;
                     d.damage(Random.Range((1f - damageVariation), (1f + damageVariation)) * damage);
                 }
                 if (hit.collider.transform.GetComponent<ArmorScript>() != null) {
