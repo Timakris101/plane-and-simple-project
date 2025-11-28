@@ -26,6 +26,13 @@ public class BulletScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col) {
         dealDamage(col);
+        Collider2D[] objsNearby = Physics2D.OverlapCircleAll(transform.position, penetrationVal);
+        foreach (Collider2D collider in objsNearby) {
+            if (collider.gameObject.GetComponent<Rigidbody2D>() == null) continue;
+            if (collider.gameObject == gameObject) continue;
+            Vector3 impulse = fragmentationStrength * (collider.transform.position - transform.position).normalized / Mathf.Pow(Mathf.Max((transform.position - collider.transform.position).magnitude, 1f), 2f);
+            collider.transform.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(impulse, transform.position, ForceMode2D.Impulse);
+        }
     }
     
     private Vector3 prevVel;
