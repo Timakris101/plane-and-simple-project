@@ -48,7 +48,8 @@ public class GForcesScript : MonoBehaviour {
         }
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
-            Instantiate(explosion, transform.position, Quaternion.identity);
+            GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(effect, 10f);
             //Instantiate(fire, transform, false);
             GetComponent<Aerodynamics>().setSpeedOfControlEff(Mathf.Infinity);
             if (SceneManager.GetActiveScene().name == "Arcade") Destroy(gameObject, 10f);
