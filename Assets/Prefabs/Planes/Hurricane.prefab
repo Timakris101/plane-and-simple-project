@@ -804,6 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99aaa4bfaf4ed4098b05c10e014b35e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PistonEngineScript
+  throttle: 0
   enginesOn: 0
   enginePowerByAlt:
     serializedVersion: 2
@@ -1544,6 +1545,7 @@ GameObject:
   - component: {fileID: 1032880517144075409}
   - component: {fileID: 2055007098265028723}
   - component: {fileID: 8509120537492706102}
+  - component: {fileID: 4938352519849800340}
   m_Layer: 3
   m_Name: Hurricane
   m_TagString: Plane
@@ -2019,6 +2021,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
   acceleration: {x: 0, y: 0, z: 0}
+--- !u!114 &4938352519849800340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8117271881959870144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletMessageReader
+  basicTextObj: {fileID: 3909010079192846407, guid: c289223fda2d14e639019ca99fc26eaf, type: 3}
 --- !u!1 &8485717505796138115
 GameObject:
   m_ObjectHideFlags: 0

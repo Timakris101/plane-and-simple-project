@@ -223,4 +223,8 @@ public class DamageModel : MonoBehaviour {
     public float getMaxHealth() {
         return maxHealth;
     }
+
+    public float healthAsDecimal() {
+        return health / maxHealth;
+    }
 }

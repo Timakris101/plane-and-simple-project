@@ -89,6 +89,8 @@ public class BulletScript : MonoBehaviour {
     }
 
     void handleDamage(Vector3 beginningHitPos, Vector3 relativeVel, float postHitFuse, float effectiveArmorPen, float newPenVal) {
+        BulletMessagePacket bulletMessagePacket = new BulletMessagePacket();
+
         for (int i = 0; i < fragmentationAmt; i++) {
             Vector2 fragmentationVector = i == 0 ? new Vector2(0,0) : new Vector2(Random.Range(-fragmentationStrength, fragmentationStrength), Random.Range(-fragmentationStrength, fragmentationStrength));
             Vector2 fragVecPlusVel = fragmentationVector + (Vector2) relativeVel;
@@ -98,7 +100,11 @@ public class BulletScript : MonoBehaviour {
                 if (hit.collider.transform.GetComponent<DamageModel>() != null) {
                     DamageModel d = hit.collider.transform.GetComponent<DamageModel>();
                     if (!(Random.Range(0f, 1f) < (d.getHitChance(Vector3.Angle(-fragVecPlusVel, d.transform.right))))) continue;
-                    d.damage(Random.Range((1f - damageVariation), (1f + damageVariation)) * damage);
+
+                    float damageToModel = Random.Range((1f - damageVariation), (1f + damageVariation)) * damage;
+                    d.damage(damageToModel);
+
+                    bulletMessagePacket.addDamage(d, damageToModel);
                 }
                 if (hit.collider.transform.GetComponent<ArmorScript>() != null) {
                     float effArmorThickness = Mathf.Abs(hit.collider.transform.GetComponent<BoxCollider2D>().size.x / Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(prevVel, hit.normal)));
@@ -111,6 +117,8 @@ public class BulletScript : MonoBehaviour {
                 }
             }
         }
+
+        if (nonAiControllerOfVehicle(planeFired).enabled) planeFired.GetComponent<BulletMessageReader>().receivePacket(bulletMessagePacket);
     }
 
     void handleArmor(Collision2D col, out int armorHitCount, out float effectiveArmorPen, out float newPenVal, out GameObject objClosestToBullet) {
@@ -191,5 +199,75 @@ public class BulletScript : MonoBehaviour {
 
     public float getInitSpeed() {
         return initSpeed;
+    }
+}
+
+public class BulletMessage {
+    private DamageModel damageModel;
+    private float damage = 0f;
+
+    public BulletMessage(DamageModel d) {
+        damageModel = d;
+    }
+
+    public void addDamage(float dmg) {
+        damage += dmg;
+    }
+
+    public float getDamage() {
+        return damage;
+    }
+
+    public DamageModel getDamageModel() {
+        return damageModel;
+    }
+
+    public override string ToString() {
+        return damageModel.gameObject.name + " hit for: " + damage + (modelDown() ? ", module down" : "") + (modelCrit() ? ", critical" : "") + (targetDown() ? ", target down" : "") + "\n";
+    }
+
+    public bool modelCrit() {
+        float criticalityNum = .25f;
+        return moduleBroughtBelowHealthDecimal(criticalityNum);
+    }
+
+    public bool modelDown() {
+        return moduleBroughtBelowHealthDecimal(0f);
+    }
+
+    public bool targetDown() {
+        return damageModel.isCritical() && modelDown();
+    }
+
+    private bool moduleBroughtBelowHealthDecimal(float num) {
+        return damageModel.healthAsDecimal() < num && (damageModel.getHealth() + damage) / damageModel.getMaxHealth() > num;
+    }
+}
+
+public class BulletMessagePacket {
+    List<BulletMessage> messages = new List<BulletMessage>();
+
+    public void addDamage(DamageModel mdl, float dmg) {
+        foreach (BulletMessage message in messages) {
+            if (message.getDamageModel() == mdl) {
+                message.addDamage(dmg);
+                return;
+            }
+        }
+        BulletMessage b = new BulletMessage(mdl);
+        b.addDamage(dmg);
+        messages.Add(b);
+    }
+
+    public List<BulletMessage> getMessages() {
+        return messages;
+    }
+
+    public override string ToString() {
+        string str = "";
+        foreach (BulletMessage message in messages) {
+            str += message.ToString();
+        }
+        return str;
     }
 }

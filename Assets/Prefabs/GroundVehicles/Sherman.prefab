@@ -1193,6 +1193,7 @@ GameObject:
   - component: {fileID: 8284620205908479837}
   - component: {fileID: 8289785900524923579}
   - component: {fileID: 886601755408425593}
+  - component: {fileID: 3299979711398177026}
   m_Layer: 3
   m_Name: Sherman
   m_TagString: GroundVehicle
@@ -1454,6 +1455,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
   acceleration: {x: 0, y: 0, z: 0}
+--- !u!114 &3299979711398177026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7771532858081799018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletMessageReader
+  basicTextObj: {fileID: 3909010079192846407, guid: c289223fda2d14e639019ca99fc26eaf, type: 3}
 --- !u!1 &7839189177307948439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1597,6 +1611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555c75ef00c9740758af25d896af39e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundVehicleEngineScript
+  throttle: 0
   enginesOn: 1
   powerHp: 400
   frontGearAmt: 4

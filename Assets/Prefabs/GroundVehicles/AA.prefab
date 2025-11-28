@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2683006685754642687}
   - component: {fileID: 2450534821641747223}
   - component: {fileID: 7316571696830139130}
+  - component: {fileID: 8989773866063206917}
   m_Layer: 3
   m_Name: AA
   m_TagString: GroundVehicle
@@ -225,6 +226,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AccelerationHolder
   acceleration: {x: 0, y: 0, z: 0}
+--- !u!114 &8989773866063206917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482386692775466936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletMessageReader
+  basicTextObj: {fileID: 3909010079192846407, guid: c289223fda2d14e639019ca99fc26eaf, type: 3}
 --- !u!1 &3156430029916055885
 GameObject:
   m_ObjectHideFlags: 0
