@@ -8,10 +8,11 @@ using static Utils;
 public class BulletMessageReader : MonoBehaviour {
 
     [SerializeField] private GameObject basicTextObj;
-    
+
     public void receivePacket(BulletMessagePacket packet) {
         foreach (BulletMessage message in packet.getMessages()) {
             GameObject newText = Instantiate(basicTextObj);
+            newText.transform.SetParent(progenyWithScript<Canvas>(gameObject)[0].transform, false);
             newText.transform.position = message.getDamageModel().transform.position;
             progenyWithScript<TMP_Text>(newText)[0].GetComponent<TMP_Text>().text = Mathf.Round(message.getDamage()).ToString();
             if (message.modelCrit()) {
