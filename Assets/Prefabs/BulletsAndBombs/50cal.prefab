@@ -154,7 +154,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &599347481085760991
 MonoBehaviour:
@@ -170,16 +170,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initSpeed: 200
   damage: 20
-  explosionRad: 0
   penetrationVal: 20
   fragmentationAmt: 1
   fragmentationStrength: 0
   armorPenMeters: 0
-  maxFlyPastDist: 0
+  armorFuseSec: 0
   armingDist: Infinity
   fuseTimeSec: 0
   effect: {fileID: 488841388351868247, guid: f79c35494f79f4021a2ba0e59a961f0b, type: 3}
   lifeTime: 5
   damageVariation: 0.2
+  bulletRicochets: 0
   timer: 0
   planeFired: {fileID: 0}
