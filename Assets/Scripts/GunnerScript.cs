@@ -22,6 +22,7 @@ public class GunnerScript : MonoBehaviour {
     protected virtual void Update() {
         if (transform.parent.gameObject.layer == LayerMask.NameToLayer("Vehicle")) { //if in plane
             if (isInTail && transform.parent.GetComponent<Animator>().GetBool("Tailless") && GetComponent<DamageModel>().isAlive()) transform.parent.GetComponent<BailoutHandler>().bailCrewMember(gameObject);
+            if (transform.parent.gameObject.layer != LayerMask.NameToLayer("Vehicle")) return;
             int animIndex = int.Parse(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Substring(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Length - 1));
             if (GetComponent<DamageModel>().isAlive() && !transform.parent.GetComponent<GForcesScript>().isPersonSleepy() && animIndex <= 1) { //if concious and alive and plane is not spinning out
                 setTargetedObj(transform.parent.GetComponent<AiPlaneController>().getTargetedObj());
