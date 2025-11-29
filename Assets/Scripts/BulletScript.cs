@@ -25,7 +25,10 @@ public class BulletScript : MonoBehaviour {
     [SerializeField] private GameObject planeFired;
 
     void OnCollisionEnter2D(Collision2D col) {
-        dealDamage(col);
+        bool hit;
+        dealDamage(col, out hit);
+        if (!hit) return;
+
         Collider2D[] objsNearby = Physics2D.OverlapCircleAll(transform.position, penetrationVal);
         foreach (Collider2D collider in objsNearby) {
             if (collider.gameObject.GetComponent<Rigidbody2D>() == null) continue;
@@ -40,7 +43,9 @@ public class BulletScript : MonoBehaviour {
         prevVel = GetComponent<Rigidbody2D>().linearVelocity;
     }
 
-    void dealDamage(Collision2D col) {
+    void dealDamage(Collision2D col, out bool actuallyHit) {
+        actuallyHit = false;
+
         int armorHitCount;
         float effectiveArmorPen;
         float newPenVal;
@@ -54,14 +59,17 @@ public class BulletScript : MonoBehaviour {
             return;
         }  
 
-        if (didMiss(col, effectiveArmorPen, newPenVal) && col.transform.GetComponent<BoxCollider2D>() != null) {
+        Vector3 hitPoint;
+        if (didMiss(col, effectiveArmorPen, Mathf.Infinity, out hitPoint) && col.transform.GetComponent<BoxCollider2D>() != null) {
             missObj(col);
             return;
         }
 
-        handleDamage(col, armorFuseSec, effectiveArmorPen, newPenVal);
+        Vector3 posToStartFrom = (armorHitCount == 0 && hitPoint != new Vector3(0,0,0)) ? hitPoint : col.contacts[0].point;
+        handleDamage(posToStartFrom, -col.relativeVelocity, armorFuseSec, effectiveArmorPen, newPenVal);
+        makeEffectAndDestroyObj(posToStartFrom + new Vector3 (0,0, -0.01f));
 
-        makeEffectAndDestroyObj(transform.position);
+        actuallyHit = true;
     }
 
     void dealDamage() {
@@ -69,16 +77,18 @@ public class BulletScript : MonoBehaviour {
         Vector3 beginningHitPos = transform.position - prevVel * Time.fixedDeltaTime;
         handleDamage(beginningHitPos, GetComponent<Rigidbody2D>().linearVelocity, armorFuseSec, effectiveArmorPen, penetrationVal);
 
-        makeEffectAndDestroyObj(transform.position);
+        makeEffectAndDestroyObj(transform.position + new Vector3 (0,0, -0.01f));
     }
 
-    bool didMiss(Collision2D col, float effectiveArmorPen, float newPenVal) {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(col.contacts[0].point, -col.relativeVelocity, penetrationVal);
+    bool didMiss(Collision2D col, float effectiveArmorPen, float newPenVal, out Vector3 whereHit) {
+        whereHit = new Vector3(0,0,0);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(col.contacts[0].point, -col.relativeVelocity, newPenVal);
         foreach (RaycastHit2D hit in hits) {
             if (hit.transform.gameObject != maxAncestor(col.gameObject)) continue;
             if (hit.collider.transform.GetComponent<DamageModel>() != null) {
                 DamageModel d = hit.collider.transform.GetComponent<DamageModel>();
                 if (!(Random.Range(0f, 1f) < (d.getHitChance(Vector3.Angle(col.relativeVelocity, d.transform.right))))) continue;
+                whereHit = hit.point;
                 return false;
             }
         }
