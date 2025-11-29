@@ -1150,7 +1150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1432378121075399777, guid: de8cbb62ce0ef4378a1459986525755a, type: 3}
-  fireRate: 0.01
+  fireRate: 0.1
   maxAmmunition: 120
   ammunition: 0
   bulletFuse: 0
