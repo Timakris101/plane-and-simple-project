@@ -56,11 +56,11 @@ public class Aerodynamics : MonoBehaviour {
         fs = null;
         if (progenyWithScript<FlapScript>(gameObject).Count != 0) fs = progenyWithScript<FlapScript>(gameObject)[0].GetComponent<FlapScript>();
         gs = null;
-        if (progenyWithScript<GearScript>(gameObject).Count != 0) gs = progenyWithScript<GearScript>(gameObject)[0].GetComponent<GearScript>();
-        rb.centerOfMass = transform.Find("CoM").localPosition;       
+        if (progenyWithScript<GearScript>(gameObject).Count != 0) gs = progenyWithScript<GearScript>(gameObject)[0].GetComponent<GearScript>();       
     }
 
     void Update() {
+        rb.centerOfMass = transform.Find("CoM").localPosition;
         setPlaneController();
         updateTrueFrontArea();
         if (fs != null) {

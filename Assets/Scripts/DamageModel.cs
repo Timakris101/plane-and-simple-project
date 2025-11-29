@@ -173,8 +173,9 @@ public class DamageModel : MonoBehaviour {
         obj.transform.localScale = transform.parent.localScale;
         transform.parent.GetComponent<Animator>().SetBool("Tailless", true);
 
-        transform.parent.GetComponent<BoxCollider2D>().size = new Vector2(transform.parent.GetComponent<BoxCollider2D>().size.x - obj.GetComponent<BoxCollider2D>().size.x, transform.parent.GetComponent<BoxCollider2D>().size.y);
-        transform.parent.GetComponent<BoxCollider2D>().offset = new Vector2(transform.parent.GetComponent<BoxCollider2D>().offset.x + obj.GetComponent<BoxCollider2D>().size.x / 2, transform.parent.GetComponent<BoxCollider2D>().offset.y);
+        maxAncestor(gameObject).transform.Find("CoM").position += transform.right * GetComponent<BoxCollider2D>().size.x / 4f;
+        transform.parent.GetComponent<BoxCollider2D>().size += new Vector2(-GetComponent<BoxCollider2D>().size.x, 0f);
+        transform.parent.GetComponent<BoxCollider2D>().offset += new Vector2(GetComponent<BoxCollider2D>().size.x / 2, 0f);
 
         Destroy(obj, 10f);
     }
