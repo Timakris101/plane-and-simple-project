@@ -67,7 +67,7 @@ public class BulletScript : MonoBehaviour {
 
         Vector3 posToStartFrom = (armorHitCount == 0 && hitPoint != new Vector3(0,0,0)) ? hitPoint : col.contacts[0].point;
         handleDamage(posToStartFrom, -col.relativeVelocity, armorFuseSec, effectiveArmorPen, newPenVal);
-        makeEffectAndDestroyObj(posToStartFrom + new Vector3 (0,0, -0.01f));
+        makeEffectAndDestroyObj(posToStartFrom);
 
         actuallyHit = true;
     }
@@ -77,7 +77,7 @@ public class BulletScript : MonoBehaviour {
         Vector3 beginningHitPos = transform.position - prevVel * Time.fixedDeltaTime;
         handleDamage(beginningHitPos, GetComponent<Rigidbody2D>().linearVelocity, armorFuseSec, effectiveArmorPen, penetrationVal);
 
-        makeEffectAndDestroyObj(transform.position + new Vector3 (0,0, -0.01f));
+        makeEffectAndDestroyObj(transform.position);
     }
 
     bool didMiss(Collision2D col, float effectiveArmorPen, float newPenVal, out Vector3 whereHit) {
