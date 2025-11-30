@@ -12,7 +12,7 @@ public class AiPlaneController : PlaneController {
     private float headonOscillationMagnitude = 10f;
     private GameObject primaryBullet;
     private bool isBomber = false;
-    private List<GameObject> squadronList;
+    private List<GameObject> squadronList = new List<GameObject>();
     private Vector2 offset;
     private GameObject squadronLead;
 
@@ -40,6 +40,7 @@ public class AiPlaneController : PlaneController {
     }
 
     void Update() {
+        if (squadronLead == null) squadronLead = squadronLeader();
         if ((frameCounter + (int) ((float) (index) * ((float) framesBeforeTargetUpdate / (float) allVehicles.Length))) % (framesBeforeTargetUpdate) == 0 || squadronLead.GetComponent<VehicleController>().vehicleDead()) {
             squadronLead = squadronLeader();
         }
@@ -96,7 +97,7 @@ public class AiPlaneController : PlaneController {
     }
 
     public float pointTowards(Vector3 pos) {
-        return Mathf.Clamp(-Mathf.Pow(angleTo(pos), 3), -1, 1);
+        return Mathf.Clamp(Mathf.Pow(angleTo(pos), 3), -1, 1);
     }
 
     private float angleTo(Vector3 pos) {
