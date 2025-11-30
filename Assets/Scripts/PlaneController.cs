@@ -5,7 +5,7 @@ using static Utils;
 
 public class PlaneController : VehicleController {
     protected bool inWEP;
-    private float throttleChangeSpeed = 1f;
+    public float throttleChangeSpeed = 1f;
     private bool pilotDead => !transform.Find("PilotHitbox").GetComponent<DamageModel>().isAlive();
     private bool pilotGone => transform.Find("PilotHitbox") == null;
     private bool unconcious => GetComponent<GForcesScript>().isPersonSleepy();
@@ -88,17 +88,8 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual float wantedDir() {
-        int val = 0;
-        if (Input.GetKey("d")) {
-            val = -1;
-        }
-        if (Input.GetKey("a")) {
-            val = 1;
-        }
-        if (Input.GetKey("d") && Input.GetKey("a")) {
-            val = 0;
-        }
-        return val;
+        if (progenyWithScript<CamScript>(gameObject).Count == 0) return 0;
+        return progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().directionInput();
     }
 
     public override void handleFeasibleControls() {
@@ -130,11 +121,10 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleControls() {
-        if (Input.GetKey("w") && getThrottle() < 1) setThrottle(getThrottle() + throttleChangeSpeed * Time.deltaTime);
-        if (Input.GetKey("s") && getThrottle() > 0) setThrottle(getThrottle() - throttleChangeSpeed * Time.deltaTime);
+        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
+        setThrottle(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().throttleInput());
 
-        inWEP = false;
-        if (Input.GetKey("w") && getThrottle() + throttleChangeSpeed * Time.deltaTime > 1) inWEP = true;
+        inWEP = progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().wepInput();
 
         if (Input.GetKeyDown("i")) toggleEngines();
 
@@ -147,7 +137,7 @@ public class PlaneController : VehicleController {
         }
         if (Input.GetKey("s") && getThrottle() - throttleChangeSpeed * Time.deltaTime < 0 && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
 
-        setGuns(Input.GetMouseButton(0));
+        setGuns(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gunInput());
         setBombs(Input.GetKey(KeyCode.Space));
     }
 

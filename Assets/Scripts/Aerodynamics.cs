@@ -118,7 +118,7 @@ public class Aerodynamics : MonoBehaviour {
         if (pc != null) {
             float dirToTurn = pc.getDir();
 
-            elevatorDeflection = Mathf.MoveTowards(elevatorDeflection, dirToTurn * maxElevatorDeflection, elevatorSpeed * Time.deltaTime);
+            elevatorDeflection = Mathf.MoveTowards(elevatorDeflection, -dirToTurn * maxElevatorDeflection, elevatorSpeed * Time.deltaTime);
 
             if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
                 

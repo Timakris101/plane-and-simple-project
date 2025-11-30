@@ -28,7 +28,7 @@ public class GroundVehicleGunnerScript : GunnerScript {
                 }
             } else {
                 if (maxAncestor.transform.Find("Camera") != null) {
-                    Vector3 screenToWorld = maxAncestor.transform.Find("Camera").GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -maxAncestor.transform.Find("Camera").position.z));
+                    Vector3 screenToWorld = INPUTS.pointerPositionInput();
                     pointGunAt(new Vector3(screenToWorld.x, screenToWorld.y, 0));
                     attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), Input.GetMouseButton(0));
                     if (ammoHasFuse) transform.GetChild(0).GetComponent<GunScript>().setFuseOfBullets(new Vector3(screenToWorld.x, screenToWorld.y, 0));

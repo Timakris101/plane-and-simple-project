@@ -15,6 +15,8 @@ public class GunnerScript : MonoBehaviour {
 
     private Vector3 positionToCheckShotFrom => (transform.GetChild(0).Find("BulletSpawnArea") == null ? transform.GetChild(0).position : transform.GetChild(0).Find("BulletSpawnArea").position);
 
+    protected CustomInputs INPUTS => allObjectsInTreeWith<CamScript>(gameObject)[0].GetComponent<CustomInputs>();
+
     protected virtual void Start() {
         origSpriteOfPlane = transform.parent.GetComponent<SpriteRenderer>().sprite;
     }
@@ -40,7 +42,7 @@ public class GunnerScript : MonoBehaviour {
                     }
                 } else {
                     if (transform.parent.Find("Camera") != null) {
-                        Vector3 screenToWorld = transform.parent.Find("Camera").GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.parent.Find("Camera").position.z));
+                        Vector3 screenToWorld = INPUTS.pointerPositionInput();
                         pointGunAt(new Vector3(screenToWorld.x, screenToWorld.y, 0));
                         attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), Input.GetMouseButton(0));
                     }
