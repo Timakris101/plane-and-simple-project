@@ -118,6 +118,8 @@ public class AiPlaneController : PlaneController {
         if (criticalSystemDestroyed || GetComponent<Rigidbody2D>().linearVelocity.magnitude <= .1f || !transform.Find("PilotHitbox").GetComponent<DamageModel>().isAlive()) GetComponent<BailoutHandler>().callBailOut();
     }
 
+    protected override void handleSwapping() {}
+
     protected override void handleControls() {
         setThrottle(1f);
         inWEP = false;

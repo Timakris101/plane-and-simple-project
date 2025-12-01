@@ -66,12 +66,12 @@ public class VehicleController : MonoBehaviour {
     }
 
     protected virtual void Update() {
-        handleFeasibleControls();
         if (transform.Find("Camera") == null) {
             foreach (VehicleController controller in GetComponents<VehicleController>()) {
                 controller.enabled = controller == aiControllerOfVehicle(gameObject);
             }
         }
+        handleFeasibleControls();
 
         frameCounter++;
         

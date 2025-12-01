@@ -109,21 +109,20 @@ public class CamScript : MonoBehaviour {
 
     private void handleVehicleSwitching() {
         if (missionEditor) {
-            if (Input.GetKeyDown("n")) {
-                if (Input.GetKey(KeyCode.LeftShift)) {
-                    if (vehicleToControl == null) {
-                        scrollSpectatableVehicles();
-                    } else {
-                        spectatedVehicle = vehicleToControl;
-                        vehicleToControl = null;
-                    }
+            if (GetComponent<CustomInputs>().spectatePlaneInput()) {
+                if (vehicleToControl == null) {
+                    scrollSpectatableVehicles();
                 } else {
-                    if (spectatedVehicle == null || spectatedVehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
-                        scrollCrewedVehicles();
-                    } else {
-                        takeControlOfVehicle(spectatedVehicle);
-                        spectatedVehicle = null;
-                    }
+                    spectatedVehicle = vehicleToControl;
+                    vehicleToControl = null;
+                }
+            }
+            if (GetComponent<CustomInputs>().swapPlaneInput()) {
+                if (spectatedVehicle == null || spectatedVehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
+                    scrollCrewedVehicles();
+                } else {
+                    takeControlOfVehicle(spectatedVehicle);
+                    spectatedVehicle = null;
                 }
             }
             if (Input.GetKeyDown(KeyCode.Escape)) {

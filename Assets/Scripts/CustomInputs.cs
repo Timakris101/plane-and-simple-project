@@ -21,6 +21,8 @@ public class CustomInputs : MonoBehaviour {
     List<InteractableModePair> controlList = new List<InteractableModePair>();
     string baseControlFind = "Canvas/Controls/";
 
+//-------------------------------------------------------------------------------------------------
+
     public delegate float SliderInputDelegate(out bool change);
 
     public float basicSliderInput(SliderControl slider, SliderInputDelegate controlOfComp, InitializeFloatType init) {
@@ -114,9 +116,9 @@ public class CustomInputs : MonoBehaviour {
     }
 //-------------------------------------------------------------------------------------------------
 
-    public delegate bool ButtonInputDelegate(ButtonControl mobileButton, out bool change);
+    public delegate bool ButtonInputDelegateUseButton(ButtonControl mobileButton, out bool change);
 
-    public bool basicButtonInput(ButtonControl button, ButtonInputDelegate controlOfComp, InitializeBoolType init) {
+    public bool basicButtonInput(ButtonControl button, ButtonInputDelegateUseButton controlOfComp, InitializeBoolType init) {
         bool changeToComp;
         controlOfComp(button, out changeToComp);
         if (changeToComp) setModeOf(button.gameObject, "computer");
@@ -125,6 +127,32 @@ public class CustomInputs : MonoBehaviour {
         switch (modeOfObj(button.gameObject)) {
             case "computer": 
             val = controlOfComp(button, out bool b);
+            button.setVal(val);
+            break;
+
+            case "mobile": 
+            val = button.getVal();
+            break;
+
+            default: 
+            button.setVal(val);
+            return val;
+        }
+
+        return val;
+    }
+
+    public delegate bool ButtonInputDelegate(out bool change);
+
+    public bool basicButtonInput(ButtonControl button, ButtonInputDelegate controlOfComp, InitializeBoolType init) {
+        bool changeToComp;
+        controlOfComp(out changeToComp);
+        if (changeToComp) setModeOf(button.gameObject, "computer");
+
+        bool val = init();
+        switch (modeOfObj(button.gameObject)) {
+            case "computer": 
+            val = controlOfComp(out bool b);
             button.setVal(val);
             break;
 
@@ -168,13 +196,13 @@ public class CustomInputs : MonoBehaviour {
 //-------------------------------------------------------------------------------------------------
     public bool wepInput() {
         GameObject uiInput = GameObject.Find(baseControlFind + "WEPButton");
-        if (uiInput == null) return computerControlBasedWepInput(null, out bool b);
+        if (uiInput == null) return computerControlBasedWepInput(out bool b);
         
         ButtonControl control = uiInput.GetComponent<ButtonControl>();
         return basicButtonInput(control, computerControlBasedWepInput, readWEP);
     }
 
-    public bool computerControlBasedWepInput(ButtonControl mobileButton, out bool buttonsTouched) {
+    public bool computerControlBasedWepInput(out bool buttonsTouched) {
         GameObject vehicle = parentWithScript<VehicleController>(gameObject);
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         bool inWEP = false;
@@ -189,6 +217,157 @@ public class CustomInputs : MonoBehaviour {
 
     public bool readWEP() {
         return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool gearInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "GearButton");
+        if (uiInput == null) return computerControlBasedGearInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedGearInput, readGear);
+    }
+
+    public bool computerControlBasedGearInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("g");
+        return Input.GetKeyDown("g");
+    }
+
+    public bool readGear() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool swapViewInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "SwapViewButton");
+        if (uiInput == null) return computerControlBasedSwapInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedSwapInput, readSwap);
+    }
+
+    public bool computerControlBasedSwapInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("v");
+        return Input.GetKeyDown("v");
+    }
+
+    public bool readSwap() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool ejectInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "EjectButton");
+        if (uiInput == null) return computerControlBasedEjectInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedEjectInput, readEject);
+    }
+
+    public bool computerControlBasedEjectInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKey("j");
+        return Input.GetKey("j");
+    }
+
+    public bool readEject() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool brakeInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "BrakeButton");
+        if (uiInput == null) return computerControlBasedBrakeInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedBrakeInput, readBrake);
+    }
+
+    public bool computerControlBasedBrakeInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKey("s");
+        GameObject vehicle = parentWithScript<VehicleController>(gameObject);
+        PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
+        return Input.GetKey("s") && pc.getThrottle() - pc.throttleChangeSpeed * Time.deltaTime < 0;
+    }
+
+    public bool readBrake() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool flapInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "FlapButton");
+        if (uiInput == null) return computerControlBasedFlapInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedFlapInput, readFlaps);
+    }
+
+    public bool computerControlBasedFlapInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("f");
+        return Input.GetKeyDown("f");
+    }
+
+    public bool readFlaps() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool engineInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "EngineButton");
+        if (uiInput == null) return computerControlBasedEngineInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedEngineInput, readEngine);
+    }
+
+    public bool computerControlBasedEngineInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("i");
+        return Input.GetKeyDown("i");
+    }
+
+    public bool readEngine() {
+        return true;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool swapPlaneInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "SwapPlaneButton");
+        if (uiInput == null) return computerControlBasedSwapPlaneInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedSwapPlaneInput, readSwapPlane);
+    }
+
+    public bool computerControlBasedSwapPlaneInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("n") && !Input.GetKey(KeyCode.LeftShift);
+        return Input.GetKeyDown("n") && !Input.GetKey(KeyCode.LeftShift);
+    }
+
+    public bool readSwapPlane() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool spectatePlaneInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "SpectatePlaneButton");
+        if (uiInput == null) return computerControlBasedSpectatePlaneInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedSpectatePlaneInput, readSpectatePlane);
+    }
+
+    public bool computerControlBasedSpectatePlaneInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("n") && Input.GetKey(KeyCode.LeftShift);
+        return Input.GetKeyDown("n") && Input.GetKey(KeyCode.LeftShift);
+    }
+
+    public bool readSpectatePlane() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool shootGunnerInput() {
+        return Input.GetMouseButton(0) || (Input.touchCount > 0 ? Input.GetTouch(0).phase != TouchPhase.Ended : false);
     }
 
 //-------------------------------------------------------------------------------------------------

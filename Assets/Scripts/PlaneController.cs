@@ -109,13 +109,13 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleNonPilotControls() {
-        if (Input.GetKey("j")) {
+        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().ejectInput()) {
             GetComponent<BailoutHandler>().callBailOut();
         }
     }
 
-    private void handleSwapping() {
-        if (Input.GetKeyDown("v")) {
+    protected virtual void handleSwapping() {
+        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().swapViewInput()) {
             toggleGunners();
         }
     }
@@ -126,16 +126,16 @@ public class PlaneController : VehicleController {
 
         inWEP = progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().wepInput();
 
-        if (Input.GetKeyDown("i")) toggleEngines();
+        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().engineInput()) toggleEngines();
 
-        if (Input.GetKeyDown("f") && transform.Find("Flaps") != null) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
+        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().flapInput() && transform.Find("Flaps") != null) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
 
-        if (Input.GetKeyDown("g") && transform.Find("Gear") && !onGround) {
+        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gearInput() && transform.Find("Gear") && !onGround) {
             foreach (GameObject gear in progenyWithScript<GearScript>(gameObject)) {
                 gear.GetComponent<GearScript>().toggleGear();
             }
         }
-        if (Input.GetKey("s") && getThrottle() - throttleChangeSpeed * Time.deltaTime < 0 && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
+        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().brakeInput() && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
 
         setGuns(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gunInput());
         setBombs(Input.GetKey(KeyCode.Space));

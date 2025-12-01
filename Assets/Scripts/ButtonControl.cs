@@ -10,6 +10,8 @@ using UnityEngine.EventSystems;
 public class ButtonControl : BaseControl, IPointerDownHandler, IPointerUpHandler {
     public bool buttonPressed;
     public bool returns;
+    public bool keyDownType;
+    public bool whatToReturn;
 
     void Update() {
         GetComponent<Image>().color = buttonPressed ? GetComponent<Button>().colors.pressedColor : GetComponent<Button>().colors.normalColor;
@@ -20,7 +22,9 @@ public class ButtonControl : BaseControl, IPointerDownHandler, IPointerUpHandler
     }
 
     public bool getVal() {
-        return buttonPressed;
+        bool b = keyDownType ? whatToReturn : buttonPressed;
+        whatToReturn = false;
+        return b;
     }
 
     public void OnPointerDown(PointerEventData eventData) {
@@ -34,6 +38,9 @@ public class ButtonControl : BaseControl, IPointerDownHandler, IPointerUpHandler
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        if (returns) buttonPressed = false;
+        if (returns) {
+            buttonPressed = false;
+            if (keyDownType) whatToReturn = true;
+        }
     }
 }
