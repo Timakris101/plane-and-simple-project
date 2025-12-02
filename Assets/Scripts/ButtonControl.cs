@@ -14,16 +14,19 @@ public class ButtonControl : BaseControl, IPointerDownHandler, IPointerUpHandler
     public bool whatToReturn;
 
     void Update() {
+        base.Update();
         GetComponent<Image>().color = buttonPressed ? GetComponent<Button>().colors.pressedColor : GetComponent<Button>().colors.normalColor;
     }
 
     public void setVal(bool b) {
+        noQuery = false;
         buttonPressed = b;
     }
 
     public bool getVal() {
         bool b = keyDownType ? whatToReturn : buttonPressed;
         whatToReturn = false;
+        noQuery = false;
         return b;
     }
 

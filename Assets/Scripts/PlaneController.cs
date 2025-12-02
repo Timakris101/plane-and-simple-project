@@ -109,12 +109,14 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleNonPilotControls() {
+        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
         if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().ejectInput()) {
             GetComponent<BailoutHandler>().callBailOut();
         }
     }
 
     protected virtual void handleSwapping() {
+        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
         if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().swapViewInput()) {
             toggleGunners();
         }
@@ -138,7 +140,7 @@ public class PlaneController : VehicleController {
         if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().brakeInput() && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
 
         setGuns(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gunInput());
-        setBombs(Input.GetKey(KeyCode.Space));
+        setBombs(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().bombInput());
     }
 
     protected void setGuns(bool shooting) {

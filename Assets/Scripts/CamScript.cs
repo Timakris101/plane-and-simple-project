@@ -20,6 +20,8 @@ public class CamScript : MonoBehaviour {
     [SerializeField] private GameObject spectatedVehicle;
     [SerializeField] private string startingAlliance;
 
+    Vector3 initCrosshairPos;
+    
     void Start() {
         offset = new Vector3(0, 0, transform.position.z);
 
@@ -29,6 +31,8 @@ public class CamScript : MonoBehaviour {
             takeControlOfVehicle(vehicleToControl);
         }
         matchParentToPlane();
+
+        initCrosshairPos = transform.Find("Canvas").Find("CrosshairHolder").GetChild(0).localPosition;
     }
 
     void Update() {
@@ -65,28 +69,33 @@ public class CamScript : MonoBehaviour {
     }
 
     private void handleCrosshair() {
+        Transform crosshairHolder = transform.Find("Canvas").Find("CrosshairHolder");
         if (transform.Find("Canvas") != null && vehicleToControl != null) {
             if (vehicleToControl.GetComponent<PlaneController>() != null) {
-                transform.Find("Canvas").Find("CrosshairHolder").GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
+                crosshairHolder.GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
                 if (!vehicleToControl.GetComponent<PlaneController>().gunnersAreManual()) {
-                    transform.Find("Canvas").Find("CrosshairHolder").right = vehicleToControl.transform.right;
-                    for (int i = 0; i < transform.Find("Canvas").Find("CrosshairHolder").childCount; i++) {
-                        transform.Find("Canvas").Find("CrosshairHolder").GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = true;
-                        transform.Find("Canvas").Find("CrosshairHolder").GetChild(i).eulerAngles = new Vector3(0, 0, 0);
+                    crosshairHolder.right = vehicleToControl.transform.right;
+                    for (int i = 0; i < crosshairHolder.childCount; i++) {
+                        crosshairHolder.GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = true;
+                        crosshairHolder.GetChild(i).eulerAngles = new Vector3(0, 0, 0);
+                        crosshairHolder.GetChild(i).localPosition = initCrosshairPos;
                     }
                 } else {
-                    for (int i = 0; i < transform.Find("Canvas").Find("CrosshairHolder").childCount; i++) {
-                        transform.Find("Canvas").Find("CrosshairHolder").GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = false;
+                    float curCamScaling = (GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
+                    crosshairHolder.transform.position = GetComponent<Camera>().WorldToScreenPoint(GetComponent<CustomInputs>().pointerPositionInput());
+                    for (int i = 0; i < crosshairHolder.childCount; i++) {
+                        crosshairHolder.GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = true;
+                        crosshairHolder.GetChild(i).localPosition = new Vector3(0,0,0);
                     }
                 }
             } else {
-                for (int i = 0; i < transform.Find("Canvas").Find("CrosshairHolder").childCount; i++) {
-                    transform.Find("Canvas").Find("CrosshairHolder").GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = false;
+                for (int i = 0; i < crosshairHolder.childCount; i++) {
+                    crosshairHolder.GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = false;
                 }
             }
         } else {
-            for (int i = 0; i < transform.Find("Canvas").Find("CrosshairHolder").childCount; i++) {
-                transform.Find("Canvas").Find("CrosshairHolder").GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = false;
+            for (int i = 0; i < crosshairHolder.childCount; i++) {
+                crosshairHolder.GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = false;
             }
         }
     }

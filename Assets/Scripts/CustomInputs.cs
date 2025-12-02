@@ -194,6 +194,28 @@ public class CustomInputs : MonoBehaviour {
     }
 
 //-------------------------------------------------------------------------------------------------
+    public bool bombInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "BombButton");
+        if (uiInput == null) return computerControlBasedBombInput();
+
+        ButtonControl control = GameObject.Find(baseControlFind + "BombButton").GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedBombInput, readBombs);
+    }
+
+    public bool computerControlBasedBombInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown(KeyCode.Space);
+        return Input.GetKeyDown(KeyCode.Space);
+    }
+
+    public bool computerControlBasedBombInput() {
+        return Input.GetKeyDown(KeyCode.Space);
+    }
+
+    public bool readBombs() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
     public bool wepInput() {
         GameObject uiInput = GameObject.Find(baseControlFind + "WEPButton");
         if (uiInput == null) return computerControlBasedWepInput(out bool b);
@@ -326,7 +348,7 @@ public class CustomInputs : MonoBehaviour {
     }
 
     public bool readEngine() {
-        return true;
+        return false;
     }
 
 //-------------------------------------------------------------------------------------------------
@@ -362,6 +384,24 @@ public class CustomInputs : MonoBehaviour {
     }
 
     public bool readSpectatePlane() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool rotateVehicleInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "RotateButton");
+        if (uiInput == null) return computerControlBasedRotateInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedRotateInput, readRotate);
+    }
+
+    public bool computerControlBasedRotateInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown("r");
+        return Input.GetKeyDown("r") ;
+    }
+
+    public bool readRotate() {
         return false;
     }
 

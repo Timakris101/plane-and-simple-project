@@ -44,7 +44,7 @@ public class GunnerScript : MonoBehaviour {
                     if (transform.parent.Find("Camera") != null) {
                         Vector3 screenToWorld = INPUTS.pointerPositionInput();
                         pointGunAt(new Vector3(screenToWorld.x, screenToWorld.y, 0));
-                        attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), Input.GetMouseButton(0));
+                        attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), INPUTS.gunInput());
                     }
                 }
             } else {

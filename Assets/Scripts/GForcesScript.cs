@@ -73,7 +73,7 @@ public class GForcesScript : MonoBehaviour {
     }
 
     public bool ableToRollover() {
-        return feltGs < rollOverThresh && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite);
+        return (feltGs < rollOverThresh || (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false)) && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite);
     }
 
     private void updateSleepy() {
