@@ -134,7 +134,7 @@ public class CamScript : MonoBehaviour {
                     spectatedVehicle = null;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (GetComponent<CustomInputs>().escapeInput()) {
                 uncoupleCam();
             }
         }
@@ -159,20 +159,37 @@ public class CamScript : MonoBehaviour {
     private void handleCam() {
         Camera camera = gameObject.GetComponent<Camera>();
 
-        Vector3 prevMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
-        
-        camera.fieldOfView -= Input.mouseScrollDelta.y;
+        if (Input.touchCount == 0) {
+            Vector3 prevMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
+            
+            camera.fieldOfView -= Input.mouseScrollDelta.y;
 
-        if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
-            camera.fieldOfView = maxP;
+            if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
+                camera.fieldOfView = maxP;
+            }
+            if (camera.fieldOfView < minP) { //makes cam size unable to go below min
+                camera.fieldOfView = minP;
+            }
+
+            Vector3 newMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
+
+            transform.position += prevMousePos - newMousePos;
+        } else if (Input.touchCount == 2) {
+            Vector3 prevTouchPos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
+            
+            camera.fieldOfView -= Input.GetTouch(0).deltaPosition.y;
+
+            if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
+                camera.fieldOfView = maxP;
+            }
+            if (camera.fieldOfView < minP) { //makes cam size unable to go below min
+                camera.fieldOfView = minP;
+            }
+
+            Vector3 newTouchPos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
+
+            transform.position += prevTouchPos - newTouchPos;
         }
-        if (camera.fieldOfView < minP) { //makes cam size unable to go below min
-            camera.fieldOfView = minP;
-        }
-
-        Vector3 newMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
-
-        transform.position += prevMousePos - newMousePos;
 
         if (transform.parent != null) {
             transform.position = transform.parent.position + offset;
@@ -185,6 +202,7 @@ public class CamScript : MonoBehaviour {
                 if (Input.GetKey("a")) movementVec += new Vector3(-1, 0, 0);
                 if (Input.GetKey("s")) movementVec += new Vector3(0, -1, 0);
                 if (Input.GetKey("d")) movementVec += new Vector3(1, 0, 0);
+                if (Input.touchCount == 1) movementVec += (Vector3) Input.GetTouch(0).deltaPosition.normalized;
 
                 transform.position += movementVec.normalized * freeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
             }
@@ -214,7 +232,7 @@ public class CamScript : MonoBehaviour {
                 }
             }
         } else {
-            spectatedVehicle = vehicles[0];
+            if (vehicles.Length > 0) spectatedVehicle = vehicles[0];
         }
     }
 

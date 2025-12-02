@@ -388,6 +388,24 @@ public class CustomInputs : MonoBehaviour {
     }
 
 //-------------------------------------------------------------------------------------------------
+    public bool escapeInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "EscapeButton");
+        if (uiInput == null) return computerControlBasedEscapeInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedEscapeInput, readEscape);
+    }
+
+    public bool computerControlBasedEscapeInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetKeyDown(KeyCode.Escape);
+        return Input.GetKeyDown(KeyCode.Escape);
+    }
+
+    public bool readEscape() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
     public bool rotateVehicleInput() {
         GameObject uiInput = GameObject.Find(baseControlFind + "RotateButton");
         if (uiInput == null) return computerControlBasedRotateInput(out bool b);
