@@ -103,6 +103,7 @@ public class VehicleController : MonoBehaviour {
     public virtual bool vehicleDead() {
         bool criticalSystemDamage = false;
         foreach (GameObject damageModel in damageModels) {
+            if (damageModel == null) continue;
             if (!damageModel.GetComponent<DamageModel>().isCrewRole() && damageModel.GetComponent<DamageModel>().isCritical()) {
                 if (!damageModel.GetComponent<DamageModel>().isAlive()) {
                     criticalSystemDamage = true;
@@ -116,6 +117,8 @@ public class VehicleController : MonoBehaviour {
 
     public bool allCrewGoneFromVehicle() {
         foreach (GameObject damageModel in damageModels) {
+            if (damageModel == null) continue;
+            if (maxAncestor(damageModel) != gameObject) continue;
             if (damageModel.GetComponent<DamageModel>().isCrewRole()) {
                 if (damageModel.GetComponent<DamageModel>().isAlive()) {
                     return false;

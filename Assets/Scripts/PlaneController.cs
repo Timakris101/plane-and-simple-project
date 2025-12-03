@@ -31,6 +31,7 @@ public class PlaneController : VehicleController {
     public override bool vehicleDead() {
         bool criticalSystemDamage = false;
         foreach (GameObject d in damageModels) {
+            if (d == null) continue;
             if (!d.GetComponent<DamageModel>().isCrewRole() && d.GetComponent<DamageModel>().isCritical()) {
                 if (!d.GetComponent<DamageModel>().isAlive()) {
                     criticalSystemDamage = true;

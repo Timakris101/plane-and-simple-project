@@ -107,6 +107,7 @@ public class AiPlaneController : PlaneController {
     protected override void handleNonPilotControls() {
         bool criticalSystemDestroyed = false;
         foreach (GameObject d in damageModels) {
+            if (d == null) continue;
             if (d.GetComponent<DamageModel>().isCritical()) {
                 if (!d.GetComponent<DamageModel>().isAlive()) {
                     criticalSystemDestroyed = true;
