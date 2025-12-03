@@ -30,7 +30,7 @@ public class GroundVehicleGunnerScript : GunnerScript {
                 if (maxAncestor.transform.Find("Camera") != null) {
                     Vector3 screenToWorld = INPUTS.pointerPositionInput();
                     pointGunAt(new Vector3(screenToWorld.x, screenToWorld.y, 0));
-                    attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), allObjectsInTreeWith<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gunInput());
+                    attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), INPUTS.gunInput());
                     if (ammoHasFuse) transform.GetChild(0).GetComponent<GunScript>().setFuseOfBullets(new Vector3(screenToWorld.x, screenToWorld.y, 0));
                 }
             }

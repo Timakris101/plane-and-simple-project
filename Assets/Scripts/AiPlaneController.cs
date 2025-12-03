@@ -49,7 +49,7 @@ public class AiPlaneController : PlaneController {
 
     protected override float wantedDir() {
         primaryBullet = null;
-        foreach (GameObject gunOrBh in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gunOrBh in guns) {
             if (gunOrBh.transform.parent == transform) {
                 isBomber = gunOrBh.TryGetComponent<BombHolderScript>(out BombHolderScript component);
                 primaryBullet = gunOrBh.GetComponent<GunScript>().getBullet();
@@ -106,7 +106,7 @@ public class AiPlaneController : PlaneController {
 
     protected override void handleNonPilotControls() {
         bool criticalSystemDestroyed = false;
-        foreach (GameObject d in progenyWithScript<DamageModel>(gameObject)) {
+        foreach (GameObject d in damageModels) {
             if (d.GetComponent<DamageModel>().isCritical()) {
                 if (!d.GetComponent<DamageModel>().isAlive()) {
                     criticalSystemDestroyed = true;

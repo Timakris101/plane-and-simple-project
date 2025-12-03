@@ -39,31 +39,32 @@ public class CamScript : MonoBehaviour {
         handleVehicleSwitching();
         handleCam();
         handleGForceDisp();
-    }
-
-    void FixedUpdate() {
-        transform.eulerAngles = new Vector3(0, 0, 0);
 
         handleCrosshair();
         handleArrow();
     }
 
+    void FixedUpdate() {
+        transform.eulerAngles = new Vector3(0, 0, 0);
+    }
+
     private void handleArrow() {
+        Transform arrowHolder = transform.Find("Canvas").Find("ArrowHolder");
         if (transform.Find("Canvas") != null) {
             if (nearestEnemy() != null && !vehicleToControl.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
                 Vector3 screenPos = GetComponent<Camera>().WorldToScreenPoint(nearestEnemy().transform.position);
                 screenPos = (new Vector3(screenPos.x / Screen.width, screenPos.y / Screen.height, 0));
                 if (screenPos.x > 0 && screenPos.x < 1 && screenPos.y > 0 && screenPos.y < 1) {
-                    transform.Find("Canvas").Find("ArrowHolder").GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
+                    arrowHolder.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
                 } else {
-                    transform.Find("Canvas").Find("ArrowHolder").GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = true;
+                    arrowHolder.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = true;
                 }
                 
-                transform.Find("Canvas").Find("ArrowHolder").right = (nearestEnemy().transform.position - vehicleToControl.transform.position).normalized;
+                arrowHolder.right = (nearestEnemy().transform.position - vehicleToControl.transform.position).normalized;
 
-                transform.Find("Canvas").Find("ArrowHolder").GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
+                arrowHolder.GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
             } else {
-                transform.Find("Canvas").Find("ArrowHolder").GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
+                arrowHolder.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
             }
         }
     }

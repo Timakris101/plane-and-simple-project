@@ -12,6 +12,8 @@ public class PlaneController : VehicleController {
     private bool onGround;
     private EngineScript es;
 
+    protected List<GameObject> gears;
+
     void OnCollisionStay2D() {
         onGround = true;
     }
@@ -28,7 +30,7 @@ public class PlaneController : VehicleController {
 
     public override bool vehicleDead() {
         bool criticalSystemDamage = false;
-        foreach (GameObject d in progenyWithScript<DamageModel>(gameObject)) {
+        foreach (GameObject d in damageModels) {
             if (!d.GetComponent<DamageModel>().isCrewRole() && d.GetComponent<DamageModel>().isCritical()) {
                 if (!d.GetComponent<DamageModel>().isAlive()) {
                     criticalSystemDamage = true;
@@ -44,6 +46,7 @@ public class PlaneController : VehicleController {
     new void Awake() {
         base.Awake();
         es = progenyWithScript<EngineScript>(gameObject)[0].GetComponent<EngineScript>();
+        gears = progenyWithScript<GearScript>(gameObject);
     }
 
     public void removeCam() {
@@ -88,8 +91,8 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual float wantedDir() {
-        if (progenyWithScript<CamScript>(gameObject).Count == 0) return 0;
-        return progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().directionInput();
+        if (INPUTS.transform.parent != transform) return 0;
+        return INPUTS.GetComponent<CustomInputs>().directionInput();
     }
 
     public override void handleFeasibleControls() {
@@ -109,55 +112,56 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleNonPilotControls() {
-        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
-        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().ejectInput()) {
+        if (INPUTS.transform.parent != transform) return;
+        if (INPUTS.GetComponent<CustomInputs>().ejectInput()) {
             GetComponent<BailoutHandler>().callBailOut();
         }
     }
 
     protected virtual void handleSwapping() {
-        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
-        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().swapViewInput()) {
+        if (INPUTS.transform.parent != transform) return;
+        if (INPUTS.GetComponent<CustomInputs>().swapViewInput()) {
             toggleGunners();
         }
     }
 
     protected virtual void handleControls() {
-        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
-        setThrottle(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().throttleInput());
+        if (INPUTS.transform.parent != transform) return;
 
-        inWEP = progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().wepInput();
+        setThrottle(INPUTS.GetComponent<CustomInputs>().throttleInput());
 
-        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().engineInput()) toggleEngines();
+        inWEP = INPUTS.GetComponent<CustomInputs>().wepInput();
 
-        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().flapInput() && transform.Find("Flaps") != null) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
+        if (INPUTS.GetComponent<CustomInputs>().engineInput()) toggleEngines();
 
-        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gearInput() && transform.Find("Gear") && !onGround) {
-            foreach (GameObject gear in progenyWithScript<GearScript>(gameObject)) {
+        if (INPUTS.GetComponent<CustomInputs>().flapInput() && transform.Find("Flaps") != null) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
+
+        if (INPUTS.GetComponent<CustomInputs>().gearInput() && transform.Find("Gear") && !onGround) {
+            foreach (GameObject gear in gears) {
                 gear.GetComponent<GearScript>().toggleGear();
             }
         }
-        if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().brakeInput() && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
+        if (INPUTS.GetComponent<CustomInputs>().brakeInput() && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
 
-        setGuns(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().gunInput());
-        setBombs(progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().bombInput());
+        setGuns(INPUTS.GetComponent<CustomInputs>().gunInput());
+        setBombs(INPUTS.GetComponent<CustomInputs>().bombInput());
     }
 
     protected void setGuns(bool shooting) {
-        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gun in guns) {
             if (gun.transform.parent != transform) continue;
             gun.GetComponent<GunScript>().setShooting(shooting);
         }
-        foreach (GameObject bh in progenyWithScript<BombHolderScript>(gameObject)) {
+        foreach (GameObject bh in bombHolders) {
             bh.GetComponent<BombHolderScript>().setShooting(false);
         }
     }
 
     protected void setBombs(bool bombing) {
-        foreach (GameObject bh in progenyWithScript<BombHolderScript>(gameObject)) {
+        foreach (GameObject bh in bombHolders) {
             bh.GetComponent<BombHolderScript>().setShooting(false);
         }
-        foreach (GameObject bh in progenyWithScript<BombHolderScript>(gameObject)) {
+        foreach (GameObject bh in bombHolders) {
             if (bh.GetComponent<BombHolderScript>().getAmmo() != 0) {
                 bh.GetComponent<BombHolderScript>().setShooting(bombing);
 
@@ -171,7 +175,7 @@ public class PlaneController : VehicleController {
     }
 
     private void resetTimerOfBombholdersExcept(GameObject curBh) {
-         foreach (GameObject bh in progenyWithScript<BombHolderScript>(gameObject)) {
+         foreach (GameObject bh in bombHolders) {
             if (curBh == bh) continue;
             bh.GetComponent<BombHolderScript>().setTimer(0);
         }

@@ -17,6 +17,14 @@ public class VehicleController : MonoBehaviour {
     protected int index;
 
     VehicleCacheScript vcs;
+
+    protected List<GameObject> damageModels;
+    protected List<GameObject> guns;
+    protected List<GameObject> bombHolders;
+    protected List<GameObject> gunners;
+
+    protected CustomInputs INPUTS;
+
     
     public void updateLocalVehicleChache() {
         allVehicles = vcs.vehicles();
@@ -45,6 +53,11 @@ public class VehicleController : MonoBehaviour {
 
     protected void Awake() {
         origSprite = GetComponent<SpriteRenderer>().sprite;
+        INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
+        damageModels = progenyWithScript<DamageModel>(gameObject);
+        guns = progenyWithScript<GunScript>(gameObject);
+        bombHolders = progenyWithScript<BombHolderScript>(gameObject);
+        gunners = progenyWithScript<GunnerScript>(gameObject);
     }
 
     public Sprite getOrigSprite() {
@@ -89,7 +102,7 @@ public class VehicleController : MonoBehaviour {
 
     public virtual bool vehicleDead() {
         bool criticalSystemDamage = false;
-        foreach (GameObject damageModel in progenyWithScript<DamageModel>(gameObject)) {
+        foreach (GameObject damageModel in damageModels) {
             if (!damageModel.GetComponent<DamageModel>().isCrewRole() && damageModel.GetComponent<DamageModel>().isCritical()) {
                 if (!damageModel.GetComponent<DamageModel>().isAlive()) {
                     criticalSystemDamage = true;
@@ -102,7 +115,7 @@ public class VehicleController : MonoBehaviour {
     }
 
     public bool allCrewGoneFromVehicle() {
-        foreach (GameObject damageModel in progenyWithScript<DamageModel>(gameObject)) {
+        foreach (GameObject damageModel in damageModels) {
             if (damageModel.GetComponent<DamageModel>().isCrewRole()) {
                 if (damageModel.GetComponent<DamageModel>().isAlive()) {
                     return false;
@@ -115,19 +128,19 @@ public class VehicleController : MonoBehaviour {
     public virtual bool whenToRemoveCamera() {return true;}
     
     protected void setGunnersToManual(bool manual) {
-        foreach(GameObject gunner in progenyWithScript<GunnerScript>(gameObject)) {
+        foreach(GameObject gunner in gunners) {
             gunner.GetComponent<GunnerScript>().setManualControl(manual);
         }
     }
 
     protected void toggleGunners() {
-        foreach(GameObject gunner in progenyWithScript<GunnerScript>(gameObject)) {
+        foreach(GameObject gunner in gunners) {
             gunner.GetComponent<GunnerScript>().setManualControl(!gunner.GetComponent<GunnerScript>().getManualControl());
         }
     }
 
     public bool gunnersAreManual() {
-        foreach(GameObject gunner in progenyWithScript<GunnerScript>(gameObject)) {
+        foreach(GameObject gunner in gunners) {
             return gunner.GetComponent<GunnerScript>().getManualControl();
         }
         return false;

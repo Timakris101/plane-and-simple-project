@@ -15,7 +15,14 @@ public class GunnerScript : MonoBehaviour {
 
     private Vector3 positionToCheckShotFrom => (transform.GetChild(0).Find("BulletSpawnArea") == null ? transform.GetChild(0).position : transform.GetChild(0).Find("BulletSpawnArea").position);
 
-    protected CustomInputs INPUTS => allObjectsInTreeWith<CamScript>(gameObject)[0].GetComponent<CustomInputs>();
+    protected List<GameObject> guns;
+
+    protected CustomInputs INPUTS;
+
+    void Awake() {
+        INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
+        guns = progenyWithScript<GunScript>(gameObject);
+    }
 
     protected virtual void Start() {
         origSpriteOfPlane = transform.parent.GetComponent<SpriteRenderer>().sprite;
@@ -52,7 +59,7 @@ public class GunnerScript : MonoBehaviour {
             }
         } else {
             if (transform.childCount != 0) {
-                foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+                foreach (GameObject gun in guns) {
                     Destroy(gun);
                 }
             }
@@ -60,7 +67,7 @@ public class GunnerScript : MonoBehaviour {
     }
 
     protected void attemptToShoot(Vector3 posToShoot, bool b) {
-        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gun in guns) {
             GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
             bool tooFarFromSight = Mathf.Abs(Vector2.SignedAngle(posToShoot - gunToLookAt.transform.position, gunToLookAt.transform.right)) > angularThreshForGuns;
             bool hitsOwnPlane = false;
@@ -76,13 +83,13 @@ public class GunnerScript : MonoBehaviour {
     }
 
     protected void attemptToShoot(bool b) {
-        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gun in guns) {
             gun.GetComponent<GunScript>().setShooting(b);
         }
     }
 
     protected virtual void pointGunAt(Vector3 pos) {
-        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gun in guns) {
             GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
             gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - gunToLookAt.transform.position).y, (pos - gunToLookAt.transform.position).x) * Mathf.Rad2Deg);
             gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gunToLookAt.transform.localEulerAngles.z, gunToLookAt.GetComponent<GunScript>().minDeflection, gunToLookAt.GetComponent<GunScript>().maxDeflection));
@@ -90,7 +97,7 @@ public class GunnerScript : MonoBehaviour {
     }
 
     protected virtual void pointGunAt(Vector3 pos, Vector3 pointFromPos) {
-        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gun in guns) {
             GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
             gun.transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2((pos - pointFromPos).y, (pos - pointFromPos).x) * Mathf.Rad2Deg);
             gun.transform.localEulerAngles = new Vector3(0, 0, boundedGunAngle(gunToLookAt.transform.transform.localEulerAngles.z, gunToLookAt.GetComponent<GunScript>().minDeflection, gunToLookAt.GetComponent<GunScript>().maxDeflection));
@@ -111,7 +118,7 @@ public class GunnerScript : MonoBehaviour {
 
     protected bool targetInSights() {
         bool inSights = false;
-        foreach (GameObject gun in progenyWithScript<GunScript>(gameObject)) {
+        foreach (GameObject gun in guns) {
             GameObject bullet = gun.transform.GetComponent<GunScript>().getBullet();
             if (!inSights) inSights = Mathf.Abs(Vector3.SignedAngle((positionToTarget() - gun.transform.position).normalized, gun.transform.right, gun.transform.forward)) < angularThreshForGuns;
         }

@@ -37,6 +37,7 @@ public class Utils {
     }
 
     public static VehicleController nonAiControllerOfVehicle(GameObject vehicle) {
+        if (vehicle == null) return null;
         VehicleController[] controllers = vehicle.GetComponents<VehicleController>();
         if (controllers.Length == 0) return null;
         if (controllers[0].GetType().IsAssignableFrom(controllers[1].GetType())) {
