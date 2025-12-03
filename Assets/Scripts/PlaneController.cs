@@ -150,6 +150,7 @@ public class PlaneController : VehicleController {
 
     protected void setGuns(bool shooting) {
         foreach (GameObject gun in guns) {
+            if (gun == null) continue;
             if (gun.transform.parent != transform) continue;
             gun.GetComponent<GunScript>().setShooting(shooting);
         }
