@@ -31,6 +31,11 @@ public class GForcesScript : MonoBehaviour {
     int counterPastRollover = 0;
     
     void FixedUpdate() {
+        updateSleepy();
+        calculateGs();
+    }
+
+    void Update() {
         for (int i = 0; i < GetComponent<Animator>().parameterCount; i++) {
             if (GetComponent<Animator>().GetParameter(i).name == "yScale") GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
         }
@@ -68,8 +73,6 @@ public class GForcesScript : MonoBehaviour {
                 dm.GetComponent<DamageModel>().kill();
             }
         }
-        updateSleepy();
-        calculateGs();
     }
 
     public bool ableToRollover() {
