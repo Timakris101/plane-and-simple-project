@@ -870,6 +870,7 @@ GameObject:
   - component: {fileID: 5798037976464544950}
   - component: {fileID: 8275156423159018174}
   - component: {fileID: 3573998582648526631}
+  - component: {fileID: 4530861563626868181}
   m_Layer: 3
   m_Name: PilotHitbox
   m_TagString: Untagged
@@ -1016,6 +1017,19 @@ MonoBehaviour:
   wingPos: {fileID: 0}
   wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
+--- !u!114 &4530861563626868181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220887884205304699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439c5c84ca47241398832aff57209e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrewarLifeHolder
+  nationality: 0
 --- !u!1 &2453116789498643652
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,6 +2141,7 @@ GameObject:
   - component: {fileID: 4002426411138017926}
   - component: {fileID: 798471849138733602}
   - component: {fileID: 9168069130299806455}
+  - component: {fileID: 3073041806598526083}
   m_Layer: 3
   m_Name: GunnerHitbox (1)
   m_TagString: Untagged
@@ -2291,3 +2306,16 @@ MonoBehaviour:
   angularThreshForGuns: 5
   maxRange: 500
   isInTail: 0
+--- !u!114 &3073041806598526083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9003916016748281661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 439c5c84ca47241398832aff57209e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrewarLifeHolder
+  nationality: 0
