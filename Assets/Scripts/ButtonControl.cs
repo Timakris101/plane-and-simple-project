@@ -19,14 +19,14 @@ public class ButtonControl : BaseControl, IPointerDownHandler, IPointerUpHandler
     }
 
     public void setVal(bool b) {
-        noQuery = false;
+        query();
         buttonPressed = b;
     }
 
     public bool getVal() {
         bool b = keyDownType ? whatToReturn : buttonPressed;
         whatToReturn = false;
-        noQuery = false;
+        query();
         return b;
     }
 

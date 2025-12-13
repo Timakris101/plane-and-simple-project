@@ -27,23 +27,15 @@ public class BaseControl : MonoBehaviour, IPointerDownHandler {
     }
 
     public void hide(bool b) {
-        if (GetComponent<SpriteRenderer>() != null) {
-            GetComponent<SpriteRenderer>().enabled = !b;
+        if (GetComponent<Graphic>() != null) {
+            GetComponent<Graphic>().enabled = !b;
         }
-        if (GetComponent<Image>() != null) {
-            GetComponent<Image>().enabled = !b;
+        foreach (GameObject imgObj in progenyWithScript<Graphic>(gameObject)) {
+            imgObj.GetComponent<Graphic>().enabled = !b;
         }
-        if (GetComponent<TMP_Text>() != null) {
-            GetComponent<TMP_Text>().enabled = !b;
-        }
-        foreach (GameObject imgObj in progenyWithScript<Image>(gameObject)) {
-            imgObj.GetComponent<Image>().enabled = !b;
-        }
-        foreach (GameObject spriteObj in progenyWithScript<SpriteRenderer>(gameObject)) {
-            spriteObj.GetComponent<SpriteRenderer>().enabled = !b;
-        }
-        foreach (GameObject textObj in progenyWithScript<TMP_Text>(gameObject)) {
-            textObj.GetComponent<TMP_Text>().enabled = !b;
-        }
+    }
+
+    public void query() {
+        noQuery = false;
     }
 }

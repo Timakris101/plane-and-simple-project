@@ -8,12 +8,12 @@ public class SliderControl : BaseControl, IPointerUpHandler {
     public bool returns;
 
     public void setVal(float f) {
-        noQuery = false;
+        query();
         GetComponent<Slider>().value = f;
     }
 
     public float getVal() {
-        noQuery = false;
+        query();
         return GetComponent<Slider>().value;
     }
 

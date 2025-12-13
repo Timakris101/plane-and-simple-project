@@ -21,6 +21,8 @@ public class CamScript : MonoBehaviour {
     [SerializeField] private string startingAlliance;
 
     Vector3 initCrosshairPos;
+
+    GameObject dialHandler;
     
     void Start() {
         offset = new Vector3(0, 0, transform.position.z);
@@ -33,6 +35,8 @@ public class CamScript : MonoBehaviour {
         matchParentToPlane();
 
         initCrosshairPos = transform.Find("Canvas").Find("CrosshairHolder").GetChild(0).localPosition;
+
+        dialHandler = transform.Find("Canvas").Find("DialHandler").gameObject;
     }
 
     void Update() {
@@ -42,6 +46,7 @@ public class CamScript : MonoBehaviour {
 
         handleCrosshair();
         handleArrow();
+        if (getControlledOrSpectatedVehicle() != null) dialHandler.GetComponent<BaseControl>().query();
     }
 
     void FixedUpdate() {
