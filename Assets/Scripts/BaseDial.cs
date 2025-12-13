@@ -29,6 +29,7 @@ public class BaseDial : MonoBehaviour {
             }
         }
         List<float> validAngles = new List<float>();
+        if (stepSize == 0) return;
         float angleStepSize = Mathf.Abs((endAngle - (startAngle > endAngle ? startAngle - 360f : startAngle)) / (endVal - startVal) * stepSize);
         for (float angle = (startAngle > endAngle ? startAngle - 360f : startAngle); angle <= endAngle; angle += angleStepSize) {
             validAngles.Add(angle);

@@ -29,6 +29,11 @@ public class BaseDialNeedle : MonoBehaviour {
             valueToRead = () => vehicle.transform.position.y;
             break;
 
+            case "Rotation": 
+            valueToRead = () => vehicle.transform.localEulerAngles.z;
+            transform.localScale = new Vector3(1, vehicle.transform.localScale.y, 1);
+            break;
+
             default: 
             valueToRead = () => 0f;
             break;
