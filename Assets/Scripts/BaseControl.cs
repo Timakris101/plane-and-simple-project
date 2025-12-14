@@ -12,6 +12,11 @@ public class BaseControl : MonoBehaviour, IPointerDownHandler {
     public bool noQuery;
     public int noQueryCounter;
 
+    public void Start() {
+        hide(true);
+        noQuery = true;
+    }
+
     public void OnPointerDown(PointerEventData eventData) {
         parentWithScript<CustomInputs>(gameObject).GetComponent<CustomInputs>().setModeOf(gameObject, "mobile");
     }
