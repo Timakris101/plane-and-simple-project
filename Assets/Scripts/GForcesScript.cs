@@ -14,7 +14,7 @@ public class GForcesScript : MonoBehaviour {
     [SerializeField] private float killingGs;
     [SerializeField] private float planeStructDestroyingGs;
     [SerializeField] private float planeDestroyingGs;
-    private float minRolloverSpeed = 4f;
+    private float minRolloverSpeed = 10f;
     private bool sleepy;
     private float inGlocTimer;
     private float timeToGloc = 4f;
@@ -76,7 +76,14 @@ public class GForcesScript : MonoBehaviour {
     }
 
     public bool ableToRollover() {
-        return (feltGs < rollOverThresh || (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false)) && GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && !GetComponent<PlaneController>().pilotDeadOrGone() && !sleepy && rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite);
+        if (!(GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && 
+            !GetComponent<PlaneController>().pilotDeadOrGone() && 
+            !sleepy && 
+            rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite) &&
+            GetComponent<PlaneController>().altitudeFromTerrain() > 10f)) 
+            return false;
+
+        return ((feltGs < rollOverThresh) || (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false));
     }
 
     private void updateSleepy() {
