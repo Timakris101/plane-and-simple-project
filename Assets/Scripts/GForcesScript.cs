@@ -79,8 +79,14 @@ public class GForcesScript : MonoBehaviour {
         if (!(GetComponent<Rigidbody2D>().linearVelocity.magnitude > minRolloverSpeed && 
             !GetComponent<PlaneController>().pilotDeadOrGone() && 
             !sleepy && 
-            rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite) &&
-            (GetComponent<PlaneController>() != null ? GetComponent<PlaneController>().altitudeFromTerrain() > 10f : false))) 
+            rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite)))
+            return false;
+
+        if ((GetComponent<PlaneController>() != null ? GetComponent<PlaneController>().altitudeFromTerrain() < 20f : true) && 
+            (Vector3.Dot(transform.up * transform.localScale.y, Vector3.down) < 0)) 
+            return false;
+
+         if ((GetComponent<PlaneController>() != null ? GetComponent<PlaneController>().altitudeFromTerrain() < (transform.Find("Gear") != null ? -transform.Find("Gear").localPosition.y + transform.Find("Gear").GetComponent<BoxCollider2D>().size.y * transform.Find("Gear").localScale.y : 3f) : true))
             return false;
 
         return ((feltGs < rollOverThresh) || (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false));
