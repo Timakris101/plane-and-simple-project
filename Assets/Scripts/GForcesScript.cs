@@ -80,7 +80,7 @@ public class GForcesScript : MonoBehaviour {
             !GetComponent<PlaneController>().pilotDeadOrGone() && 
             !sleepy && 
             rolloverAllowingSprites.Contains(GetComponent<SpriteRenderer>().sprite) &&
-            GetComponent<PlaneController>().altitudeFromTerrain() > 10f)) 
+            (GetComponent<PlaneController>() != null ? GetComponent<PlaneController>().altitudeFromTerrain() > 10f : false))) 
             return false;
 
         return ((feltGs < rollOverThresh) || (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false));
