@@ -6,7 +6,9 @@ using TMPro;
 using UnityEngine.UI;
 using static Utils;
 
-public class SquadronSpawner : MonoBehaviour {  
+public class SquadronSpawner : MonoBehaviour {
+    [SerializeField] private bool activateOnAwake;
+
     [Header("Mode")]
     [SerializeField] private bool arcade;
     private bool arcadeOn;
@@ -37,6 +39,13 @@ public class SquadronSpawner : MonoBehaviour {
     [SerializeField] private GameObject allianceDropdown;
 
     private bool inEditor;
+
+    void Awake() {
+        if (activateOnAwake) {
+            spawnVehicles();
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
 
     void Start() {
         inEditor = true;
