@@ -27,7 +27,7 @@ public class GunScript : MonoBehaviour {
         newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
         newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
         newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
-        parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().AddForceAtPosition(-transform.right * newBullet.GetComponent<BulletScript>().getInitSpeed() * newBullet.GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Impulse);
+        parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().AddForceAtPosition(-transform.right * .5f *  Mathf.Pow(newBullet.GetComponent<BulletScript>().getInitSpeed(), 2f) * newBullet.GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Force);
     }
 
     protected void Update() {

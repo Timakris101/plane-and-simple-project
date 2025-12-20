@@ -3,3 +3,9 @@ Cmd: initializeCompiler
 
 Cmd: initializeCompiler
 
+Cmd: disassembleShader
+ name=Sprites/Default platform=metal type=23 mask=6 insize=2612 outsize=2552 ok=1
+
+Cmd: disassembleShader
+ name=Sprites/Default platform=metal type=24 mask=6 insize=930 outsize=870 ok=1
+

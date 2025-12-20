@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initSpeed: 200
-  damage: 20
+  damage: 40
   penetrationVal: 20
   fragmentationAmt: 1
   fragmentationStrength: 0
