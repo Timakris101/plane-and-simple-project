@@ -54,6 +54,10 @@ public class SkyScript : MonoBehaviour {
         }
 
         texture.Apply();
+
+        camera.transform.Find("Canvas").Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, Mathf.Max(0f, camera.transform.Find("Canvas").Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color.a - Time.deltaTime));
+        camera.transform.Find("Canvas").Find("Brightness").GetComponent<RectTransform>().sizeDelta = camera.transform.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
+        camera.transform.Find("Canvas").Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, (.7f - (gradient.Evaluate(percentDay).maxColorComponent)));
     }
 // not working
     // private Vector3 lightSeenInViewDir(Vector3 dir, float stepSize) {
