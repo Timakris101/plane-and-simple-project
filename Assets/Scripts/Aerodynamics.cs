@@ -99,6 +99,10 @@ public class Aerodynamics : MonoBehaviour {
         return seaLevelAirDensity / Mathf.Exp(transform.position.y / scaleHeight);
     }
 
+    public static float getAirDensity(float altitude) {
+        return seaLevelAirDensity / Mathf.Exp(altitude / scaleHeight);
+    }
+
     private void handleLift() {
         float liftForce = .5f * (cL.Evaluate(AoA()) + (fs == null ? 0 : (fs.getFlapEffectiveness() * fs.deflection() / fs.getMaxDeflection()))) * getAirDensity() * Mathf.Pow(rb.linearVelocity.magnitude, 2) * wingArea;
         Vector2 liftDir = transform.localScale.y * Vector3.Cross(rb.linearVelocity, -transform.forward).normalized;
