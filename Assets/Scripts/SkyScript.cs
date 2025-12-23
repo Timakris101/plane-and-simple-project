@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using static Utils;
 using System;
+using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class SkyScript : MonoBehaviour {
     [SerializeField] private int size;
     [SerializeField] private Vector3 sunPosOnScreen;
@@ -28,7 +30,7 @@ public class SkyScript : MonoBehaviour {
         transform.position = camera.transform.position - (new Vector3(1,1,0) * 10f * baseSize / 2f) - new Vector3(0, 0, camera.transform.position.z);
 
         Texture2D texture = new Texture2D(size, size);
-        GetComponent<Renderer>().material.mainTexture = texture;
+        GetComponent<Renderer>().sharedMaterial.mainTexture = texture;
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, size, size), Vector2.zero);
         GetComponent<SpriteRenderer>().sprite = sprite;
 
