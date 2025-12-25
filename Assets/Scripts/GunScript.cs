@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
+using Unity.Netcode;
 
-public class GunScript : MonoBehaviour {
+public class GunScript : NetworkBehaviour {
 
     [SerializeField] protected GameObject bullet;
     [SerializeField] protected float fireRate;
@@ -27,7 +28,20 @@ public class GunScript : MonoBehaviour {
         newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
         newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
         newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
-        parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().AddForceAtPosition(-transform.right * .5f *  Mathf.Pow(newBullet.GetComponent<BulletScript>().getInitSpeed(), 2f) * newBullet.GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Force);
+        parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().AddForceAtPosition(-transform.right * .5f *  Mathf.Pow(bullet.GetComponent<BulletScript>().getInitSpeed(), 2f) * bullet.GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Force);
+        
+        pewPewServerRpc();
+    }
+
+    [ServerRpc]
+    void pewPewServerRpc() {
+        GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position), transform.rotation);
+        newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
+        newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
+        newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
+
+        NetworkObject m_SpawnedNetworkObject = newBullet.GetComponent<NetworkObject>();
+        m_SpawnedNetworkObject.Spawn();
     }
 
     protected void Update() {

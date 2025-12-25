@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
+using Unity.Netcode;
 
 public class CamScript : MonoBehaviour {
 
@@ -40,6 +41,7 @@ public class CamScript : MonoBehaviour {
     }
 
     void Update() {
+        takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
         handleVehicleSwitching();
         handleCam();
         handleGForceDisp();
@@ -285,7 +287,7 @@ public class CamScript : MonoBehaviour {
         foreach (GameObject vehicle in allVehiclesOfTags("Plane", "GroundVehicle")) {
             if (vehicle == vehicleToControl) continue;
 
-            if (vehicle.GetComponent<AllianceHolder>().getAlliance() == vehicleToControl.GetComponent<AllianceHolder>().getAlliance()) {
+            if (vehicle.GetComponent<AllianceHolder>().getAlliance() == alliance) {
                 if (!vehicle.GetComponent<VehicleController>().vehicleDead() && aiControllerOfVehicle(vehicle).enabled) {
                     return vehicle;
                 }

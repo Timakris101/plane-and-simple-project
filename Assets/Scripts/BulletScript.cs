@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
+using Unity.Netcode;
 
-public class BulletScript : MonoBehaviour {
+public class BulletScript : NetworkBehaviour {
     [Header("Base Stats")]
     [SerializeField] private float initSpeed;
     [SerializeField] private float damage;
@@ -174,8 +175,9 @@ public class BulletScript : MonoBehaviour {
         GameObject newEffect = Instantiate(effect, effectPos, Quaternion.identity);
         var mainModule = newEffect.GetComponent<ParticleSystem>().main;
         if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
+
         Destroy(newEffect, effectLifeTime);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     public void setPlaneFired(GameObject plane) {
@@ -184,7 +186,14 @@ public class BulletScript : MonoBehaviour {
 
     void Start() {
         collisionToPlaneFired(false);
-        Destroy(gameObject, lifeTime);
+        //Destroy(gameObject, lifeTime);
+    }
+
+    [ServerRpc]
+    public void destroyObjServerRpc() {
+        Destroy(gameObject);
+        NetworkObject m_SpawnedNetworkObject = gameObject.GetComponent<NetworkObject>();
+        m_SpawnedNetworkObject.Despawn();
     }
 
     public void setFuseTime(float sec) {
@@ -200,7 +209,7 @@ public class BulletScript : MonoBehaviour {
 
     void Update() {
         if (planeFired == null) {
-            Destroy(gameObject);
+            //Destroy(gameObject);
             return;
         }
 
