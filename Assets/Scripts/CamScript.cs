@@ -41,8 +41,12 @@ public class CamScript : MonoBehaviour {
     }
 
     void Update() {
-        takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
-        handleVehicleSwitching();
+        if (GameObject.Find("NetworkManager") != null) {
+            takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
+            matchParentToPlane();
+        } else {
+            handleVehicleSwitching();
+        }
         handleCam();
         handleGForceDisp();
 

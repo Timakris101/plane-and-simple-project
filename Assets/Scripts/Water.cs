@@ -13,13 +13,13 @@ public class Water : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.transform.gameObject.layer != LayerMask.NameToLayer("Vehicle") && other.transform.gameObject.layer != LayerMask.NameToLayer("Crew") && other.transform.parent == null) {
-            Destroy(other.transform.gameObject);
+            //GameObject.Find("NetworkManager").GetComponent<MultiplayerCreateAndDestroy>().destroy(other.transform.gameObject);
         }
         if (other.transform.parent == null) {
             GameObject newSplash = Instantiate(splashEffect, other.transform.position, Quaternion.identity);
             var mainModule = newSplash.GetComponent<ParticleSystem>().main;
             mainModule.startSpeed = new ParticleSystem.MinMaxCurve(splashSize(other.transform.gameObject) / 2f, splashSize(other.transform.gameObject));
-            Destroy(newSplash, mainModule.startLifetime.constant);
+            //GameObject.Find("NetworkManager").GetComponent<MultiplayerCreateAndDestroy>().destroy(newSplash, mainModule.startLifetime.constant);
         }
     }
 
