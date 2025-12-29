@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -169,6 +170,7 @@ GameObject:
   - component: {fileID: 2603898983792936210}
   - component: {fileID: 4235619079341509995}
   - component: {fileID: 4023884866766926858}
+  - component: {fileID: 4315336452938945920}
   - component: {fileID: 143053683170709520}
   - component: {fileID: 3153049483057612442}
   - component: {fileID: 8982516478224298928}
@@ -179,9 +181,8 @@ GameObject:
   - component: {fileID: 2905595085187888539}
   - component: {fileID: 4710348208218240673}
   - component: {fileID: 1885685550945214903}
-  - component: {fileID: 4315336452938945920}
   - component: {fileID: 5246110744016789156}
-  - component: {fileID: 4675636732958066433}
+  - component: {fileID: 928580992643086790}
   m_Layer: 3
   m_Name: Player
   m_TagString: Plane
@@ -348,6 +349,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 9, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &4315336452938945920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778651146784760480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2183786658
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &143053683170709520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0303471b7c3da4414933d6af2f8f52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
   tagsToTarget: []
   throttleChangeSpeed: 1
@@ -380,6 +407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1037361d7540a6be5e0a194ca7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
   tagsToTarget:
   - Plane
@@ -568,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf668b4f245784c349e66c2f685a3f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   rollOverThresh: -4
   currentGs: {x: 0, y: 0, z: 0}
   feltGs: 0
@@ -667,32 +696,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletMessageReader
+  ShowTopMostFoldoutHeaderGroup: 1
   basicTextObj: {fileID: 3909010079192846407, guid: c289223fda2d14e639019ca99fc26eaf, type: 3}
---- !u!114 &4315336452938945920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 778651146784760480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3446329939
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &5246110744016789156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,7 +744,7 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &4675636732958066433
+--- !u!114 &928580992643086790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -748,10 +753,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 778651146784760480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8eb4050068d6418da644597dd6f3820, type: 3}
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MultiplayerSpecifics
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkAnimator
   ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 4750402942499127984}
 --- !u!1 &1597390885604379672
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -955,6 +963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1462,6 +1471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1834,6 +1844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -2098,6 +2109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2

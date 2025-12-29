@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
+using Unity.Netcode;
 
-public class DamageModel : MonoBehaviour {
+public class DamageModel : NetworkBehaviour {
 
     private string effect;
     [SerializeField] private bool assym;
@@ -128,7 +129,73 @@ public class DamageModel : MonoBehaviour {
     }
 
     public void damage(float amt) {
-        health -= amt;
+        if (Constants.Hitdetection.serverside) {
+            if (IsServer && GameObject.Find("NetworkManager") != null) {
+                health -= amt;
+                serverHitSetHealthRpc(health);
+            } else if (GameObject.Find("NetworkManager") == null) {
+                health -= amt;
+            }
+        } else {
+            if (GameObject.Find("NetworkManager") != null) {
+                health -= amt;
+                clientHitSetHealthRpc(health);
+                whackThisManRpc();
+            } else if (GameObject.Find("NetworkManager") == null) {
+                health -= amt;
+            }
+        }
+        
+        switch(effect) {
+            case "Tail":
+                if (health <= 0 && !transform.parent.GetComponent<Animator>().GetBool("Tailless")) {
+                    handleSpawningTail();
+                }
+                break;
+
+            case "Wing":
+                if (health / maxHealth < Random.Range(0f, .5f)) {
+                    if (transform.parent.Find("Gear") != null) transform.parent.Find("Gear").GetComponent<GearScript>().breakGear();
+                }
+                if (health / maxHealth < Random.Range(0f, .75f)) {
+                    if (transform.parent.Find("Flaps") != null) transform.parent.Find("Flaps").GetComponent<FlapScript>().breakFlaps();
+                }
+                if (health <= 0 && !transform.parent.GetComponent<Animator>().GetBool("Wingless")) {
+                    handleSpawningWing();
+                }
+                break;
+
+            case "Engine":
+                break;
+        }
+
+        switch(effect) {
+            case "Tail":
+                aero.setBaseTorque(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
+                break;
+
+            case "Wing":
+                aero.setWingArea(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
+                break;
+
+            case "Engine":
+                GetComponent<EngineScript>().setVal(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
+                break;
+        }
+    }
+
+    [Rpc(SendTo.Owner)]
+    void serverHitSetHealthRpc(float val) {
+        health = val;
+    }
+
+    [Rpc(SendTo.NotMe)]
+    void clientHitSetHealthRpc(float val) {
+        health = val;
+    }
+
+    [Rpc(SendTo.Server)]
+    void whackThisManRpc() {      
         switch(effect) {
             case "Tail":
                 if (health <= 0 && !transform.parent.GetComponent<Animator>().GetBool("Tailless")) {

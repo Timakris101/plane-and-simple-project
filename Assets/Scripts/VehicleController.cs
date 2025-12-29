@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using static Utils;
+using Unity.Netcode;
 
-public class VehicleController : MonoBehaviour {
+public class VehicleController : NetworkBehaviour {
     
     private Sprite origSprite;
 
@@ -84,6 +85,12 @@ public class VehicleController : MonoBehaviour {
                 controller.enabled = controller == aiControllerOfVehicle(gameObject);
             }
         }
+        if (GameObject.Find("NetworkManager") != null) {
+            foreach (VehicleController controller in GetComponents<VehicleController>()) {
+                controller.enabled = controller != aiControllerOfVehicle(gameObject);
+            }
+        }
+
         handleFeasibleControls();
 
         frameCounter++;

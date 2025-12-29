@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using static Utils;
+using Unity.Netcode;
 
-public class GForcesScript : MonoBehaviour {
+public class GForcesScript : NetworkBehaviour {
     [SerializeField] private float rollOverThresh;
     [SerializeField] private Vector3 currentGs;
     [SerializeField] private float feltGs;
@@ -44,6 +45,9 @@ public class GForcesScript : MonoBehaviour {
             rollover();
             justRolledOver = true;
         }
+
+        if (!IsServer && GameObject.Find("NetworkManager") != null) return;
+
         if (justRolledOver) {
             counterPastRollover++;
         }
@@ -53,8 +57,12 @@ public class GForcesScript : MonoBehaviour {
         }
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
-            GameObject effect = Instantiate(explosion, transform.position, Quaternion.identity);
-            Destroy(effect, 10f);
+            GameObject effect = GameObject.Find("NetworkManager") != null ? GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(explosion, transform.position, Quaternion.identity) : Instantiate(explosion, transform.position, Quaternion.identity);
+            if (GameObject.Find("NetworkManager") != null) {
+                GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(effect, 10f);
+            } else {
+                Destroy(effect, 10f);
+            }
             //Instantiate(fire, transform, false);
             GetComponent<Aerodynamics>().setSpeedOfControlEff(Mathf.Infinity);
             if (SceneManager.GetActiveScene().name == "Arcade") Destroy(gameObject, 10f);

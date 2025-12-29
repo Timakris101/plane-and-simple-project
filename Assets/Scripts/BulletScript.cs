@@ -38,7 +38,7 @@ public class BulletScript : NetworkBehaviour {
             collider.transform.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(impulse, transform.position, ForceMode2D.Impulse);
         }
     }
-    
+
     private Vector3 prevVel;
     private void FixedUpdate() {
         prevVel = GetComponent<Rigidbody2D>().linearVelocity;
@@ -172,12 +172,22 @@ public class BulletScript : NetworkBehaviour {
     }
 
     private void makeEffectAndDestroyObj(Vector3 effectPos) {
-        GameObject newEffect = GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(effect, effectPos, Quaternion.identity);
-        var mainModule = newEffect.GetComponent<ParticleSystem>().main;
-        if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
+        GameObject newEffect = GameObject.Find("MultiplayerCreateDestroy") != null ? GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(effect, effectPos, Quaternion.identity) : Instantiate(effect, effectPos, Quaternion.identity);
+        if (newEffect != null) {
+            var mainModule = newEffect.GetComponent<ParticleSystem>().main;
+            if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
 
-        GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newEffect, effectLifeTime);
-        GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject);
+            if (GameObject.Find("MultiplayerCreateDestroy") != null) {
+                GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newEffect, effectLifeTime);
+            } else {
+                Destroy(newEffect, lifeTime);
+            }
+        }
+        if (GameObject.Find("MultiplayerCreateDestroy") != null) {
+            GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject);
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     public void setPlaneFired(GameObject plane) {
@@ -185,8 +195,25 @@ public class BulletScript : NetworkBehaviour {
     }
 
     void Start() {
-        //collisionToPlaneFired(false);
-        GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject, lifeTime);
+        if (GameObject.Find("MultiplayerCreateDestroy") != null) {
+            GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject, lifeTime);
+            if (Constants.Hitdetection.serverside) {
+                if (IsServer) {
+                    GetComponent<Collider2D>().enabled = true;
+                } else {
+                    GetComponent<Collider2D>().enabled = false;
+                }
+            } else {
+                if (planeFired.GetComponent<NetworkObject>().IsOwner) {
+                    GetComponent<Collider2D>().enabled = true;
+                } else {
+                    GetComponent<Collider2D>().enabled = false;
+                }
+            }
+        } else {
+            Destroy(gameObject, lifeTime);
+        }
+        collisionToPlaneFired(false);
     }
 
     public void setFuseTime(float sec) {
@@ -265,6 +292,12 @@ public class BulletMessage {
 
 public class BulletMessagePacket {
     List<BulletMessage> messages = new List<BulletMessage>();
+
+    public BulletMessagePacket(BulletMessagePacket packet) {
+        messages = packet.getMessages();
+    }
+
+    public BulletMessagePacket() {}
 
     public void addDamage(DamageModel mdl, float dmg) {
         foreach (BulletMessage message in messages) {

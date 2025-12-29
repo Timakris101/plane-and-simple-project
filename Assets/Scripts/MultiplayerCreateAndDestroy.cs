@@ -24,10 +24,11 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
 
     [Rpc(SendTo.Server)]
     public void killServerRpc(int i) {
+        if (i >= hitList.Count) return;
         if (hitList[i].gameObject == null) return;
 
         NetworkObject m_NetworkObject = hitList[i].gameObject.GetComponent<NetworkObject>();
-        m_NetworkObject.Despawn();
+        if (m_NetworkObject != null) m_NetworkObject.Despawn();
 
         Destroy(hitList[i].gameObject);
     }
@@ -55,7 +56,7 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     public void createServerRpc(Vector3 pos, Quaternion rot) {
         lilManSpawned = Instantiate(lilManToSpawn, pos, rot);
         NetworkObject m_SpawnedNetworkObject = lilManSpawned.GetComponent<NetworkObject>();
-        m_SpawnedNetworkObject.Spawn();
+        if (m_SpawnedNetworkObject != null) m_SpawnedNetworkObject.Spawn();
     }
 }
 

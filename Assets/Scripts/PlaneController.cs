@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
+using Unity.Netcode;
 
 public class PlaneController : VehicleController {
     protected bool inWEP;
@@ -62,7 +63,7 @@ public class PlaneController : VehicleController {
     }
 
     public float getDir() {
-        if (!pilotDeadOrGone()) {
+        if (!pilotDeadOrGone() && (IsOwner || GameObject.Find("NetworkManager") == null)) {
             if (altitudeFromTerrain() == Mathf.Infinity) {
                 if (Vector3.Dot(transform.right, Vector3.up) <= 0 && transform.position.y < GetComponent<AiPlaneController>().getMinAlt() + Constants.Water.seaLevel) {
                     return GetComponent<AiPlaneController>().pointTowards(transform.position + Vector3.up);
@@ -97,7 +98,7 @@ public class PlaneController : VehicleController {
     }
 
     public override void handleFeasibleControls() {
-        if (!pilotDeadOrGone() && !unconcious) {
+        if (!pilotDeadOrGone() && !unconcious && (IsOwner || GameObject.Find("NetworkManager") == null)) {
             if (gunnersAreManual()) {
                 GetComponent<AiPlaneController>().handleControls();
             } else {

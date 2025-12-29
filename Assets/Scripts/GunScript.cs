@@ -23,13 +23,17 @@ public class GunScript : NetworkBehaviour {
     }
     
     protected virtual void shoot() {
-        // GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position), transform.rotation);
-        // newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
-        // newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
-        // newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
-        float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
+        if (GameObject.Find("NetworkManager") != null) {
+            float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
 
-        pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency * 5f, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);
+            pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency * 5f, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);
+        } else {
+            GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position), transform.rotation);
+            newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
+            newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
+            newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
+            maxAncestor(gameObject).GetComponent<Rigidbody2D>().AddForceAtPosition(-transform.right * .5f *  Mathf.Pow(bullet.GetComponent<BulletScript>().getInitSpeed(), 2f) * bullet.GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Force);
+        }
     }
     
     [Rpc(SendTo.Server)]
@@ -39,13 +43,25 @@ public class GunScript : NetworkBehaviour {
         
         newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
 
-        NetworkObject m_SpawnedNetworkObject = newBullet.GetComponent<NetworkObject>();
-        m_SpawnedNetworkObject.Spawn();
+        NetworkObject newBulletNetwork = newBullet.GetComponent<NetworkObject>();
+        newBulletNetwork.Spawn();
 
         newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
 
         maxAncestor(gameObject).GetComponent<Rigidbody2D>().AddForceAtPosition(-transform.right * .5f *  Mathf.Pow(bullet.GetComponent<BulletScript>().getInitSpeed(), 2f) * bullet.GetComponent<Rigidbody2D>().mass, transform.position, ForceMode2D.Force);
+
+        setBulletRpc(newBulletNetwork.NetworkObjectId, vel, bulletFuse);
     }
+
+    [Rpc(SendTo.Everyone)]
+    void setBulletRpc(ulong idOfNewBullet, Vector3 vel, float bulletFuse) {
+        GameObject localBullet = NetworkManager.SpawnManager.SpawnedObjects[idOfNewBullet].gameObject;
+        localBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
+
+        localBullet.GetComponent<Rigidbody2D>().linearVelocity = vel;
+        
+        localBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
+    }   
 
     protected void Update() {
         timer += Time.deltaTime;

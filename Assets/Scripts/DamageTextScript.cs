@@ -15,7 +15,7 @@ public class DamageTextScript : MonoBehaviour {
     float startFontSize;
 
     void Start() {
-        Destroy(gameObject, lifeTime);;
+        Destroy(gameObject, lifeTime);
         text = progenyWithScript<TMP_Text>(gameObject)[0];
         text.transform.SetParent(transform.parent);
         transform.SetParent(null, true);

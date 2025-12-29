@@ -4,8 +4,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using static Utils;
+using Unity.Netcode;
 
-public class BulletMessageReader : MonoBehaviour {
+public class BulletMessageReader : NetworkBehaviour {
 
     [SerializeField] private GameObject basicTextObj;
 
