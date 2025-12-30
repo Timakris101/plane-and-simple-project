@@ -10,7 +10,4 @@ public class Constants {
     public static class Water {
         public static float seaLevel = 60f;
     }
-    public static class Hitdetection {
-        public static bool serverside = false;
-    }
 }

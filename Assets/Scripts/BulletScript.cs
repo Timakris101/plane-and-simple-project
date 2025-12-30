@@ -197,18 +197,10 @@ public class BulletScript : NetworkBehaviour {
     void Start() {
         if (GameObject.Find("MultiplayerCreateDestroy") != null) {
             GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject, lifeTime);
-            if (Constants.Hitdetection.serverside) {
-                if (IsServer) {
-                    GetComponent<Collider2D>().enabled = true;
-                } else {
-                    GetComponent<Collider2D>().enabled = false;
-                }
+            if (IsServer) {
+                GetComponent<Collider2D>().enabled = true;
             } else {
-                if (planeFired.GetComponent<NetworkObject>().IsOwner) {
-                    GetComponent<Collider2D>().enabled = true;
-                } else {
-                    GetComponent<Collider2D>().enabled = false;
-                }
+                GetComponent<Collider2D>().enabled = false;
             }
         } else {
             Destroy(gameObject, lifeTime);

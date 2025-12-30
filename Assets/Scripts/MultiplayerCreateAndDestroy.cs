@@ -28,9 +28,7 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
         if (hitList[i].gameObject == null) return;
 
         NetworkObject m_NetworkObject = hitList[i].gameObject.GetComponent<NetworkObject>();
-        if (m_NetworkObject != null) m_NetworkObject.Despawn();
-
-        Destroy(hitList[i].gameObject);
+        if (m_NetworkObject != null) m_NetworkObject.Despawn(true);
     }
 
     public void destroy(GameObject g) {

@@ -129,21 +129,13 @@ public class DamageModel : NetworkBehaviour {
     }
 
     public void damage(float amt) {
-        if (Constants.Hitdetection.serverside) {
-            if (IsServer && GameObject.Find("NetworkManager") != null) {
-                health -= amt;
-                serverHitSetHealthRpc(health);
-            } else if (GameObject.Find("NetworkManager") == null) {
-                health -= amt;
-            }
-        } else {
-            if (GameObject.Find("NetworkManager") != null) {
-                health -= amt;
-                clientHitSetHealthRpc(health);
-                whackThisManRpc();
-            } else if (GameObject.Find("NetworkManager") == null) {
-                health -= amt;
-            }
+        if (IsServer && GameObject.Find("NetworkManager") != null) {
+            health -= amt;
+            serverHitSetHealthRpc(health);
+            whackThisManRpc();
+            return;
+        } else if (GameObject.Find("NetworkManager") == null) {
+            health -= amt;
         }
         
         switch(effect) {
@@ -184,17 +176,12 @@ public class DamageModel : NetworkBehaviour {
         }
     }
 
-    [Rpc(SendTo.Owner)]
+    [Rpc(SendTo.Everyone)]
     void serverHitSetHealthRpc(float val) {
         health = val;
     }
-
-    [Rpc(SendTo.NotMe)]
-    void clientHitSetHealthRpc(float val) {
-        health = val;
-    }
-
-    [Rpc(SendTo.Server)]
+    
+    [Rpc(SendTo.Everyone)]
     void whackThisManRpc() {      
         switch(effect) {
             case "Tail":
