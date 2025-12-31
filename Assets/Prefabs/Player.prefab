@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2183786658
+  GlobalObjectIdHash: 3446329939
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1745,7 +1745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  bullet: {fileID: 1432378121075399777, guid: 7b220f30aa2fa4fab9fef58f1ae9fcf2, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
   ammunition: 0
@@ -1956,7 +1956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: 11aae9de4897a4df39cdd34c8f6cc281, type: 3}
+  bullet: {fileID: 1432378121075399777, guid: 4b7498355aa26489d8404804097935aa, type: 3}
   fireRate: 0.1
   maxAmmunition: 60
   ammunition: 0
@@ -2009,7 +2009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  bullet: {fileID: 1432378121075399777, guid: 7b220f30aa2fa4fab9fef58f1ae9fcf2, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
   ammunition: 0
@@ -2292,7 +2292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: 11aae9de4897a4df39cdd34c8f6cc281, type: 3}
+  bullet: {fileID: 1432378121075399777, guid: 4b7498355aa26489d8404804097935aa, type: 3}
   fireRate: 0.1
   maxAmmunition: 60
   ammunition: 0
