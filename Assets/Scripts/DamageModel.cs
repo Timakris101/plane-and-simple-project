@@ -20,6 +20,8 @@ public class DamageModel : NetworkBehaviour {
 
     [Header("Engine")]
     [SerializeField] private float fireDamagePerSec;
+    [SerializeField] private GameObject wepOrAbEffect;
+    GameObject instantiatedEffect;
 
     [Header("Tail")]
     [SerializeField] private GameObject tailPos;
@@ -65,6 +67,10 @@ public class DamageModel : NetworkBehaviour {
 
             case "Engine":
                 startingValOfEffect = GetComponent<EngineScript>().getVal();
+                if (wepOrAbEffect != null) {
+                    instantiatedEffect = Instantiate(wepOrAbEffect, transform);
+                    instantiatedEffect.transform.localPosition = GetComponent<BoxCollider2D>().offset;
+                }
                 break;
         }
     }
@@ -107,6 +113,28 @@ public class DamageModel : NetworkBehaviour {
         if (effect == "Wing") {
             if (transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude > ripSpeed) {
                 kill();
+            }
+        }
+
+        if (effect == "Engine") { 
+            if (instantiatedEffect != null) {
+                ParticleSystem ps = instantiatedEffect.GetComponent<ParticleSystem>();
+                PlaneController pc = null;
+                foreach (PlaneController c in transform.parent.GetComponents<PlaneController>()) {
+                    if (c.enabled) {
+                        pc = c;
+                        break;
+                    }
+                } 
+                if (pc.getInWEP() && isAlive()) {
+                    if (!ps.isPlaying) {
+                        ps.Play(true);
+                    }
+                } else {
+                    if (ps.isPlaying) {
+                        ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                    }
+                }
             }
         }
     }
