@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3720521406314344333}
   - component: {fileID: 1097000177817599654}
   - component: {fileID: 4706963607179859926}
+  - component: {fileID: -8387596888246265439}
   - component: {fileID: 1569400567192195856}
   - component: {fileID: 7474561485111155223}
   - component: {fileID: 3728597093868562233}
@@ -194,6 +195,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 12, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &-8387596888246265439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232945582501730601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 1941159487
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &1569400567192195856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0303471b7c3da4414933d6af2f8f52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
   tagsToTarget: []
   throttleChangeSpeed: 1
@@ -226,6 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1037361d7540a6be5e0a194ca7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
   tagsToTarget:
   - Plane
@@ -415,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf668b4f245784c349e66c2f685a3f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   rollOverThresh: -4
   currentGs: {x: 0, y: 0, z: 0}
   feltGs: 0
@@ -514,6 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletMessageReader
+  ShowTopMostFoldoutHeaderGroup: 1
   basicTextObj: {fileID: 3909010079192846407, guid: c289223fda2d14e639019ca99fc26eaf, type: 3}
 --- !u!1 &872669484970968795
 GameObject:
@@ -559,6 +589,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
@@ -1006,6 +1037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1163,6 +1195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1321,6 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1580,6 +1614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1645,6 +1680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
@@ -1697,6 +1733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
@@ -1749,6 +1786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: 11aae9de4897a4df39cdd34c8f6cc281, type: 3}
   fireRate: 0.1
   maxAmmunition: 200
@@ -1850,6 +1888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1977,6 +2016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: 11aae9de4897a4df39cdd34c8f6cc281, type: 3}
   fireRate: 0.1
   maxAmmunition: 200
@@ -2258,6 +2298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -2368,6 +2409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.05
   maxAmmunition: 2000
@@ -2797,6 +2839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
@@ -2927,6 +2970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -2993,6 +3037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f4ef90a1ce3a474fa32196fd97cd845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 4421821571535085684, guid: 997073c74f2b54cb896ba6348abf632b, type: 3}
   fireRate: 0.1
   maxAmmunition: 1

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.005
   maxAmmunition: 2000
@@ -302,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -366,6 +368,7 @@ GameObject:
   - component: {fileID: 6572080974519759259}
   - component: {fileID: 1483700832910698638}
   - component: {fileID: 1448794788859955870}
+  - component: {fileID: -4949988307526654977}
   - component: {fileID: 1947236376156283228}
   - component: {fileID: 282818566222992549}
   - component: {fileID: 8927023784502357940}
@@ -540,6 +543,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-4949988307526654977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015567163552028216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 2668481595
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &1947236376156283228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,6 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0303471b7c3da4414933d6af2f8f52b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
   tagsToTarget: []
   throttleChangeSpeed: 1
@@ -572,6 +601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1037361d7540a6be5e0a194ca7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
   tagsToTarget:
   - Plane
@@ -760,6 +790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf668b4f245784c349e66c2f685a3f6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   rollOverThresh: -4
   currentGs: {x: 0, y: 0, z: 0}
   feltGs: 0
@@ -858,6 +889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletMessageReader
+  ShowTopMostFoldoutHeaderGroup: 1
   basicTextObj: {fileID: 3909010079192846407, guid: c289223fda2d14e639019ca99fc26eaf, type: 3}
 --- !u!1 &2220887884205304699
 GameObject:
@@ -870,7 +902,6 @@ GameObject:
   - component: {fileID: 5798037976464544950}
   - component: {fileID: 8275156423159018174}
   - component: {fileID: 3573998582648526631}
-  - component: {fileID: 4530861563626868181}
   m_Layer: 3
   m_Name: PilotHitbox
   m_TagString: Untagged
@@ -951,6 +982,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1017,19 +1049,6 @@ MonoBehaviour:
   wingPos: {fileID: 0}
   wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
---- !u!114 &4530861563626868181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2220887884205304699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 439c5c84ca47241398832aff57209e87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PrewarLifeHolder
-  nationality: 0
 --- !u!1 &2453116789498643652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1310,6 +1330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -1460,6 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
   fireRate: 0.005
   maxAmmunition: 0
@@ -1951,6 +1973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageModel
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -2063,6 +2086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -2223,6 +2247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45590e02feca045439eb77af1e31812f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   assym: 0
   hitChanceByAngle:
     serializedVersion: 2
@@ -2319,3 +2344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PrewarLifeHolder
   nationality: 0
+  name: 
+  occupation: 
+  birthyear: 0
+  grave: {fileID: 0}
