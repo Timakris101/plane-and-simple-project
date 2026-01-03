@@ -6,6 +6,8 @@ public class CrewScript : MonoBehaviour {
 
     [SerializeField] private float chuteSpeed;
     [SerializeField] private float chuteEff;
+    [SerializeField] private float chuteDelay;
+    float timer = 0f;
     [SerializeField] private AnimationCurve hitChanceByAngle;
     private bool onGround;
 
@@ -40,6 +42,7 @@ public class CrewScript : MonoBehaviour {
     }
 
     void Update() {
+        timer += Time.deltaTime;
         handleHealth();
         if (transform.position.y < Constants.Water.seaLevel) {
             toDoWhenOnGround();
@@ -55,7 +58,7 @@ public class CrewScript : MonoBehaviour {
     }
 
     void handleSpeed() {
-        if (GetComponent<Rigidbody2D>().linearVelocity.magnitude > chuteSpeed) {
+        if (GetComponent<Rigidbody2D>().linearVelocity.magnitude > chuteSpeed && timer > chuteDelay) {
             GetComponent<Rigidbody2D>().linearVelocity -= GetComponent<Rigidbody2D>().linearVelocity.normalized * (Time.deltaTime * chuteEff * GetComponent<Rigidbody2D>().linearVelocity.magnitude);
         }
     }
