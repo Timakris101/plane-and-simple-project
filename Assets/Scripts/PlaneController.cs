@@ -140,7 +140,7 @@ public class PlaneController : VehicleController {
 
         if (INPUTS.GetComponent<CustomInputs>().gearInput() && transform.Find("Gear") && !onGround) {
             foreach (GameObject gear in gears) {
-                gear.GetComponent<GearScript>().toggleGear();
+                if (gear != null) gear.GetComponent<GearScript>().toggleGear();
             }
         }
         if (INPUTS.GetComponent<CustomInputs>().brakeInput() && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();

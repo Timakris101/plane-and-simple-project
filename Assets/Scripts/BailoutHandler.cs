@@ -9,6 +9,7 @@ public class BailoutHandler : MonoBehaviour {
     private int bailCalled;
     private int counter;
     private float bailOutTimer;
+    [SerializeField] private float ejectionSeatStrength;
 
     void Update() {
         counter++;
@@ -43,7 +44,7 @@ public class BailoutHandler : MonoBehaviour {
 
     public void bailCrewMember(GameObject crewToBail) {
         GameObject newCrew = Instantiate(crew, crewToBail.transform.position, Quaternion.identity);
-        newCrew.GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity;
+        newCrew.GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity + (Vector2) transform.up * transform.localScale.y * ejectionSeatStrength;
 
         if (transform.Find("Camera") != null) transform.Find("Camera").parent = null;
 

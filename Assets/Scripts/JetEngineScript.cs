@@ -14,6 +14,10 @@ public class JetEngineScript : EngineScript {
         baseThrustToAb = afterBurner / thrustKn;
     }
 
+    public override float getThrustNewtons(float speed) {
+        return this.getThrustNewtons();
+    }
+
     public override float getThrustNewtons() {
         return enginesOn ? (((PlaneController) vc).getInWEP() ? thrustKn * baseThrustToAb : thrustKn) * 1000f * enginePowerByAlt.Evaluate(transform.position.y) * throttle : 0f;
     }
