@@ -32,8 +32,10 @@ public class GForcesScript : NetworkBehaviour {
     int counterPastRollover = 0;
     
     void FixedUpdate() {
-        updateSleepy();
-        calculateGs();
+        if (!justRolledOver) {
+            updateSleepy();
+        }
+            calculateGs();
     }
 
     void Update() {

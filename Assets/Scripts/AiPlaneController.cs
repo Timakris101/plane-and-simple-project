@@ -176,9 +176,11 @@ public class AiPlaneController : PlaneController {
 
         float timeOfFlight = newtonRaphson(s == 0 ? 0f : p.magnitude / s, 5, 5f, coefficients);
 
-        if (s == 0f) { //really hacky and dumb solution for bombs
+        if (s == 0f && targetedObj.GetComponent<Rigidbody2D>().linearVelocity.magnitude < 15f) { //really hacky and dumb solution for bombs
             timeOfFlight = (targetedObj.transform.position - transform.position).x / ((Vector3) GetComponent<Rigidbody2D>().linearVelocity).x;
             return targetedObj.transform.position + (Vector3) (targetedObj.GetComponent<Rigidbody2D>().linearVelocity) * timeOfFlight - (Vector3) Physics2D.gravity * Mathf.Pow(timeOfFlight, 2) / 2f;
+        } else if (s == 0f) {
+            return transform.position - transform.right * Mathf.Infinity;
         }
 
         if (timeOfFlight == -Mathf.Infinity) {
