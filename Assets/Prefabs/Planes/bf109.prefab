@@ -153,6 +153,7 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
+  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -306,6 +307,7 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -841,6 +843,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crew: {fileID: 6995507021632064973, guid: e7d534dcfa29a47a79b89e36601a4619, type: 3}
   bailOutDelay: 2
+  ejectionSeatStrength: 0
 --- !u!114 &4677812592195434679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,6 +1089,7 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 200
@@ -1667,6 +1671,7 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 3329704741098306423, guid: fd73a7d0d25dc482db1132f79d744f25, type: 3}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1780,6 +1785,7 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -2022,15 +2028,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.0011111111
-      outSlope: 0.0011111111
+      inSlope: 0.004211472
+      outSlope: 0.004211472
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 90
-      value: 0.1
+      time: 65.77319
+      value: 0.27700195
       inSlope: -0.000026644258
       outSlope: -0.000026644258
       tangentMode: 0
@@ -2038,8 +2044,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.67599565
     - serializedVersion: 3
-      time: 180.77441
-      value: 0.03
+      time: 177.97504
+      value: 0.19796875
       inSlope: 0.00002954078
       outSlope: 0.00002954078
       tangentMode: 0
@@ -2047,10 +2053,10 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.4328544
     - serializedVersion: 3
-      time: 270
-      value: 0.1
-      inSlope: -0.0001632914
-      outSlope: -0.0001632914
+      time: 266.53903
+      value: 0.27601013
+      inSlope: -0.0010360132
+      outSlope: -0.0010360132
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2058,8 +2064,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 360
       value: 0
-      inSlope: -0.0011111111
-      outSlope: -0.0011111111
+      inSlope: -0.0029532127
+      outSlope: -0.0029532127
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2075,6 +2081,7 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
