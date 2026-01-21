@@ -66,7 +66,7 @@ public class PlaneController : VehicleController {
         if (!pilotDeadOrGone() && (IsOwner || GameObject.Find("NetworkManager") == null)) {
             if (altitudeFromTerrain() == Mathf.Infinity) {
                 if (Vector3.Dot(transform.right, Vector3.up) <= 0 && transform.position.y < GetComponent<AiPlaneController>().getMinAlt() + Constants.Water.seaLevel) {
-                    return GetComponent<AiPlaneController>().pointTowards(transform.position + Vector3.up);
+                    return GetComponent<AiPlaneController>().pointTowards(transform.position + Vector3.up + Vector3.right * Mathf.Clamp(transform.position.x, -1, 1));
                 } else {
                     return GetComponent<AiPlaneController>().pointTowards(new Vector3(0, transform.position.y ,0));
                 }
@@ -97,6 +97,7 @@ public class PlaneController : VehicleController {
         return INPUTS.GetComponent<CustomInputs>().directionInput();
     }
 
+    private float oobCounter;
     public override void handleFeasibleControls() {
         if (!pilotDeadOrGone() && !unconcious && (IsOwner || GameObject.Find("NetworkManager") == null)) {
             if (gunnersAreManual()) {
@@ -104,6 +105,12 @@ public class PlaneController : VehicleController {
             } else {
                 handleControls();
             }
+        }
+        if (altitudeFromTerrain() == Mathf.Infinity) {
+            oobCounter += Time.deltaTime;
+            if (oobCounter > 20) GetComponent<BailoutHandler>().callBailOut();
+        } else {
+            oobCounter = 0;
         }
         if (pilotDeadOrGone()) setGuns(false);
         
