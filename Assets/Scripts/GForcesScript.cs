@@ -30,12 +30,12 @@ public class GForcesScript : NetworkBehaviour {
 
     bool justRolledOver = false;
     int counterPastRollover = 0;
-    
+
     void FixedUpdate() {
         if (!justRolledOver) {
             updateSleepy();
         }
-            calculateGs();
+        calculateGs();
     }
 
     void Update() {
@@ -43,7 +43,7 @@ public class GForcesScript : NetworkBehaviour {
             if (GetComponent<Animator>().GetParameter(i).name == "yScale") GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
         }
         
-        if (ableToRollover()) {
+        if (ableToRollover() && (yearnsToRollover() || rolloverInputPressed())) {
             rollover();
             justRolledOver = true;
         }
@@ -57,6 +57,9 @@ public class GForcesScript : NetworkBehaviour {
             justRolledOver = false;
             counterPastRollover = 0;
         }
+
+        if (justRolledOver) return;
+        
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
             GameObject effect = GameObject.Find("NetworkManager") != null ? GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(explosion, transform.position, Quaternion.identity) : Instantiate(explosion, transform.position, Quaternion.identity);
@@ -73,7 +76,7 @@ public class GForcesScript : NetworkBehaviour {
                 dm.GetComponent<DamageModel>().kill();
             }
         }
-        if (overGPlane() && !justRolledOver) {
+        if (overGPlane()) {
             if (transform.Find("WingHitbox") != null) transform.Find("WingHitbox").GetComponent<DamageModel>().kill();
             //if (transform.Find("TailHitbox") != null) transform.Find("TailHitbox").GetComponent<DamageModel>().kill();
         }
@@ -97,10 +100,21 @@ public class GForcesScript : NetworkBehaviour {
             Vector3.Dot(transform.up * transform.localScale.y, Vector3.down) < 0) 
             return false;
 
-         if (GetComponent<PlaneController>().altitudeFromTerrain() < (transform.Find("Gear") != null ? -transform.Find("Gear").localPosition.y + transform.Find("Gear").GetComponent<BoxCollider2D>().size.y * transform.Find("Gear").localScale.y : 3f))
+        if (GetComponent<PlaneController>().altitudeFromTerrain() < (transform.Find("Gear") != null ? -transform.Find("Gear").localPosition.y + transform.Find("Gear").GetComponent<BoxCollider2D>().size.y * transform.Find("Gear").localScale.y : 3f))
             return false;
 
-        return ((feltGs < rollOverThresh) || (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false));
+        if (justRolledOver)
+            return false;
+
+        return true;
+    }
+
+    public bool yearnsToRollover() {
+        return (feltGs < rollOverThresh);
+    }
+
+    public bool rolloverInputPressed() {
+        return (progenyWithScript<CamScript>(gameObject).Count > 0 ? (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) : false);
     }
 
     private void updateSleepy() {

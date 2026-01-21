@@ -27,11 +27,16 @@ public class CamScript : MonoBehaviour {
     
     void Start() {
         offset = new Vector3(0, 0, transform.position.z);
-
+        
+        GameObject vehicleToControlAtStart = null;
         if (vehicleToControl == null) {
-            takeControlOfVehicle(findNewVehicle(startingAlliance));
+            vehicleToControlAtStart = findNewVehicle(startingAlliance);
         } else {
-            takeControlOfVehicle(vehicleToControl);
+            vehicleToControlAtStart = vehicleToControl;
+        }
+        takeControlOfVehicle(vehicleToControlAtStart);
+        if (vehicleToControlAtStart != null) {
+            transform.position = vehicleToControlAtStart.transform.position;
         }
         matchParentToPlane();
 
@@ -49,14 +54,17 @@ public class CamScript : MonoBehaviour {
         }
         handleCam();
         handleGForceDisp();
-
-        handleCrosshair();
-        handleArrow();
         if (getControlledOrSpectatedVehicle() != null) dialHandler.GetComponent<BaseControl>().query();
     }
 
-    void FixedUpdate() {
+    void LateUpdate() {
         transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.localScale = Vector3.one;
+    }
+
+    void FixedUpdate() {
+        handleCrosshair();
+        handleArrow();
     }
 
     private void handleArrow() {
@@ -73,7 +81,7 @@ public class CamScript : MonoBehaviour {
                 
                 arrowHolder.right = (nearestEnemy().transform.position - vehicleToControl.transform.position).normalized;
 
-                arrowHolder.GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
+                arrowHolder.transform.position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
             } else {
                 arrowHolder.GetChild(0).GetComponent<UnityEngine.UI.Image>().enabled = false;
             }
@@ -84,7 +92,7 @@ public class CamScript : MonoBehaviour {
         Transform crosshairHolder = transform.Find("Canvas").Find("CrosshairHolder");
         if (transform.Find("Canvas") != null && vehicleToControl != null) {
             if (vehicleToControl.GetComponent<PlaneController>() != null) {
-                crosshairHolder.GetComponent<RectTransform>().position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
+                crosshairHolder.transform.position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
                 if (!vehicleToControl.GetComponent<PlaneController>().gunnersAreManual()) {
                     crosshairHolder.right = vehicleToControl.transform.right;
                     for (int i = 0; i < crosshairHolder.childCount; i++) {
@@ -101,8 +109,11 @@ public class CamScript : MonoBehaviour {
                     }
                 }
             } else {
+                float curCamScaling = (GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
+                crosshairHolder.transform.position = GetComponent<Camera>().WorldToScreenPoint(GetComponent<CustomInputs>().pointerPositionInput());
                 for (int i = 0; i < crosshairHolder.childCount; i++) {
-                    crosshairHolder.GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = false;
+                    crosshairHolder.GetChild(i).GetComponent<UnityEngine.UI.Image>().enabled = true;
+                    crosshairHolder.GetChild(i).localPosition = new Vector3(0,0,0);
                 }
             }
         } else {
@@ -169,6 +180,7 @@ public class CamScript : MonoBehaviour {
     }
 
     private void handleCam() {
+        transform.localScale = Vector3.one;
         Camera camera = gameObject.GetComponent<Camera>();
 
         if (Input.touchCount == 0) {
@@ -185,7 +197,7 @@ public class CamScript : MonoBehaviour {
 
             Vector3 newMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
 
-            transform.position += prevMousePos - newMousePos;
+            if (getControlledOrSpectatedVehicle() == null) transform.position += prevMousePos - newMousePos;
         } else if (Input.touchCount == 2) {
             Vector3 prevTouchPos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
             
@@ -200,7 +212,7 @@ public class CamScript : MonoBehaviour {
 
             Vector3 newTouchPos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
 
-            transform.position += prevTouchPos - newTouchPos;
+            if (getControlledOrSpectatedVehicle() == null) transform.position += prevTouchPos - newTouchPos;
         }
 
         if (transform.parent != null) {
@@ -221,10 +233,10 @@ public class CamScript : MonoBehaviour {
         }
         transform.eulerAngles = new Vector3(0, 0, 0);
 
-        if (camera.WorldToScreenPoint(new Vector3(bounds.min.x, bounds.min.y, 0)).x > 0) {
+        if (camera.WorldToScreenPoint(new Vector3(bounds.min.x, 0, 0)).x > 0) {
             transform.position = new Vector3(bounds.min.x - (camera.ScreenToWorldPoint(new Vector3(0, 0, -transform.position.z)) - transform.position).x, transform.position.y, transform.position.z);
         } 
-        if (camera.WorldToScreenPoint(new Vector3(bounds.max.x, bounds.min.y, 0)).x < camera.pixelWidth) {
+        if (camera.WorldToScreenPoint(new Vector3(bounds.max.x, 0, 0)).x < camera.pixelWidth) {
             transform.position = new Vector3(bounds.max.x - (camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, 0, -transform.position.z)) - transform.position).x, transform.position.y, transform.position.z);
         }
         if (camera.WorldToScreenPoint(new Vector3(0, bounds.min.y, 0)).y > 0) {
