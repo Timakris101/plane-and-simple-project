@@ -15,6 +15,7 @@ public class SkyScript : MonoBehaviour {
     // [SerializeField] private float baseScatter = 400f;
     [SerializeField] private AnimationCurve sunPath;
     [SerializeField] private AnimationCurve glareStrength;
+    [SerializeField] private AnimationCurve sunSize;
     [SerializeField] private Gradient gradient;
     [SerializeField] private float dayLength;
     [SerializeField] private float time;
@@ -25,10 +26,17 @@ public class SkyScript : MonoBehaviour {
     //Vector3 earthCenter => new Vector3(0, -earthRadius, 0f);
     int baseSize = 100;
 
-    void Update() {
+    void LateUpdate() {
+        transform.parent = null;
         transform.localScale = new Vector3(100000 / size, 100000 / size, 1f);
-        transform.position = camera.transform.position - (new Vector3(1,1,0) * 10f * baseSize / 2f) - new Vector3(0, 0, camera.transform.position.z);
+        transform.position = camera.transform.position - (new Vector3(1, 1f, 0) * 10f * baseSize / 2f) - new Vector3(0, 0, camera.transform.position.z);
 
+        float percentDay = (time % dayLength) / dayLength;
+        transform.GetChild(0).localScale = new Vector3(sunSize.Evaluate(percentDay) / baseSize * size, sunSize.Evaluate(percentDay) / baseSize * size, 1);
+        transform.GetChild(0).localPosition = sunPosOnScreen / baseSize;
+    }
+
+    void Update() {
         Texture2D texture = new Texture2D(size, size);
         GetComponent<Renderer>().sharedMaterial.mainTexture = texture;
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, size, size), Vector2.zero);
@@ -46,10 +54,9 @@ public class SkyScript : MonoBehaviour {
 
         for (int y = 0; y < texture.height; y++) {
             for (int x = 0; x < texture.width; x++) {
-                float dist = Vector3.Distance(sunPosOnScreen, new Vector3(x, y, 0f));
+                float dist = Vector3.Distance(sunPosOnScreen, new Vector3(x, y, 0f)) * size / baseSize;
                 
                 Color color = (gradient.Evaluate(sunPosOnScreen.x / texture.width) + new Color((texture.width - dist) * glareStrength.Evaluate(sunPosOnScreen.x / texture.width), (texture.height - dist) * glareStrength.Evaluate(sunPosOnScreen.x / texture.width), 0f, .1f));
-                if (dist < glareStrength.Evaluate(percentDay) * size / baseSize * 1000f) color = new Color(1f, 1f, 0f, 1f);
 
                 texture.SetPixel(x, y, color);
             }
