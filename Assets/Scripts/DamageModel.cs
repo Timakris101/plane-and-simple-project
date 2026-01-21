@@ -75,6 +75,7 @@ public class DamageModel : NetworkBehaviour {
         }
     }
 
+    float prevHealth;
     void Update() {
         if (health > maxHealth) health = maxHealth;
         if (health <= 0) {
@@ -137,6 +138,15 @@ public class DamageModel : NetworkBehaviour {
                 }
             }
         }
+
+        if (health != prevHealth) {
+            onHealthChange();
+        }
+        prevHealth = health;
+    }
+
+    public void onHealthChange() {
+        damage(0);
     }
 
     public void drown() {

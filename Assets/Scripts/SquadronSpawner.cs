@@ -123,11 +123,7 @@ public class SquadronSpawner : MonoBehaviour {
     public void editSpawner(GameObject spawnerToEdit) {
         if (spawnerToEdit != null && inEditor) {
             setSpawnerToPanelStats(spawnerToEdit);
-            foreach (GameObject spawner in GameObject.FindGameObjectsWithTag("Spawner")) {
-                if (spawner != spawnerToEdit && spawnerToEdit.GetComponent<SquadronSpawner>().containsPlayer) {
-                    spawner.GetComponent<SquadronSpawner>().setContainsPlayer(false);
-                }
-            }
+            setContainsPlayer(spawnerToEdit);
             if (Input.GetMouseButton(0)) {
                 Vector3 dir = camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -camera.transform.position.z)) - curSelected.transform.position;
                 if (dir.magnitude < curSelected.GetComponent<CircleCollider2D>().radius * 2f) {
@@ -136,6 +132,14 @@ public class SquadronSpawner : MonoBehaviour {
             }
             if (Input.GetMouseButton(1)) {
                 spawnerToEdit.transform.position = camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -camera.transform.position.z));
+            }
+        }
+    }
+
+    public void setContainsPlayer(GameObject spawnerToEdit) {
+        foreach (GameObject spawner in GameObject.FindGameObjectsWithTag("Spawner")) {
+            if (spawner != spawnerToEdit && spawnerToEdit.GetComponent<SquadronSpawner>().containsPlayer) {
+                spawner.GetComponent<SquadronSpawner>().setContainsPlayer(false);
             }
         }
     }
