@@ -55,6 +55,9 @@ public class CamScript : MonoBehaviour {
         handleCam();
         handleGForceDisp();
         if (getControlledOrSpectatedVehicle() != null) dialHandler.GetComponent<BaseControl>().query();
+
+        handleCrosshair();
+        handleArrow();
     }
 
     void LateUpdate() {
@@ -63,8 +66,7 @@ public class CamScript : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        handleCrosshair();
-        handleArrow();
+        
     }
 
     private void handleArrow() {
