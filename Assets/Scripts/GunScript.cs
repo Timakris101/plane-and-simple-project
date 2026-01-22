@@ -23,6 +23,7 @@ public class GunScript : NetworkBehaviour {
     }
     
     protected virtual void shoot() {
+        ammunition--;
         if (GameObject.Find("NetworkManager") != null) {
             float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
 
