@@ -18,11 +18,14 @@ public class GunScript : NetworkBehaviour {
     private bool shooting;
     private Vector3 baseVel;
 
+    private float screenShakeFactor = 10f;
+
     protected void Start() {
         ammunition = maxAmmunition;
     }
     
     protected virtual void shoot() {
+        if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, bullet.GetComponent<Rigidbody2D>().mass / maxAncestor(gameObject).GetComponent<Rigidbody2D>().mass * bullet.GetComponent<BulletScript>().getInitSpeed() * screenShakeFactor);
         ammunition--;
         if (GameObject.Find("NetworkManager") != null) {
             float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;

@@ -34,6 +34,7 @@ public class DamageModel : NetworkBehaviour {
     [SerializeField] private float animatorSpeedFactor;
 
     private float screenShakeFactor = 1f / 40f;
+    private float speedScreenShakeFactor = 1f / 1000f;
 
     private Aerodynamics aero;
     private bool effectApplied;
@@ -116,6 +117,10 @@ public class DamageModel : NetworkBehaviour {
         if (effect == "Wing") {
             if (transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude > ripSpeed) {
                 kill();
+            } else {
+                if (transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude > ripSpeed * .9f) {
+                    if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude * speedScreenShakeFactor);
+                }
             }
         }
 
