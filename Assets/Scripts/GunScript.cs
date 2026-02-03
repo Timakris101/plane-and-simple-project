@@ -29,7 +29,7 @@ public class GunScript : NetworkBehaviour {
 
             pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency * 5f, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);
         } else {
-            GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position), transform.rotation);
+            GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * timeDif(), transform.rotation);
             newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
             newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
             newBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
@@ -63,17 +63,26 @@ public class GunScript : NetworkBehaviour {
         
         localBullet.GetComponent<BulletScript>().setFuseTime(bulletFuse);
     }   
-
+    
+    float updateTimer;
     protected void Update() {
         timer += Time.deltaTime;
         if (timer > fireRate && shooting && ammunition > 0) {
             timer = 0;
             shoot();
         }
+
+        updateTimer += Time.deltaTime;
     }
 
+    float fixedUpdateTimer;
     private void FixedUpdate() {
         baseVel = (Vector3) maxAncestor(gameObject).GetComponent<Rigidbody2D>().linearVelocity;
+        fixedUpdateTimer += Time.fixedDeltaTime;
+    }
+
+    public float timeDif() {
+        return (fixedUpdateTimer - updateTimer) / 2;
     }
 
     public void setFuseOfBullets(float sec) {
