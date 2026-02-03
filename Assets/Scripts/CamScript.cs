@@ -58,6 +58,25 @@ public class CamScript : MonoBehaviour {
 
         handleCrosshair();
         handleArrow();
+
+        if (isScreenShaky) {
+            shakeTimer -= Time.deltaTime;
+            transform.position += new Vector3(Random.Range(-shakeMag, shakeMag), Random.Range(-shakeMag, shakeMag), 0);
+        }
+        if (shakeTimer <= 0) {
+            shakeTimer = 0;
+            shakeMag = 0;
+            isScreenShaky = false;
+        }
+    }
+
+    private bool isScreenShaky;
+    private float shakeTimer;
+    public float shakeMag;
+    public void shakeScreen(float time, float magnitude) {
+        isScreenShaky = true;
+        if (magnitude >= shakeMag) shakeTimer = time;
+        if (magnitude > shakeMag) shakeMag = magnitude;
     }
 
     void LateUpdate() {

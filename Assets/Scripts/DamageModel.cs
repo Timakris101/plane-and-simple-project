@@ -33,6 +33,8 @@ public class DamageModel : NetworkBehaviour {
     [SerializeField] private GameObject wingNeg;
     [SerializeField] private float animatorSpeedFactor;
 
+    private float screenShakeFactor = 1f / 40f;
+
     private Aerodynamics aero;
     private bool effectApplied;
     private float drowningDps = 0f;
@@ -105,7 +107,7 @@ public class DamageModel : NetworkBehaviour {
 
                 case "Engine":
                     foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(gameObject)) {
-                        damageModel.GetComponent<DamageModel>().damage(fireDamagePerSec * Time.deltaTime);
+                        damageModel.GetComponent<DamageModel>().damage(fireDamagePerSec * Time.deltaTime, false);
                     }
                     break;
             }   
@@ -165,8 +167,9 @@ public class DamageModel : NetworkBehaviour {
         maxHealth = val;
         if (health > val) health = val;
     }
-
-    public void damage(float amt) {
+    public void damage(float amt) {damage(amt, true);}
+    public void damage(float amt, bool shakeScreen) {
+        if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject) && shakeScreen) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, amt * screenShakeFactor);
         if (IsServer && GameObject.Find("NetworkManager") != null) {
             health -= amt;
             serverHitSetHealthRpc(health);
