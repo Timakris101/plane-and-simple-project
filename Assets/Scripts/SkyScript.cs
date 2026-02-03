@@ -50,7 +50,7 @@ public class SkyScript : MonoBehaviour {
 
         float percentDay = (time % dayLength) / dayLength;
 
-        sunPosOnScreen = new Vector3(percentDay * texture.width, sunPath.Evaluate(percentDay) * texture.height - altitudeCoef * transform.position.y, 0f);
+        sunPosOnScreen = new Vector3(percentDay * texture.width, sunPath.Evaluate(percentDay) * texture.height - altitudeCoef * transform.position.y * size / baseSize, 0f);
 
         for (int y = 0; y < texture.height; y++) {
             for (int x = 0; x < texture.width; x++) {
