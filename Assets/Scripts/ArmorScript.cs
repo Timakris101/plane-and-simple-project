@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class ArmorScript : MonoBehaviour
+public class ArmorScript : DamageModel
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        
+        maxHealth = 100f;
+        screenShakeFactor *= .5f;
     }
 
     // Update is called once per frame

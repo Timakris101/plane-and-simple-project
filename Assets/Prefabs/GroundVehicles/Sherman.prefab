@@ -91,6 +91,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d548a35e28c4e9ba1650cb915c5340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorScript
+  ShowTopMostFoldoutHeaderGroup: 1
+  assym: 0
+  hitChanceByAngle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHealth: 0
+  health: 0
+  crewRole: 0
+  criticalSystem: 0
+  destructiveEffect: {fileID: 0}
+  replacementSprite: {fileID: 0}
+  effectivenessFalloffRate: 0
+  fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
+  ripSpeed: 0
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
+  animatorSpeedFactor: 0
 --- !u!1 &2232578170496928292
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +205,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d548a35e28c4e9ba1650cb915c5340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorScript
+  ShowTopMostFoldoutHeaderGroup: 1
+  assym: 0
+  hitChanceByAngle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHealth: 0
+  health: 0
+  crewRole: 0
+  criticalSystem: 0
+  destructiveEffect: {fileID: 0}
+  replacementSprite: {fileID: 0}
+  effectivenessFalloffRate: 0
+  fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
+  ripSpeed: 0
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
+  animatorSpeedFactor: 0
 --- !u!1 &2568521066041489524
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +319,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d548a35e28c4e9ba1650cb915c5340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorScript
+  ShowTopMostFoldoutHeaderGroup: 1
+  assym: 0
+  hitChanceByAngle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHealth: 0
+  health: 0
+  crewRole: 0
+  criticalSystem: 0
+  destructiveEffect: {fileID: 0}
+  replacementSprite: {fileID: 0}
+  effectivenessFalloffRate: 0
+  fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
+  ripSpeed: 0
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
+  animatorSpeedFactor: 0
 --- !u!1 &2584702227220768272
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,7 +400,7 @@ Transform:
   m_GameObject: {fileID: 3013891416396766287}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.179, y: -0.367, z: 0}
+  m_LocalPosition: {x: 1.06, y: -0.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -371,7 +440,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.20064938}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -381,7 +450,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.0635, y: 1.5}
+  m_Size: {x: 0.0635, y: 1.11}
   m_EdgeRadius: 0
 --- !u!114 &3675321770740535876
 MonoBehaviour:
@@ -395,6 +464,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d548a35e28c4e9ba1650cb915c5340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorScript
+  ShowTopMostFoldoutHeaderGroup: 1
+  assym: 0
+  hitChanceByAngle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHealth: 0
+  health: 0
+  crewRole: 0
+  criticalSystem: 0
+  destructiveEffect: {fileID: 0}
+  replacementSprite: {fileID: 0}
+  effectivenessFalloffRate: 0
+  fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
+  ripSpeed: 0
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
+  animatorSpeedFactor: 0
 --- !u!1 &3409647231910421573
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,13 +1087,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5482792248289201213}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1.146, y: -0.56, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7347963, w: 0.6782879}
+  m_LocalPosition: {x: -1.54, y: -0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4779524704317788198}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 94.58}
 --- !u!61 &5184509544112395729
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1036,7 +1128,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.20064938}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1060,6 +1152,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d548a35e28c4e9ba1650cb915c5340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorScript
+  ShowTopMostFoldoutHeaderGroup: 1
+  assym: 0
+  hitChanceByAngle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHealth: 0
+  health: 0
+  crewRole: 0
+  criticalSystem: 0
+  destructiveEffect: {fileID: 0}
+  replacementSprite: {fileID: 0}
+  effectivenessFalloffRate: 0
+  fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
+  ripSpeed: 0
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
+  animatorSpeedFactor: 0
 --- !u!1 &6165379519396085638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1182,6 +1297,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d548a35e28c4e9ba1650cb915c5340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArmorScript
+  ShowTopMostFoldoutHeaderGroup: 1
+  assym: 0
+  hitChanceByAngle:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxHealth: 0
+  health: 0
+  crewRole: 0
+  criticalSystem: 0
+  destructiveEffect: {fileID: 0}
+  replacementSprite: {fileID: 0}
+  effectivenessFalloffRate: 0
+  fireDamagePerSec: 0
+  wepOrAbEffect: {fileID: 0}
+  tailPos: {fileID: 0}
+  tailNeg: {fileID: 0}
+  ripSpeed: 0
+  wingPos: {fileID: 0}
+  wingNeg: {fileID: 0}
+  animatorSpeedFactor: 0
 --- !u!1 &7771532858081799018
 GameObject:
   m_ObjectHideFlags: 0

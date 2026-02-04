@@ -9,7 +9,7 @@ public class DamageModel : NetworkBehaviour {
     private string effect;
     [SerializeField] private bool assym;
     [SerializeField] private AnimationCurve hitChanceByAngle;
-    [SerializeField] private float maxHealth;
+    [SerializeField] protected float maxHealth;
     [SerializeField] private float health;
     [SerializeField] private bool crewRole;
     [SerializeField] private bool criticalSystem;
@@ -33,8 +33,8 @@ public class DamageModel : NetworkBehaviour {
     [SerializeField] private GameObject wingNeg;
     [SerializeField] private float animatorSpeedFactor;
 
-    private float screenShakeFactor = 1f / 40f;
-    private float speedScreenShakeFactor = 1f / 1000f;
+    protected float screenShakeFactor = 10f;
+    private float speedScreenShakeFactor = 1f / 200f;
 
     private Aerodynamics aero;
     private bool effectApplied;
@@ -119,7 +119,7 @@ public class DamageModel : NetworkBehaviour {
                 kill();
             } else {
                 if (transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude > ripSpeed * .9f) {
-                    if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude * speedScreenShakeFactor);
+                    if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, (transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude - ripSpeed * .9f) * speedScreenShakeFactor);
                 }
             }
         }
@@ -174,7 +174,7 @@ public class DamageModel : NetworkBehaviour {
     }
     public void damage(float amt) {damage(amt, true);}
     public void damage(float amt, bool shakeScreen) {
-        if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject) && shakeScreen) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, amt * screenShakeFactor);
+        if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject) && shakeScreen) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, amt / maxAncestor(gameObject).GetComponent<Rigidbody2D>().mass * screenShakeFactor);
         if (IsServer && GameObject.Find("NetworkManager") != null) {
             health -= amt;
             serverHitSetHealthRpc(health);

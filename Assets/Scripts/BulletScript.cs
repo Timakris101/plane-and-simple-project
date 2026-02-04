@@ -21,6 +21,7 @@ public class BulletScript : NetworkBehaviour {
     [SerializeField] private bool bulletRicochets;
     private float effectLifeTime = .2f;
     [SerializeField] private float timer;
+    private float explosiveScreenShakeFactor = 1f / 1000f;
     
     [Header("Plane")]
     [SerializeField] private GameObject planeFired;
@@ -36,6 +37,7 @@ public class BulletScript : NetworkBehaviour {
             if (collider.gameObject == gameObject) continue;
             Vector3 impulse = fragmentationStrength * (collider.transform.position - transform.position).normalized / Mathf.Pow(Mathf.Max((transform.position - collider.transform.position).magnitude, 1f), 2f);
             collider.transform.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(impulse, transform.position, ForceMode2D.Impulse);
+            if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(collider.transform.gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, damage / Mathf.Pow(Mathf.Max((transform.position - collider.transform.position).magnitude, 1f), 2f) * explosiveScreenShakeFactor);
         }
     }
 
@@ -115,11 +117,11 @@ public class BulletScript : NetworkBehaviour {
             RaycastHit2D[] hits = Physics2D.RaycastAll(beginningHitPos + relativeVel * postHitFuse, fragVecPlusVel, newPenVal);
             Debug.DrawRay(beginningHitPos + relativeVel * postHitFuse, fragVecPlusVel.normalized * newPenVal, Color.red, 10f);
             foreach (RaycastHit2D hit in hits) {
-                if (hit.collider.transform.GetComponent<DamageModel>() != null) {
+                if (hit.collider.transform.GetComponent<DamageModel>() != null && hit.collider.transform.GetComponent<ArmorScript>() == null) {
                     DamageModel d = hit.collider.transform.GetComponent<DamageModel>();
                     if (!(Random.Range(0f, 1f) < (d.getHitChance(Vector3.Angle(-fragVecPlusVel, d.transform.right))))) continue;
 
-                    float damageToModel = Random.Range((1f - damageVariation), (1f + damageVariation)) * damage;
+                    float damageToModel = Random.Range((1f - damageVariation), (1f + damageVariation)) * damage * (fragmentationStrength == 0f ? (relativeVel.magnitude / initSpeed) : 1f);
                     d.damage(damageToModel);
 
                     bulletMessagePacket.addDamage(d, damageToModel);
@@ -159,6 +161,10 @@ public class BulletScript : NetworkBehaviour {
             if (hit.collider.transform.GetComponent<ArmorScript>() != null) {
                 float effArmorThickness = Mathf.Abs(hit.collider.transform.GetComponent<BoxCollider2D>().size.x / Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(col.relativeVelocity, hit.normal)));
                 armorHitCount++;
+
+                float shakeToVehicle = GetComponent<Rigidbody2D>().mass * GetComponent<Rigidbody2D>().linearVelocity.magnitude * Mathf.Cos(Mathf.Deg2Rad * Vector3.Angle(col.relativeVelocity, hit.normal));
+                hit.collider.transform.GetComponent<ArmorScript>().damage(shakeToVehicle);
+
                 if (effArmorThickness < effectiveArmorPen) {
                     effectiveArmorPen -= effArmorThickness;
                 } else {
