@@ -76,7 +76,7 @@ public class CamScript : MonoBehaviour {
     public void shakeScreen(float time, float magnitude) {
         isScreenShaky = true;
         if (magnitude >= shakeMag) shakeTimer = time;
-        shakeMag += magnitude;
+        shakeMag += Mathf.Abs(magnitude);
     }
 
     void LateUpdate() {
