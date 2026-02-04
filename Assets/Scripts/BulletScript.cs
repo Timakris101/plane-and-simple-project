@@ -37,7 +37,7 @@ public class BulletScript : NetworkBehaviour {
             if (collider.gameObject == gameObject) continue;
             Vector3 impulse = fragmentationStrength * (collider.transform.position - transform.position).normalized / Mathf.Pow(Mathf.Max((transform.position - collider.transform.position).magnitude, 1f), 2f);
             collider.transform.gameObject.GetComponent<Rigidbody2D>().AddForceAtPosition(impulse, transform.position, ForceMode2D.Impulse);
-            if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(collider.transform.gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, damage / Mathf.Pow(Mathf.Max((transform.position - collider.transform.position).magnitude, 1f), 2f) * explosiveScreenShakeFactor);
+            if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(collider.transform.gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, Mathf.Sqrt(damage / Mathf.Pow(Mathf.Max((transform.position - collider.transform.position).magnitude, 1f), 2f) * explosiveScreenShakeFactor));
         }
     }
 
