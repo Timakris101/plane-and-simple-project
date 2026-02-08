@@ -6,6 +6,7 @@ using static Utils;
 public class GroundVehicleGunnerScript : GunnerScript {
 
     [SerializeField] private bool rotatableTurret;
+    [SerializeField] private bool ableToRotateTurret;
     [SerializeField] private bool ammoHasFuse;
     private GameObject maxAncestor => maxAncestor(gameObject);
 
@@ -49,9 +50,9 @@ public class GroundVehicleGunnerScript : GunnerScript {
 
         if (rotatableTurret) {
             float yAnglePrev = transform.parent.localEulerAngles.y;
-            transform.parent.localEulerAngles = new Vector3(0, (posToTheFrontSide ? 0 : 180f), 0f);
+            if (ableToRotateTurret) transform.parent.localEulerAngles = new Vector3(0, (posToTheFrontSide ? 0 : 180f), 0f);
             float newYAngle = transform.parent.localEulerAngles.y;
-            if (yAnglePrev != newYAngle) {
+            if (yAnglePrev != newYAngle && ableToRotateTurret) {
                 return;
             }
 

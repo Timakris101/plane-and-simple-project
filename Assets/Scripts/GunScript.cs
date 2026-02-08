@@ -18,7 +18,7 @@ public class GunScript : NetworkBehaviour {
     private bool shooting;
     private Vector3 baseVel;
 
-    private float screenShakeFactor = 5f;
+    private float screenShakeFactor = 10f;
 
     protected void Start() {
         ammunition = maxAmmunition;

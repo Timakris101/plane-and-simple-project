@@ -27,7 +27,7 @@ public class PlaneController : VehicleController {
         setGunnersToManual(false);
     }
 
-    public override bool whenToRemoveCamera() {return vehicleDead();}
+    public override bool whenToRemoveCamera() {return pilotDeadOrGone();}
 
     public override bool vehicleDead() {
         bool criticalSystemDamage = false;

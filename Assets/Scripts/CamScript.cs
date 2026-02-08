@@ -59,11 +59,11 @@ public class CamScript : MonoBehaviour {
         handleCrosshair();
         handleArrow();
 
-        if (isScreenShaky) {
+        if (isScreenShaky && getControlledOrSpectatedVehicle() != null) {
             shakeTimer -= Time.deltaTime;
             transform.position += new Vector3(Random.Range(-shakeMag, shakeMag), Random.Range(-shakeMag, shakeMag), 0);
         }
-        if (shakeTimer <= 0) {
+        if (shakeTimer <= 0 || getControlledOrSpectatedVehicle() == null) {
             shakeTimer = 0;
             shakeMag = 0;
             isScreenShaky = false;

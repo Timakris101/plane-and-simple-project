@@ -6,7 +6,7 @@ public class ArmorScript : DamageModel
     void Awake()
     {
         maxHealth = 100f;
-        screenShakeFactor *= .5f;
+        screenShakeFactor = 1f / 20f;
     }
 
     // Update is called once per frame

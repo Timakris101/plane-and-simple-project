@@ -15,6 +15,8 @@ public class PropellerScript : MonoBehaviour {
     [SerializeField] private Quaternion[] valsOfPropAtAnimIndexWingless;
     [SerializeField] private float engineAmt = 0;
 
+    private EngineScript es;
+
     private PlaneController pc;
 
     void OnTriggerEnter2D(Collider2D col) {
@@ -45,6 +47,8 @@ public class PropellerScript : MonoBehaviour {
                 valsOfPropAtAnimIndexWingless[i] = valsOfPropAtAnimIndexNonWingless[i];
             }
         }
+
+        es = allObjectsInTreeWith<EngineScript>(gameObject)[0].GetComponent<EngineScript>();
     }
 
     void setPlaneController() {
@@ -58,10 +62,10 @@ public class PropellerScript : MonoBehaviour {
 
     void Update() {
         setPlaneController();
-        engineOn = allObjectsInTreeWith<EngineScript>(gameObject)[0].GetComponent<EngineScript>().getEnginesOn();
-        engineBroken = !allObjectsInTreeWith<EngineScript>(gameObject)[0].GetComponent<DamageModel>().isAlive();
+        engineOn = es.getEnginesOn();
+        engineBroken = !es.gameObject.GetComponent<DamageModel>().isAlive();
         if (!engineBroken) {
-            if (engineOn && GetComponent<Animator>().speed <= Mathf.Min(allObjectsInTreeWith<EngineScript>(gameObject)[0].GetComponent<EngineScript>().getThrottle() + idleCoef, 1)) {
+            if (engineOn && GetComponent<Animator>().speed <= Mathf.Min(es.getThrottle() + idleCoef, 1)) {
                 GetComponent<Animator>().speed *= engineAccelRate;
                 GetComponent<Animator>().speed += engineAccelRate - 1;
             } else {

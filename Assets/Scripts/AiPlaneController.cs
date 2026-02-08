@@ -5,9 +5,9 @@ using static Utils;
  
 public class AiPlaneController : PlaneController {
     [SerializeField] private float angularThreshForGuns;
-    [SerializeField] private float sixAngle;
+    private float sixAngle = 45f;
     [SerializeField] private string mode;
-    [SerializeField] private float minAltitude;
+    private float minAltitude = 100f;
     [SerializeField] private float gunRange;
     private float headonOscillationMagnitude = 10f;
     private GameObject primaryBullet;
