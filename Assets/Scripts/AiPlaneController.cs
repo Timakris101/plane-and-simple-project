@@ -139,7 +139,7 @@ public class AiPlaneController : PlaneController {
         }
 
         if (targetedObj != null && primaryBullet != null) {
-            if (targetInSights(primaryBullet) && (transform.position - positionToTarget(primaryBullet, transform.right)).magnitude < gunRange && !targetedObj.GetComponent<PlaneController>().vehicleDead()) {
+            if (targetInSights(primaryBullet) && (transform.position - positionToTarget(primaryBullet, transform.right)).magnitude < gunRange && !targetedObj.GetComponent<VehicleController>().vehicleDead()) {
                 setGuns(true);
                 if (isBomber) setBombs(true);
             } else {
