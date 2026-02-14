@@ -16,7 +16,7 @@ public class BulletMessageReader : NetworkBehaviour {
         } else {
             foreach (BulletMessage message in packet.getMessages()) {
                 GameObject newText = Instantiate(basicTextObj);
-                newText.transform.SetParent(progenyWithScript<Canvas>(gameObject)[0].transform, false);
+                newText.transform.SetParent(GameObject.Find("Canvas").transform, false);
                 newText.transform.position = message.getDamageModel().transform.position;
                 progenyWithScript<TMP_Text>(newText)[0].GetComponent<TMP_Text>().text = Mathf.Round(message.getDamage()).ToString();
                 if (message.modelCrit()) {
@@ -37,7 +37,7 @@ public class BulletMessageReader : NetworkBehaviour {
             if (message.Length == 0) continue;
 
             GameObject newText = Instantiate(basicTextObj);
-            newText.transform.SetParent(progenyWithScript<Canvas>(gameObject)[0].transform, false);
+            newText.transform.SetParent(GameObject.Find("Canvas").transform, false);
             newText.transform.position = GameObject.Find(message.Substring(0, message.IndexOf(" "))).transform.position;
             progenyWithScript<TMP_Text>(newText)[0].GetComponent<TMP_Text>().text = Mathf.Round(float.Parse(message.Substring(message.IndexOf(":") + 1, (message.IndexOf(",") == -1 ? message.Length - 1 : message.IndexOf(",")) - (message.IndexOf(":") + 1)).Trim())).ToString();
             if (message.Contains("critical")) {

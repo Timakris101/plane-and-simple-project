@@ -26,10 +26,10 @@ public class DamageTextScript : MonoBehaviour {
 
     void Update() {
         text.GetComponent<TMP_Text>().alpha -= (1 / lifeTime * Time.deltaTime);
-        if (parentWithScript<Camera>(text) != null) text.transform.position = parentWithScript<Camera>(text).GetComponent<Camera>().WorldToScreenPoint(transform.position);
+        if (GameObject.Find("Camera") != null) text.transform.position = GameObject.Find("Camera").GetComponent<Camera>().WorldToScreenPoint(transform.position);
         float jitter = Random.Range(-jitterStrength, jitterStrength);
 
-        float curCamScaling = (parentWithScript<Camera>(text).GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - parentWithScript<Camera>(text).GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
+        float curCamScaling = (GameObject.Find("Camera").GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GameObject.Find("Camera").GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
 
         transform.position += new Vector3(jitter, upwardSpeed + jitter, 0) * Time.deltaTime * curCamScaling;
         text.GetComponent<TMP_Text>().fontSize = startFontSize * curCamScaling;
