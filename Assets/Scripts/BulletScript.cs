@@ -138,6 +138,8 @@ public class BulletScript : NetworkBehaviour {
             }
         }
 
+        if (planeFired == null) return;
+        if (nonAiControllerOfVehicle(planeFired) == null) return;
         if (nonAiControllerOfVehicle(planeFired).enabled && planeFired.GetComponent<BulletMessageReader>().enabled) planeFired.GetComponent<BulletMessageReader>().receivePacket(bulletMessagePacket);
     }
 
@@ -227,7 +229,7 @@ public class BulletScript : NetworkBehaviour {
 
     void Update() {
         if (planeFired == null) {
-            //Destroy(gameObject);
+            Destroy(gameObject);
             return;
         }
 

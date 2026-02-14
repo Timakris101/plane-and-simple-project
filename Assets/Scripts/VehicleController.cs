@@ -34,6 +34,7 @@ public class VehicleController : NetworkBehaviour {
     public void findTarget() {
         targetedObj = null;
         foreach (GameObject vehicle in allVehicles) {
+            if (vehicle == null) continue;
             if (vehicle.GetComponent<VehicleController>().vehicleDead()) continue;
             if (!tagsToTarget.Contains(vehicle.tag)) continue;
             if (vehicle.GetComponent<AllianceHolder>().getAlliance() == GetComponent<AllianceHolder>().getAlliance()) continue;
@@ -133,6 +134,10 @@ public class VehicleController : NetworkBehaviour {
             }
         }
         return true;
+    }
+
+    public GameObject[] getDamageModels() {
+        return damageModels.ToArray();
     }
 
     public virtual bool whenToRemoveCamera() {return true;}

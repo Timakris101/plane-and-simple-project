@@ -7,11 +7,11 @@ public class AiPlaneController : PlaneController {
     [SerializeField] private float angularThreshForGuns;
     private float sixAngle = 45f;
     [SerializeField] private string mode;
-    private float minAltitude = 100f;
-    [SerializeField] private float gunRange;
+    protected float minAltitude = 500f;
+    [SerializeField] protected float gunRange;
     private float headonOscillationMagnitude = 10f;
-    private GameObject primaryBullet;
-    private bool isBomber = false;
+    protected GameObject primaryBullet;
+    protected bool isBomber = false;
     private List<GameObject> squadronList = new List<GameObject>();
     private Vector2 offset;
     private GameObject squadronLead;
@@ -139,7 +139,7 @@ public class AiPlaneController : PlaneController {
         }
 
         if (targetedObj != null && primaryBullet != null) {
-            if (targetInSights(primaryBullet) && (transform.position - positionToTarget(primaryBullet, transform.right)).magnitude < gunRange/* && mode != "headon"*/) {
+            if (targetInSights(primaryBullet) && (transform.position - positionToTarget(primaryBullet, transform.right)).magnitude < gunRange && !targetedObj.GetComponent<PlaneController>().vehicleDead()) {
                 setGuns(true);
                 if (isBomber) setBombs(true);
             } else {
@@ -157,11 +157,11 @@ public class AiPlaneController : PlaneController {
         return minAltitude;
     }
 
-    private bool targetInSights(GameObject bullet) {
+    protected bool targetInSights(GameObject bullet) {
         return Mathf.Abs(Vector3.SignedAngle((positionToTarget(bullet, transform.right) - transform.position).normalized, transform.right, transform.forward)) < angularThreshForGuns;
     }
 
-    private Vector3 positionToTarget(GameObject bullet, Vector3 gunDir) {
+    protected Vector3 positionToTarget(GameObject bullet, Vector3 gunDir) {
         Vector3 a = targetedObj.GetComponent<AccelerationHolder>().getAccel() - gameObject.GetComponent<AccelerationHolder>().getAccel();
         Vector3 v = targetedObj.GetComponent<Rigidbody2D>().linearVelocity - GetComponent<Rigidbody2D>().linearVelocity;
         Vector3 p = targetedObj.transform.position - transform.position;

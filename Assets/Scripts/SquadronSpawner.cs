@@ -12,6 +12,7 @@ public class SquadronSpawner : MonoBehaviour {
     [Header("Mode")]
     [SerializeField] private bool arcade;
     private bool arcadeOn;
+    [SerializeField] private bool clankerTraining;
 
     [Header("SelectionSpawner")]
     [SerializeField] private bool selectionSpawner;
@@ -94,7 +95,12 @@ public class SquadronSpawner : MonoBehaviour {
         if (arcade && arcadeOn) {
             if (!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance())) {
                 spawnVehicles();
-                GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : 1)).ToString();
+            }
+        }
+        if (clankerTraining) {
+            //Debug.Log(!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance()) + alliance);
+            if (!anyVehiclesLeft(alliance)) {
+                spawnVehicles();
             }
         }
         if (GetComponent<SpriteRenderer>() != null) {
@@ -112,8 +118,12 @@ public class SquadronSpawner : MonoBehaviour {
     public bool anyVehiclesLeft(string alliance) {
         foreach (GameObject vehicle in allVehiclesOfTags("Plane", "GroundVehicle")) {
             if (vehicle.GetComponent<AllianceHolder>().getAlliance() == alliance) {
-                if (!vehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
+                if (clankerTraining) {
                     return true;
+                } else {
+                    if (!vehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
+                        return true;
+                    }
                 }
             }
         }
