@@ -18,7 +18,7 @@ public class BaseControl : MonoBehaviour, IPointerDownHandler {
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-        parentWithScript<CustomInputs>(gameObject).GetComponent<CustomInputs>().setModeOf(gameObject, "mobile");
+        GameObject.Find("Camera").GetComponent<CustomInputs>().setModeOf(gameObject, "mobile");
     }
 
     public void Update() {
