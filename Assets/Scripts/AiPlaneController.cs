@@ -7,7 +7,7 @@ public class AiPlaneController : PlaneController {
     [SerializeField] private float angularThreshForGuns;
     private float sixAngle = 45f;
     [SerializeField] private string mode;
-    protected float minAltitude = 500f;
+    protected float minAltitude = 100f;
     [SerializeField] protected float gunRange;
     private float headonOscillationMagnitude = 10f;
     protected GameObject primaryBullet;

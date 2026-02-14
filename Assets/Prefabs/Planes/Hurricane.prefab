@@ -1684,7 +1684,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
@@ -1776,9 +1776,7 @@ MonoBehaviour:
   tagsToTarget: []
   throttleChangeSpeed: 1
   angularThreshForGuns: 5
-  sixAngle: 90
   mode: 
-  minAltitude: 100
   gunRange: 300
 --- !u!114 &4381638941314355117
 MonoBehaviour:
@@ -2077,7 +2075,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8117271881959870144}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a148e2528cb048c198031a582d20c43, type: 3}
   m_Name: 

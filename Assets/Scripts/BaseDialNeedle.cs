@@ -15,7 +15,7 @@ public class BaseDialNeedle : MonoBehaviour {
     [SerializeField] private bool bounded;
 
     protected virtual void setReadingVal() {
-        GameObject vehicle = parentWithScript<CamScript>(gameObject).GetComponent<CamScript>().getControlledOrSpectatedVehicle();
+        GameObject vehicle = GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle();
         if (vehicle == null) {
             valueToRead = () => 0f;
             return;

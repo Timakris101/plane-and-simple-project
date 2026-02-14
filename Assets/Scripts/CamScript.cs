@@ -40,9 +40,9 @@ public class CamScript : MonoBehaviour {
         }
         matchParentToPlane();
 
-        initCrosshairPos = transform.Find("Canvas").Find("CrosshairHolder").GetChild(0).localPosition;
+        initCrosshairPos = GameObject.Find("Canvas").transform.Find("CrosshairHolder").GetChild(0).localPosition;
 
-        dialHandler = transform.Find("Canvas").Find("DialHandler").gameObject;
+        dialHandler = GameObject.Find("Canvas").transform.Find("DialHandler").gameObject;
     }
 
     void Update() {
@@ -84,13 +84,9 @@ public class CamScript : MonoBehaviour {
         transform.localScale = Vector3.one;
     }
 
-    void FixedUpdate() {
-        
-    }
-
     private void handleArrow() {
-        Transform arrowHolder = transform.Find("Canvas").Find("ArrowHolder");
-        if (transform.Find("Canvas") != null) {
+        Transform arrowHolder = GameObject.Find("Canvas").transform.Find("ArrowHolder");
+        if (GameObject.Find("Canvas") != null) {
             if (nearestEnemy() != null && !vehicleToControl.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
                 Vector3 screenPos = GetComponent<Camera>().WorldToScreenPoint(nearestEnemy().transform.position);
                 screenPos = (new Vector3(screenPos.x / Screen.width, screenPos.y / Screen.height, 0));
@@ -110,8 +106,8 @@ public class CamScript : MonoBehaviour {
     }
 
     private void handleCrosshair() {
-        Transform crosshairHolder = transform.Find("Canvas").Find("CrosshairHolder");
-        if (transform.Find("Canvas") != null && vehicleToControl != null) {
+        Transform crosshairHolder = GameObject.Find("Canvas").transform.Find("CrosshairHolder");
+        if (GameObject.Find("Canvas") != null && vehicleToControl != null) {
             if (vehicleToControl.GetComponent<PlaneController>() != null) {
                 crosshairHolder.transform.position = GetComponent<Camera>().WorldToScreenPoint(vehicleToControl.transform.position);
                 if (!vehicleToControl.GetComponent<PlaneController>().gunnersAreManual()) {
@@ -145,11 +141,11 @@ public class CamScript : MonoBehaviour {
     }
 
     private void handleGForceDisp() {
-        transform.Find("Canvas").Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, Mathf.Max(0f, transform.Find("Canvas").Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color.a - Time.deltaTime));
-        transform.Find("Canvas").Find("GForceDisp").GetComponent<RectTransform>().sizeDelta = transform.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
+        GameObject.Find("Canvas").transform.Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, Mathf.Max(0f, GameObject.Find("Canvas").transform.Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color.a - Time.deltaTime));
+        GameObject.Find("Canvas").transform.Find("GForceDisp").GetComponent<RectTransform>().sizeDelta = GameObject.Find("Canvas").transform.GetComponent<RectTransform>().sizeDelta;
         if (vehicleToControl == null) return;
         if (vehicleToControl.GetComponent<GForcesScript>() == null) return;
-        transform.Find("Canvas").Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, vehicleToControl.GetComponent<GForcesScript>().howSleepyIsPerson() * Constants.GForceEffectConstants.GlocDarkness);
+        GameObject.Find("Canvas").transform.Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, vehicleToControl.GetComponent<GForcesScript>().howSleepyIsPerson() * Constants.GForceEffectConstants.GlocDarkness);
     }
 
     private void matchParentToPlane() {

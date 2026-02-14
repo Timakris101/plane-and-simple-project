@@ -85,7 +85,7 @@ public class GunScript : NetworkBehaviour {
     }
 
     public float timeDif() {
-        return (fixedUpdateTimer - updateTimer) / 2;
+        return (bullet.GetComponent<Rigidbody2D>().interpolation == RigidbodyInterpolation2D.Interpolate) ? (fixedUpdateTimer - updateTimer) / 2 : 0f;
     }
 
     public void setFuseOfBullets(float sec) {
