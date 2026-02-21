@@ -154,6 +154,7 @@ public class DamageModelDisplay : MonoBehaviour {
     }
 
     void Update() {
+        if (camera == null) return;
         displayVehicle(camera.GetComponent<CamScript>().getControlledOrSpectatedVehicle());
     }
 }

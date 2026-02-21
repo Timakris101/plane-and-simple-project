@@ -22,11 +22,12 @@ public class SkyScript : MonoBehaviour {
     [SerializeField] private float altitudeCoef;
     [SerializeField] private bool irlTime; 
     Camera camera => GameObject.Find("Camera").GetComponent<Camera>();
-
     //Vector3 earthCenter => new Vector3(0, -earthRadius, 0f);
     int baseSize = 100;
 
     void LateUpdate() {
+        if (GameObject.Find("Camera") == null) return;
+        
         transform.parent = null;
         transform.localScale = new Vector3(100000 / size, 100000 / size, 1f);
         transform.position = camera.transform.position - (new Vector3(1, 1f, 0) * 10f * baseSize / 2f) - new Vector3(0, 0, camera.transform.position.z);
@@ -37,6 +38,8 @@ public class SkyScript : MonoBehaviour {
     }
 
     void Update() {
+        if (GameObject.Find("Camera") == null) return;
+
         Texture2D texture = new Texture2D(size, size);
         GetComponent<Renderer>().sharedMaterial.mainTexture = texture;
         Sprite sprite = Sprite.Create(texture, new Rect(0, 0, size, size), Vector2.zero);
@@ -64,7 +67,6 @@ public class SkyScript : MonoBehaviour {
 
         texture.Apply();
 
-        GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, Mathf.Max(0f, GameObject.Find("Canvas").transform.Find("GForceDisp").GetComponent<UnityEngine.UI.Image>().color.a - Time.deltaTime));
         GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<RectTransform>().sizeDelta = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
         GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, (.7f - (gradient.Evaluate(percentDay).maxColorComponent)));
     }

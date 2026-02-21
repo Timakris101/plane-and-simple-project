@@ -15,6 +15,7 @@ public class BaseDialNeedle : MonoBehaviour {
     [SerializeField] private bool bounded;
 
     protected virtual void setReadingVal() {
+        if (GameObject.Find("Camera") == null) return;
         GameObject vehicle = GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle();
         if (vehicle == null) {
             valueToRead = () => 0f;
@@ -22,15 +23,15 @@ public class BaseDialNeedle : MonoBehaviour {
         }
         switch(dial.type) {
             case "Speed": 
-            valueToRead = () => vehicle.GetComponent<Rigidbody2D>().linearVelocity.magnitude;
+            valueToRead = () => (vehicle != null ? vehicle.GetComponent<Rigidbody2D>().linearVelocity.magnitude : 0f);
             break;
             
             case "Altitude": 
-            valueToRead = () => vehicle.transform.position.y;
+            valueToRead = () => (vehicle != null ? vehicle.transform.position.y : 0f);
             break;
 
             case "Rotation": 
-            valueToRead = () => vehicle.transform.localEulerAngles.z;
+            valueToRead = () => (vehicle != null ? vehicle.transform.localEulerAngles.z : 0f);
             transform.localScale = new Vector3(1, vehicle.transform.localScale.y, 1);
             break;
 

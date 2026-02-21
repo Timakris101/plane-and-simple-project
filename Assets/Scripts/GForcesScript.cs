@@ -48,7 +48,7 @@ public class GForcesScript : NetworkBehaviour {
             justRolledOver = true;
         }
 
-        if (!IsServer && GameObject.Find("NetworkManager") != null) return;
+        //if (!IsServer && GameObject.Find("NetworkManager") != null) return;
 
         if (justRolledOver) {
             counterPastRollover++;

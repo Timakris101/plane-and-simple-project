@@ -25,6 +25,8 @@ public class DamageTextScript : MonoBehaviour {
     }
 
     void Update() {
+        if (GameObject.Find("Camera") == null) return;
+        
         text.GetComponent<TMP_Text>().alpha -= (1 / lifeTime * Time.deltaTime);
         if (GameObject.Find("Camera") != null) text.transform.position = GameObject.Find("Camera").GetComponent<Camera>().WorldToScreenPoint(transform.position);
         float jitter = Random.Range(-jitterStrength, jitterStrength);
