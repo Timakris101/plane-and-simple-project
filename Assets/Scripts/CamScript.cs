@@ -8,6 +8,13 @@ public class CamScript : MonoBehaviour {
 
     private Vector3 offset;
     [SerializeField] private Bounds bounds;
+
+    [Header("Zoom")]
+    [SerializeField] private bool zoomed;
+    [SerializeField] private float zoomInFoV;
+    [SerializeField] private float zoomOutFoV;
+    private PIDController zoomPID = new PIDController(4f, .3f, 0f);
+
     [Header("Mode")]
     [SerializeField] private bool missionEditor;
 
@@ -204,7 +211,12 @@ public class CamScript : MonoBehaviour {
         if (Input.touchCount == 0) {
             Vector3 prevMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
             
-            camera.fieldOfView -= Input.mouseScrollDelta.y;
+            if (getControlledOrSpectatedVehicle() != null) {
+                if (GetComponent<CustomInputs>().zoomCamInput()) zoomed = !zoomed;
+                camera.fieldOfView += zoomPID.calculate(camera.fieldOfView, (zoomed ? zoomInFoV : zoomOutFoV), Time.deltaTime) * Time.deltaTime;
+            } else {
+                camera.fieldOfView -= Input.mouseScrollDelta.y;
+            }
 
             if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
                 camera.fieldOfView = maxP;

@@ -416,10 +416,28 @@ public class CustomInputs : MonoBehaviour {
 
     public bool computerControlBasedRotateInput(out bool buttonsTouched) {
         buttonsTouched = Input.GetKeyDown("r");
-        return Input.GetKeyDown("r") ;
+        return Input.GetKeyDown("r");
     }
 
     public bool readRotate() {
+        return false;
+    }
+
+//-------------------------------------------------------------------------------------------------
+    public bool zoomCamInput() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "ZoomButton");
+        if (uiInput == null) return computerControlBasedZoomInput(out bool b);
+        
+        ButtonControl control = uiInput.GetComponent<ButtonControl>();
+        return basicButtonInput(control, computerControlBasedZoomInput, readZoom);
+    }
+
+    public bool computerControlBasedZoomInput(out bool buttonsTouched) {
+        buttonsTouched = Input.GetMouseButtonDown(1);
+        return Input.GetMouseButtonDown(1);
+    }
+
+    public bool readZoom() {
         return false;
     }
 

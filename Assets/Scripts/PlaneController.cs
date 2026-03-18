@@ -94,7 +94,15 @@ public class PlaneController : VehicleController {
 
     protected virtual float wantedDir() {
         if (INPUTS.transform.parent != transform) return 0;
-        return INPUTS.GetComponent<CustomInputs>().directionInput();
+        switch (PlayerPrefs.GetString("ControlMode")) {
+            case "Joystick": 
+                return INPUTS.directionInput();
+            case "Touch":
+                Vector3 screenToWorld = INPUTS.pointerPositionInput();
+                return GetComponent<AiPlaneController>().pointTowards(screenToWorld);
+            default:
+                return 0f;
+        }
     }
 
     private float oobCounter;
