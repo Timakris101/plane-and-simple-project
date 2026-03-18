@@ -4,7 +4,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
-using ParrelSync;
+//using ParrelSync;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
@@ -27,9 +27,9 @@ public class Lobby : NetworkBehaviour {
     private async void Start() {
         if (SceneManager.GetActiveScene().name != "MultiplayerTest") {
             InitializationOptions options = new InitializationOptions();
-            if (ClonesManager.IsClone()) {
-                options.SetProfile("clone");
-            }
+            // if (ClonesManager.IsClone()) {
+            //     options.SetProfile("clone");
+            // }
 
             if (!signedIn) {
                 await UnityServices.InitializeAsync(options);
@@ -45,8 +45,10 @@ public class Lobby : NetworkBehaviour {
         } else {
             if (isTheOneWhoKnocks) {
                 NetworkManager.Singleton.StartHost();
+                Debug.Log("started host");
             } else {
                 NetworkManager.Singleton.StartClient();
+                Debug.Log("started client");
             }
         }
     }
@@ -54,9 +56,9 @@ public class Lobby : NetworkBehaviour {
     private static bool gameStarted;
     private static float timer;
     async void Update() {
-        if (NetworkManager.Singleton != null) {
-            if (NetworkManager.Singleton.IsConnectedClient) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
-        }
+        // if (NetworkManager.Singleton != null) {
+        //     if (NetworkManager.Singleton.IsConnectedClient) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
+        // }
 
         timer += Time.deltaTime;
         if (currentLobby != null && !gameStarted) {
@@ -181,7 +183,7 @@ public class Lobby : NetworkBehaviour {
     public async void leaveLobby(bool resigned) {
         if (currentLobby != null) {
             leftLobby = true;
-            if (resigned && NetworkManager.Singleton != null) sendResignationToOthersRpc();
+            // if (resigned && NetworkManager.Singleton != null) sendResignationToOthersRpc();
 
             if (enemyResigned) scoreOfMatch = 1;
             if (resigned) scoreOfMatch = 0;
@@ -192,7 +194,7 @@ public class Lobby : NetworkBehaviour {
             string playerId = AuthenticationService.Instance.PlayerId;
             Unity.Netcode.NetworkManager.Singleton.Shutdown();
             await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("MultiplayerMainMenu");
 
             currentLobby = null;
             isTheOneWhoKnocks = false;
