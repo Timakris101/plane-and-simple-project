@@ -23,7 +23,7 @@ public class CloudScript : MonoBehaviour {
     }
 
     void Update() {
-        if (color.a < 1f && timer < lifeTime) GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, color.a + speedOfDissilution * Time.deltaTime);
+        if (color.a < .8f && timer < lifeTime) GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, color.a + speedOfDissilution * Time.deltaTime);
 
         transform.position += Vector3.right * speed * Time.deltaTime;
         

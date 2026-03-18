@@ -40,6 +40,8 @@ public class DamageModel : NetworkBehaviour {
     private bool effectApplied;
     private float drowningDps = 0f;
 
+    private List<GameObject> otherDamageModels;
+
     public bool isCrewRole() {
         return crewRole;
     }
@@ -57,6 +59,8 @@ public class DamageModel : NetworkBehaviour {
     }
 
     void Start() {
+        otherDamageModels = allObjectsInTreeWith<DamageModel>(gameObject);
+
         aero = transform.parent.GetComponent<Aerodynamics>();
         effect = gameObject.name.Replace("Hitbox", "");
         switch(effect) {
@@ -209,7 +213,7 @@ public class DamageModel : NetworkBehaviour {
 
         switch(effect) {
             case "Tail":
-                aero.setBaseTorque(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
+                if (findOtherOfEffect("Wing").GetComponent<DamageModel>().isAlive()) aero.setBaseTorque(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
                 break;
 
             case "Wing":
@@ -254,7 +258,7 @@ public class DamageModel : NetworkBehaviour {
 
         switch(effect) {
             case "Tail":
-                aero.setBaseTorque(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
+                if (findOtherOfEffect("Wing").GetComponent<DamageModel>().isAlive()) aero.setBaseTorque(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
                 break;
 
             case "Wing":
@@ -265,6 +269,13 @@ public class DamageModel : NetworkBehaviour {
                 GetComponent<EngineScript>().setVal(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
                 break;
         }
+    }
+
+    private GameObject findOtherOfEffect(string effect) {
+        foreach (GameObject g in otherDamageModels) {
+            if (g.GetComponent<DamageModel>().effect == effect) return g;
+        }
+        return null;
     }
 
     private void handleSpawningTail() {
