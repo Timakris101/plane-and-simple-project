@@ -44,7 +44,7 @@ public class BailoutHandler : MonoBehaviour {
 
     public void bailCrewMember(GameObject crewToBail) {
         GameObject newCrew = Instantiate(crew, crewToBail.transform.position, Quaternion.identity);
-        //Destroy(newCrew, 10f);
+        Destroy(newCrew, 10f);
         newCrew.GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity + (Vector2) transform.up * transform.localScale.y * ejectionSeatStrength;
 
         if (transform.Find("Camera") != null) transform.Find("Camera").parent = null;

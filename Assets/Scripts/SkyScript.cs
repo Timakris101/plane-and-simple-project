@@ -3,6 +3,7 @@ using UnityEngine.Experimental.Rendering;
 using static Utils;
 using System;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 
 [ExecuteInEditMode]
 public class SkyScript : MonoBehaviour {
@@ -21,9 +22,24 @@ public class SkyScript : MonoBehaviour {
     [SerializeField] private float time;
     [SerializeField] private float altitudeCoef;
     [SerializeField] private bool irlTime; 
+    [SerializeField] private GameObject star;
+    [SerializeField] private int starCount;
+    List<GameObject> stars;
     Camera camera => GameObject.Find("Camera").GetComponent<Camera>();
     //Vector3 earthCenter => new Vector3(0, -earthRadius, 0f);
     int baseSize = 100;
+
+    void Start() {
+        stars = new List<GameObject>();
+        for (int i = 0; i < starCount; i++) {
+            GameObject newStar = Instantiate(star, transform.position + new Vector3(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f), 0f), Quaternion.identity, transform);
+            newStar.GetComponent<Light2D>().pointLightOuterRadius = UnityEngine.Random.Range(0f, star.GetComponent<Light2D>().pointLightOuterRadius);
+            stars.Add(newStar);
+        }
+        foreach (GameObject g in progenyWithScript<Light2D>(gameObject)) {
+            if (!stars.Contains(g)) DestroyImmediate(g);
+        }
+    }
 
     void LateUpdate() {
         if (GameObject.Find("Camera") == null) return;
@@ -69,6 +85,12 @@ public class SkyScript : MonoBehaviour {
 
         GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<RectTransform>().sizeDelta = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
         GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, (.7f - (gradient.Evaluate(percentDay).maxColorComponent)));
+
+        foreach (GameObject star in stars) {
+            star.GetComponent<Light2D>().intensity = 1f - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent;
+            Collider2D hit =  Physics2D.OverlapCircle(star.transform.position, star.GetComponent<Light2D>().pointLightOuterRadius / 5f);
+            if (hit != null) star.GetComponent<Light2D>().intensity = 0f;
+        }
     }
 // not working
     // private Vector3 lightSeenInViewDir(Vector3 dir, float stepSize) {
@@ -139,5 +161,9 @@ public class SkyScript : MonoBehaviour {
 
     private Vector3 pixelToWorldPoint(int x, int y) {
         return transform.position + new Vector3(x * transform.lossyScale.x / baseSize, y * transform.lossyScale.y / baseSize, transform.position.z);
+    }
+
+    private Vector2 worldToPixel(Vector3 pos) {
+        return new Vector2((int) (pos.x * baseSize / transform.lossyScale.x), (int) (pos.y * baseSize / transform.lossyScale.y)) - new Vector2((int) (transform.position.x * baseSize / transform.lossyScale.x), (int) (transform.position.y * baseSize / transform.lossyScale.x));
     }
 }

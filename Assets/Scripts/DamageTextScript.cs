@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using static Utils;
+using UnityEngine.Rendering.Universal;
 
 public class DamageTextScript : MonoBehaviour {
 
@@ -35,5 +36,6 @@ public class DamageTextScript : MonoBehaviour {
 
         transform.position += new Vector3(jitter, upwardSpeed + jitter, 0) * Time.deltaTime * curCamScaling;
         text.GetComponent<TMP_Text>().fontSize = startFontSize * curCamScaling;
+        transform.GetChild(0).GetComponent<Light2D>().intensity = text.GetComponent<TMP_Text>().alpha;
     }
 }

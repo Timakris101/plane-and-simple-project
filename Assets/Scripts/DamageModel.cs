@@ -273,6 +273,7 @@ public class DamageModel : NetworkBehaviour {
 
     private GameObject findOtherOfEffect(string effect) {
         foreach (GameObject g in otherDamageModels) {
+            if (g == null) continue;
             if (g.GetComponent<DamageModel>().effect == effect) return g;
         }
         return null;

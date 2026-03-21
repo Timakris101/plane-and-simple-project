@@ -13,6 +13,7 @@ public class SquadronSpawner : MonoBehaviour {
     [SerializeField] private bool arcade;
     private bool arcadeOn;
     [SerializeField] private bool clankerTraining;
+    [SerializeField] private bool menu;
 
     [Header("SelectionSpawner")]
     [SerializeField] private bool selectionSpawner;
@@ -98,7 +99,7 @@ public class SquadronSpawner : MonoBehaviour {
                 GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : 1)).ToString();
             }
         }
-        if (clankerTraining) {
+        if (clankerTraining || menu) {
             //Debug.Log(!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance()) + alliance);
             if (!anyVehiclesLeft(alliance)) {
                 spawnVehicles();
@@ -231,6 +232,7 @@ public class SquadronSpawner : MonoBehaviour {
             foreach (GameObject plane in planes) {
                 ((AiPlaneController) aiControllerOfVehicle(plane)).setSquadronList(planes);
                 ((AiPlaneController) aiControllerOfVehicle(plane)).setOffset(offset);
+                if (menu) Destroy(plane, 120f);
             }
         }
     }
