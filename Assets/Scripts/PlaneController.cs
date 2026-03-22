@@ -151,17 +151,40 @@ public class PlaneController : VehicleController {
 
         if (INPUTS.GetComponent<CustomInputs>().engineInput()) toggleEngines();
 
-        if (INPUTS.GetComponent<CustomInputs>().flapInput() && transform.Find("Flaps") != null) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
+        if (transform.Find("Flaps") != null) {
+            if (INPUTS.GetComponent<CustomInputs>().flapInput()) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
+        }
 
-        if (INPUTS.GetComponent<CustomInputs>().gearInput() && transform.Find("Gear") && !onGround) {
-            foreach (GameObject gear in gears) {
-                if (gear != null) gear.GetComponent<GearScript>().toggleGear();
+        if (transform.Find("Gear") && !onGround) {
+            if (INPUTS.GetComponent<CustomInputs>().gearInput()) {
+                foreach (GameObject gear in gears) {
+                    if (gear != null) gear.GetComponent<GearScript>().toggleGear();
+                }
             }
         }
-        if (INPUTS.GetComponent<CustomInputs>().brakeInput() && transform.Find("Gear")) transform.Find("Gear").GetComponent<GearScript>().brake();
+        if (transform.Find("Gear")) {
+            if (INPUTS.GetComponent<CustomInputs>().brakeInput()) transform.Find("Gear").GetComponent<GearScript>().brake();
+        }
 
-        setGuns(INPUTS.GetComponent<CustomInputs>().gunInput());
-        setBombs(INPUTS.GetComponent<CustomInputs>().bombInput());
+        if (checkForGunAmmo()) setGuns(INPUTS.GetComponent<CustomInputs>().gunInput());
+        if (checkForBombAmmo()) setBombs(INPUTS.GetComponent<CustomInputs>().bombInput());
+    }
+
+    protected bool checkForGunAmmo() {
+        foreach (GameObject gun in guns) {
+            if (gun.GetComponent<BombHolderScript>()) continue;
+            if (gun == null) continue;
+            if (gun.transform.parent != transform) continue;
+            if (gun.GetComponent<GunScript>().getAmmo() != 0) return true;
+        }
+        return false;
+    }
+
+    protected bool checkForBombAmmo() {
+        foreach (GameObject bh in bombHolders) {
+            if (bh.GetComponent<BombHolderScript>().getAmmo() != 0) return true;
+        }
+        return false;
     }
 
     protected void setGuns(bool shooting) {

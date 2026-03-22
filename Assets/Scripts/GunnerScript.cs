@@ -51,7 +51,7 @@ public class GunnerScript : MonoBehaviour {
                     if (transform.parent.Find("Camera") != null) {
                         Vector3 screenToWorld = INPUTS.pointerPositionInput();
                         pointGunAt(new Vector3(screenToWorld.x, screenToWorld.y, 0));
-                        attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), INPUTS.gunInput());
+                        if (hasAmmo()) attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), INPUTS.gunInput());
                     }
                 }
             } else {
@@ -65,6 +65,13 @@ public class GunnerScript : MonoBehaviour {
             }
         }
     }
+
+    protected bool hasAmmo() {
+        foreach (GameObject gun in guns) {
+            if (gun.GetComponent<GunScript>().getAmmo() != 0) return true;
+        }
+        return false;
+    } 
 
     protected void attemptToShoot(Vector3 posToShoot, bool b) {
         foreach (GameObject gun in guns) {
