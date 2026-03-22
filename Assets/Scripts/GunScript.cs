@@ -6,7 +6,8 @@ using Unity.Netcode;
 
 public class GunScript : NetworkBehaviour {
 
-    [SerializeField] protected GameObject bullet;
+    [SerializeField] protected GameObject belt;
+    protected GameObject bullet => belt.GetComponent<BeltScript>().getBullet(ammunition);
     [SerializeField] protected float fireRate;
     protected float timer;
     [SerializeField] private int maxAmmunition;

@@ -1736,7 +1736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: cefdd0a217dc046b5bddaf737cab7aa8, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 6acebe9eb3e9f4035be5633c03de9aab, type: 3}
   fireRate: 0.005
   maxAmmunition: 240
   ammunition: 0

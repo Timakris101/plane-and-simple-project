@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3850267047446635593
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1916526060411216193}
+  - component: {fileID: -2527090885172269518}
+  m_Layer: 0
+  m_Name: Network30calBelt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1916526060411216193
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850267047446635593}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.0910873, y: 0.4494629, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2527090885172269518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850267047446635593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3e8a186e8c3640b09b5a670d2ced0a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BeltScript
+  bullets:
+  - {fileID: 1432378121075399777, guid: 8173aa7399c344ccda262a1a9ab6c9a0, type: 3}
+  - {fileID: 1432378121075399777, guid: 7b220f30aa2fa4fab9fef58f1ae9fcf2, type: 3}
+  - {fileID: 1432378121075399777, guid: 7b220f30aa2fa4fab9fef58f1ae9fcf2, type: 3}
+  - {fileID: 1432378121075399777, guid: 7b220f30aa2fa4fab9fef58f1ae9fcf2, type: 3}

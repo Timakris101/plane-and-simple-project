@@ -589,7 +589,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
   ammunition: 0
@@ -1684,7 +1684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
   ammunition: 0
@@ -1737,7 +1737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
   ammunition: 0
@@ -1790,7 +1790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: 11aae9de4897a4df39cdd34c8f6cc281, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 7ece22e7495b84b4491129604692dd5c, type: 3}
   fireRate: 0.1
   maxAmmunition: 200
   ammunition: 0
@@ -2021,7 +2021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: 11aae9de4897a4df39cdd34c8f6cc281, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 7ece22e7495b84b4491129604692dd5c, type: 3}
   fireRate: 0.1
   maxAmmunition: 200
   ammunition: 0
@@ -2415,7 +2415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
   maxAmmunition: 2000
   ammunition: 0
@@ -2845,7 +2845,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
   maxAmmunition: 1000
   ammunition: 0
@@ -3044,7 +3044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 4421821571535085684, guid: 997073c74f2b54cb896ba6348abf632b, type: 3}
+  belt: {fileID: 3850267047446635593, guid: 9432911cefe464103b4ad8cc7699f544, type: 3}
   fireRate: 0.1
   maxAmmunition: 1
   ammunition: 0
