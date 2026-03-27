@@ -1627,8 +1627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 6acebe9eb3e9f4035be5633c03de9aab, type: 3}
-  fireRate: 0.1
-  maxAmmunition: 200
+  fireRate: 0.3
+  maxAmmunition: 30
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -1858,8 +1858,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 6acebe9eb3e9f4035be5633c03de9aab, type: 3}
-  fireRate: 0.1
-  maxAmmunition: 200
+  fireRate: 0.3
+  maxAmmunition: 30
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0

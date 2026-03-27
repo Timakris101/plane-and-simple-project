@@ -666,7 +666,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 12
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -1312,7 +1312,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 1, g: 0, b: 0, a: 1}
         key1: {r: 1, g: 0.3086193, b: 0, a: 0.5882353}
-        key2: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0}
+        key2: {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 0.5882353}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1328,7 +1328,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 22937
-        atime2: 0
+        atime2: 56283
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1337,7 +1337,7 @@ ParticleSystem:
         m_Mode: 0
         m_ColorSpace: 0
         m_NumColorKeys: 3
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
