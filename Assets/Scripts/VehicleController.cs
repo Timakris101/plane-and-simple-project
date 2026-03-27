@@ -144,6 +144,7 @@ public class VehicleController : NetworkBehaviour {
     
     protected void setGunnersToManual(bool manual) {
         foreach(GameObject gunner in gunners) {
+            if (gunner == null) continue;
             gunner.GetComponent<GunnerScript>().setManualControl(manual);
         }
     }

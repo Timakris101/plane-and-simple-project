@@ -14,6 +14,9 @@ public class SkyScript : MonoBehaviour {
     // private float stepSize = 10000f;
     // private float maxStepCount = 500f;
     // [SerializeField] private float baseScatter = 400f;
+    [SerializeField] private float physicalSize;
+    [SerializeField] private float distBack;
+    [SerializeField] private float endarkeningFactor;
     [SerializeField] private AnimationCurve sunPath;
     [SerializeField] private AnimationCurve glareStrength;
     [SerializeField] private AnimationCurve sunSize;
@@ -45,8 +48,8 @@ public class SkyScript : MonoBehaviour {
         if (GameObject.Find("Camera") == null) return;
         
         transform.parent = null;
-        transform.localScale = new Vector3(100000 / size, 100000 / size, 1f);
-        transform.position = camera.transform.position - (new Vector3(1, 1f, 0) * 10f * baseSize / 2f) - new Vector3(0, 0, camera.transform.position.z);
+        transform.localScale = new Vector3(physicalSize * 100 / size, physicalSize * 100 / size, 1f);
+        transform.position = camera.transform.position - (new Vector3(1, 1f, 0) * physicalSize / 100f * baseSize / 2f) - new Vector3(0, 0, camera.transform.position.z - distBack);
 
         float percentDay = (time % dayLength) / dayLength;
         transform.GetChild(0).localScale = new Vector3(sunSize.Evaluate(percentDay) / baseSize * size, sunSize.Evaluate(percentDay) / baseSize * size, 1);
@@ -83,8 +86,22 @@ public class SkyScript : MonoBehaviour {
 
         texture.Apply();
 
+        float endarkening = 0f;
+        float rStepSize = 10f;
+        float thetaStepSize = 1f;
+        float counter = 0;
+        for (float r = 1; r < 10f * rStepSize; r += rStepSize) {
+            for (float theta = 0; theta < 6.28; theta += thetaStepSize) {
+                Vector3 posOnSun = new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0f);
+                Collider2D hit = Physics2D.OverlapCircle(camera.ScreenToWorldPoint(new Vector3(camera.WorldToScreenPoint(transform.GetChild(0).position).x, camera.WorldToScreenPoint(transform.GetChild(0).position).y, -camera.transform.position.z)) + posOnSun, 1f);
+                if (hit && hit.transform.GetComponent<Renderer>() != null) endarkening += 1f * endarkeningFactor * hit.transform.GetComponent<Renderer>().sharedMaterial.color.a;
+                counter++;
+            }
+        }
+        endarkening /= counter;
+
         GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<RectTransform>().sizeDelta = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
-        GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, (.7f - (gradient.Evaluate(percentDay).maxColorComponent)));
+        GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, (.7f - (gradient.Evaluate(percentDay).maxColorComponent)) + endarkening);
 
         foreach (GameObject star in stars) {
             star.GetComponent<Light2D>().intensity = 1f - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent;
