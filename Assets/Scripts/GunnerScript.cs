@@ -12,6 +12,7 @@ public class GunnerScript : MonoBehaviour {
     [SerializeField] private bool isInTail;
 
     private static bool shootThruSelf = false;
+    private static bool rotatingGunners = true;
 
     private Sprite origSpriteOfPlane;
 
@@ -36,6 +37,7 @@ public class GunnerScript : MonoBehaviour {
 
     protected virtual void Update() {
         for (int i = 0; i < guns.Count; i++) {
+            if (guns[i] == null) continue;
             if (origGunPosY[i] == 0) origGunPosY[i] = guns[i].transform.localPosition.y + transform.localPosition.y;
             if (origMinMaxOfGuns[i].magnitude == 0) origMinMaxOfGuns[i] = new Vector2(guns[i].GetComponent<GunScript>().minDeflection, guns[i].GetComponent<GunScript>().maxDeflection);
         }
@@ -44,6 +46,8 @@ public class GunnerScript : MonoBehaviour {
             if (transform.parent.gameObject.layer != LayerMask.NameToLayer("Vehicle")) return;
             int animIndex = int.Parse(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Substring(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Length - 1));
             for (int i = 0; i < guns.Count; i++) {
+                if (guns[i] == null) continue;
+                if (!rotatingGunners) continue;
                 guns[i].transform.localPosition = new Vector3(guns[i].transform.localPosition.x,
                                                               origGunPosY[i] * (Mathf.Abs((4 - animIndex) / 2) - 1) - transform.localPosition.y,
                                                               guns[i].transform.localPosition.z);
