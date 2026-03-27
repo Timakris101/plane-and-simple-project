@@ -11,6 +11,8 @@ public class GunnerScript : MonoBehaviour {
     [SerializeField] protected float maxRange;
     [SerializeField] private bool isInTail;
 
+    private static bool shootThruSelf = false;
+
     private Sprite origSpriteOfPlane;
 
     private Vector3 positionToCheckShotFrom => (transform.GetChild(0).Find("BulletSpawnArea") == null ? transform.GetChild(0).position : transform.GetChild(0).Find("BulletSpawnArea").position);
@@ -19,9 +21,13 @@ public class GunnerScript : MonoBehaviour {
 
     protected CustomInputs INPUTS;
 
+    float[] origGunPosY;
+    Vector2[] origMinMaxOfGuns;
     void Awake() {
         INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
         guns = progenyWithScript<GunScript>(gameObject);
+        origGunPosY = new float[guns.Count];
+        origMinMaxOfGuns = new Vector2[guns.Count];
     }
 
     protected virtual void Start() {
@@ -29,11 +35,27 @@ public class GunnerScript : MonoBehaviour {
     }
 
     protected virtual void Update() {
+        for (int i = 0; i < guns.Count; i++) {
+            if (origGunPosY[i] == 0) origGunPosY[i] = guns[i].transform.localPosition.y + transform.localPosition.y;
+            if (origMinMaxOfGuns[i].magnitude == 0) origMinMaxOfGuns[i] = new Vector2(guns[i].GetComponent<GunScript>().minDeflection, guns[i].GetComponent<GunScript>().maxDeflection);
+        }
         if (transform.parent.gameObject.layer == LayerMask.NameToLayer("Vehicle")) { //if in plane
             if (isInTail && transform.parent.GetComponent<Animator>().GetBool("Tailless") && GetComponent<DamageModel>().isAlive()) transform.parent.GetComponent<BailoutHandler>().bailCrewMember(gameObject);
             if (transform.parent.gameObject.layer != LayerMask.NameToLayer("Vehicle")) return;
             int animIndex = int.Parse(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Substring(transform.parent.GetComponent<SpriteRenderer>().sprite.name.Length - 1));
-            if (GetComponent<DamageModel>().isAlive() && !transform.parent.GetComponent<GForcesScript>().isPersonSleepy() && animIndex <= 1) { //if concious and alive and plane is not spinning out
+            for (int i = 0; i < guns.Count; i++) {
+                guns[i].transform.localPosition = new Vector3(guns[i].transform.localPosition.x,
+                                                              origGunPosY[i] * (Mathf.Abs((4 - animIndex) / 2) - 1) - transform.localPosition.y,
+                                                              guns[i].transform.localPosition.z);
+                if ((Mathf.Abs((4 - animIndex) / 2) - 1) == -1) {
+                    guns[i].GetComponent<GunScript>().minDeflection = origMinMaxOfGuns[i].y * (Mathf.Abs((4 - animIndex) / 2) - 1);
+                    guns[i].GetComponent<GunScript>().maxDeflection = origMinMaxOfGuns[i].x * (Mathf.Abs((4 - animIndex) / 2) - 1);
+                } else {
+                    guns[i].GetComponent<GunScript>().minDeflection = origMinMaxOfGuns[i].x;
+                    guns[i].GetComponent<GunScript>().maxDeflection = origMinMaxOfGuns[i].y;
+                }
+            }
+            if (GetComponent<DamageModel>().isAlive() && !transform.parent.GetComponent<GForcesScript>().isPersonSleepy()) { //if concious and alive and plane is not spinning out
                 setTargetedObj(transform.parent.GetComponent<AiPlaneController>().getTargetedObj());
 
                 if (!manualControl) {
@@ -78,11 +100,13 @@ public class GunnerScript : MonoBehaviour {
             GameObject gunToLookAt = gun.GetComponent<GunScript>().fixedToOtherGun ? transform.GetChild(0).gameObject : gun;
             bool tooFarFromSight = Mathf.Abs(Vector2.SignedAngle(posToShoot - gunToLookAt.transform.position, gunToLookAt.transform.right)) > angularThreshForGuns;
             bool hitsOwnPlane = false;
-            RaycastHit2D[] hits = Physics2D.RaycastAll(positionToCheckShotFrom, gunToLookAt.transform.right);
-            foreach (RaycastHit2D hit in hits) {
-                if (hit.collider.transform == transform.parent) { //checks if the specific collider is of the parent and not of the children. Hit.transform would return parent transform
-                    hitsOwnPlane = true;
-                    break;
+            if (!shootThruSelf) {
+                RaycastHit2D[] hits = Physics2D.RaycastAll(positionToCheckShotFrom, gunToLookAt.transform.right);
+                foreach (RaycastHit2D hit in hits) {
+                    if (hit.collider.transform == transform.parent) { //checks if the specific collider is of the parent and not of the children. Hit.transform would return parent transform
+                        hitsOwnPlane = true;
+                        break;
+                    }
                 }
             }
             gun.GetComponent<GunScript>().setShooting(b && !hitsOwnPlane && !tooFarFromSight);
