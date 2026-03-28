@@ -17,6 +17,7 @@ public class SkyScript : MonoBehaviour {
     [SerializeField] private float physicalSize;
     [SerializeField] private float distBack;
     [SerializeField] private float endarkeningFactor;
+    [SerializeField] private bool takesMax;
     [SerializeField] private AnimationCurve sunPath;
     [SerializeField] private AnimationCurve glareStrength;
     [SerializeField] private AnimationCurve sunSize;
@@ -35,7 +36,7 @@ public class SkyScript : MonoBehaviour {
     void Start() {
         stars = new List<GameObject>();
         for (int i = 0; i < starCount; i++) {
-            GameObject newStar = Instantiate(star, transform.position + new Vector3(UnityEngine.Random.Range(0f, 1000f), UnityEngine.Random.Range(0f, 1000f), 0f), Quaternion.identity, transform);
+            GameObject newStar = Instantiate(star, transform.position + new Vector3(UnityEngine.Random.Range(0f, physicalSize), UnityEngine.Random.Range(0f, physicalSize), transform.position.z), Quaternion.identity, transform);
             newStar.GetComponent<Light2D>().pointLightOuterRadius = UnityEngine.Random.Range(0f, star.GetComponent<Light2D>().pointLightOuterRadius);
             stars.Add(newStar);
         }
@@ -56,6 +57,7 @@ public class SkyScript : MonoBehaviour {
         transform.GetChild(0).localPosition = sunPosOnScreen / baseSize;
     }
 
+    int frameCounter;
     void Update() {
         if (GameObject.Find("Camera") == null) return;
 
@@ -86,27 +88,61 @@ public class SkyScript : MonoBehaviour {
 
         texture.Apply();
 
+        float maxEndarkening = .5f;
+
         float endarkening = 0f;
-        float rStepSize = 10f;
-        float thetaStepSize = 1f;
+        float rStepCount = 3f;
+        float maxR = 50f;
+        float thetaStepCount = 3f;
         float counter = 0;
-        for (float r = 1; r < 10f * rStepSize; r += rStepSize) {
-            for (float theta = 0; theta < 6.28; theta += thetaStepSize) {
-                Vector3 posOnSun = new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0f);
-                Collider2D hit = Physics2D.OverlapCircle(camera.ScreenToWorldPoint(new Vector3(camera.WorldToScreenPoint(transform.GetChild(0).position).x, camera.WorldToScreenPoint(transform.GetChild(0).position).y, -camera.transform.position.z)) + posOnSun, 1f);
-                if (hit && hit.transform.GetComponent<Renderer>() != null) endarkening += 1f * endarkeningFactor * hit.transform.GetComponent<Renderer>().sharedMaterial.color.a;
-                counter++;
+        float depthStep = 10f;
+
+        float totalDarknessOfDepths = 0f;
+        float maxDarknessOfAnyDepth = 0f; 
+
+        LayerMask lm = ~LayerMask.GetMask("Bullet");
+        for (float depth = 0; depth <= distBack; depth += depthStep) {
+            float darknessOfCurDepth = 0f;
+            for (float r = 0; r <= maxR; r += maxR / rStepCount) {
+                for (float theta = 0; theta < 6.28f; theta += 6.28f / thetaStepCount) {
+                    if (r == 0 && theta != 0) continue;
+                    Vector3 posOnSun = new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0f);
+                    Collider2D[] hits = Physics2D.OverlapCircleAll(camera.ScreenToWorldPoint(new Vector3(camera.WorldToScreenPoint(transform.GetChild(0).position).x, camera.WorldToScreenPoint(transform.GetChild(0).position).y, -camera.transform.position.z + depth)) + posOnSun, 0.01f, lm, depth - depthStep / 2f, depth + depthStep / 2f);
+                    float alpha = 0f;
+                    foreach (Collider2D hit in hits) {
+                        if (hit && hit.transform.GetComponent<Renderer>() != null) alpha += hit.transform.GetComponent<Renderer>().sharedMaterial.color.a;
+                    }
+                    darknessOfCurDepth += Mathf.Min(1f, alpha);
+                    counter++;
+                }
             }
+            totalDarknessOfDepths += darknessOfCurDepth;
+            if (darknessOfCurDepth > maxDarknessOfAnyDepth) maxDarknessOfAnyDepth = darknessOfCurDepth;
         }
-        endarkening /= counter;
+        if (!takesMax) {
+            endarkening = Mathf.Min(totalDarknessOfDepths / (counter / (distBack / depthStep + 1f)) * endarkeningFactor, 1f);
+        } else {
+            endarkening = maxDarknessOfAnyDepth / (counter / (distBack / depthStep + 1f)) * endarkeningFactor;
+        }
 
         GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<RectTransform>().sizeDelta = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
-        GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, (.7f - (gradient.Evaluate(percentDay).maxColorComponent)) + endarkening);
+        GameObject.Find("Canvas").transform.Find("Brightness").GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, Mathf.Max((.7f - (gradient.Evaluate(percentDay).maxColorComponent)), Mathf.Min(endarkening, maxEndarkening)));
 
+        frameCounter++;
+        int index = 0;
+        int groupCount = 3;
         foreach (GameObject star in stars) {
+            index++;
+            if (index % groupCount != frameCounter % groupCount) continue;
             star.GetComponent<Light2D>().intensity = 1f - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent;
-            Collider2D hit =  Physics2D.OverlapCircle(star.transform.position, star.GetComponent<Light2D>().pointLightOuterRadius / 5f);
-            if (hit != null) star.GetComponent<Light2D>().intensity = 0f;
+            for (float depth = 0; depth <= distBack; depth += depthStep) {
+                Collider2D[] hits = Physics2D.OverlapCircleAll(camera.ScreenToWorldPoint(new Vector3(camera.WorldToScreenPoint(star.transform.position).x, camera.WorldToScreenPoint(star.transform.position).y, -camera.transform.position.z + depth)), star.GetComponent<Light2D>().pointLightOuterRadius / 5f, lm, depth - depthStep / 2f, depth + depthStep / 2f);
+                float alpha = 0f;
+                foreach (Collider2D hit in hits) {
+                    if (hit && hit.transform.GetComponent<Renderer>() != null) alpha += hit.transform.GetComponent<Renderer>().sharedMaterial.color.a;
+                }
+                if (alpha != 0f) star.GetComponent<Light2D>().intensity = 1f - Mathf.Min(alpha, 1f);
+            }
         }
     }
 // not working

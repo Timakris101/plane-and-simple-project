@@ -20,7 +20,7 @@ public class PropellerScript : MonoBehaviour {
     private PlaneController pc;
 
     void OnTriggerEnter2D(Collider2D col) {
-        if (col.transform.tag == "Ground") {
+        if (col.transform.tag == "Ground" && col.transform.position.z == transform.position.z) {
             for (int i = 0; i < transform.parent.childCount; i++) {
                 GameObject potentialProp = transform.parent.GetChild(i).gameObject;
                 if (potentialProp.GetComponent<PropellerScript>() != null) {
