@@ -134,15 +134,16 @@ public class SkyScript : MonoBehaviour {
         foreach (GameObject star in stars) {
             index++;
             if (index % groupCount != frameCounter % groupCount) continue;
-            star.GetComponent<Light2D>().intensity = 1f - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent;
+            float totalAlpha = 0f;
             for (float depth = 0; depth <= distBack; depth += depthStep) {
                 Collider2D[] hits = Physics2D.OverlapCircleAll(camera.ScreenToWorldPoint(new Vector3(camera.WorldToScreenPoint(star.transform.position).x, camera.WorldToScreenPoint(star.transform.position).y, -camera.transform.position.z + depth)), star.GetComponent<Light2D>().pointLightOuterRadius / 5f, lm, depth - depthStep / 2f, depth + depthStep / 2f);
                 float alpha = 0f;
                 foreach (Collider2D hit in hits) {
                     if (hit && hit.transform.GetComponent<Renderer>() != null) alpha += hit.transform.GetComponent<Renderer>().sharedMaterial.color.a;
                 }
-                if (alpha != 0f) star.GetComponent<Light2D>().intensity = 1f - Mathf.Min(alpha, 1f);
+                totalAlpha += Mathf.Min(alpha, 1f);
             }
+            star.GetComponent<Light2D>().intensity = Mathf.Min(1f - Mathf.Min(totalAlpha, 1f), 1f - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent);
         }
     }
 // not working
