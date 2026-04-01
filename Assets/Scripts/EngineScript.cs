@@ -7,12 +7,38 @@ public class EngineScript : MonoBehaviour {
     [SerializeField] protected float throttle;
     [SerializeField] protected bool enginesOn;
 
+    [SerializeField] private GameObject wepOrAbEffect;
+    GameObject instantiatedEffect;
+
     void Start() {
         setVehicleController(); 
+        if (wepOrAbEffect != null) {
+            instantiatedEffect = Instantiate(wepOrAbEffect, transform);
+            instantiatedEffect.transform.localPosition = GetComponent<BoxCollider2D>().offset;
+        }
     }
 
     void Update() {
         setVehicleController();
+        if (instantiatedEffect != null) {
+            ParticleSystem ps = instantiatedEffect.GetComponent<ParticleSystem>();
+            PlaneController pc = null;
+            foreach (PlaneController c in transform.parent.GetComponents<PlaneController>()) {
+                if (c.enabled) {
+                    pc = c;
+                    break;
+                }
+            } 
+            if (pc.getInWEP() && getVal() != 0 && enginesOn) {
+                if (!ps.isPlaying) {
+                    ps.Play(true);
+                }
+            } else {
+                if (ps.isPlaying) {
+                    ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                }
+            }
+        }
     }
 
     public virtual void setVal(float val) {}

@@ -269,7 +269,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -383,7 +382,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -839,7 +837,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   irlTurnTime: 33
   elevatorDeflection: 0
-  speedOfControlEffectiveness: 3
 --- !u!114 &5593220574017246992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1107,7 +1104,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1266,7 +1262,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 3329704741098306423, guid: 6efc0c7728e1e4d0f8e3f12918839648, type: 3}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1644,7 +1639,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
-  wepOrAbEffect: {fileID: 2226748883049470077, guid: 25806837707984f699c3c36a89f5faee, type: 3}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1665,6 +1659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JetEngineScript
   throttle: 0
   enginesOn: 0
+  wepOrAbEffect: {fileID: 2226748883049470077, guid: 25806837707984f699c3c36a89f5faee, type: 3}
   enginePowerByAlt:
     serializedVersion: 2
     m_Curve:
@@ -2069,7 +2064,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -2228,7 +2222,6 @@ MonoBehaviour:
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 500
