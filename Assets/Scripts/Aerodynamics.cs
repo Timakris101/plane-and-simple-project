@@ -30,7 +30,7 @@ public class Aerodynamics : MonoBehaviour {
     private float elevatorSpeed = 480f;
     private float baseTorque;
     private float instantaneousTurnRateFactor = 1.5f;
-    [SerializeField] private float speedOfControlEffectiveness;
+    private float speedOfControlEffectiveness = 10f;
 
     [Header("Atmosphere")]
     private static float seaLevelAirDensity = 9f;

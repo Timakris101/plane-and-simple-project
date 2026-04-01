@@ -172,8 +172,8 @@ public class PlaneController : VehicleController {
 
     protected bool checkForGunAmmo() {
         foreach (GameObject gun in guns) {
-            if (gun.GetComponent<BombHolderScript>()) continue;
             if (gun == null) continue;
+            if (gun.GetComponent<BombHolderScript>()) continue;
             if (gun.transform.parent != transform) continue;
             if (gun.GetComponent<GunScript>().getAmmo() != 0) return true;
         }

@@ -3638,7 +3638,7 @@ MonoBehaviour:
   sunPosOnScreen: {x: 14.437833, y: 4.6438046, z: 0}
   physicalSize: 2000
   distBack: 10
-  endarkeningFactor: 0.3
+  endarkeningFactor: 0.1
   takesMax: 1
   sunPath:
     serializedVersion: 2
