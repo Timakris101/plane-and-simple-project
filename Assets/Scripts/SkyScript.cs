@@ -80,7 +80,7 @@ public class SkyScript : MonoBehaviour {
             for (int x = 0; x < texture.width; x++) {
                 float dist = Vector3.Distance(sunPosOnScreen, new Vector3(x, y, 0f));
                 
-                Color color = (gradient.Evaluate(sunPosOnScreen.x / texture.width) + new Color((texture.width - dist) * baseSize / size * glareStrength.Evaluate(sunPosOnScreen.x / texture.width), (texture.height - dist) * baseSize / size * glareStrength.Evaluate(sunPosOnScreen.x / texture.width), 0f, .1f));
+                Color color = (gradient.Evaluate(sunPosOnScreen.x / texture.width) + new Color((texture.width - dist) * baseSize / size * glareStrength.Evaluate(sunPosOnScreen.x / texture.width), (texture.height - dist) * baseSize / size * glareStrength.Evaluate(sunPosOnScreen.x / texture.width), 0f, 1f));
 
                 texture.SetPixel(x, y, color);
             }
@@ -92,7 +92,7 @@ public class SkyScript : MonoBehaviour {
 
         float endarkening = 0f;
         float rStepCount = 3f;
-        float maxR = 50f;
+        float maxR = sunSize.Evaluate(percentDay) * transform.localScale.x;
         float thetaStepCount = 3f;
         float counter = 0;
         float depthStep = 10f;
