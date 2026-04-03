@@ -92,7 +92,7 @@ public class SkyScript : MonoBehaviour {
 
         float endarkening = 0f;
         float rStepCount = 3f;
-        float maxR = sunSize.Evaluate(percentDay) * transform.localScale.x;
+        float maxR = transform.GetChild(0).lossyScale.x;
         float thetaStepCount = 3f;
         float counter = 0;
         float depthStep = 10f;
