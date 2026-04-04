@@ -29,6 +29,7 @@ public class SkyScript : MonoBehaviour {
     [SerializeField] private GameObject star;
     [SerializeField] private int starCount;
     List<GameObject> stars;
+    [SerializeField] private float starAppearenceVal;
     Camera camera => GameObject.Find("Camera").GetComponent<Camera>();
     //Vector3 earthCenter => new Vector3(0, -earthRadius, 0f);
     int baseSize = 100;
@@ -143,7 +144,7 @@ public class SkyScript : MonoBehaviour {
                 }
                 totalAlpha += Mathf.Min(alpha, 1f);
             }
-            star.GetComponent<Light2D>().intensity = Mathf.Min(1f - Mathf.Min(totalAlpha, 1f), 1f - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent);
+            star.GetComponent<Light2D>().intensity = Mathf.Min(1f - Mathf.Min(totalAlpha, 1f), starAppearenceVal - texture.GetPixel((int) worldToPixel(star.transform.position).x, (int) worldToPixel(star.transform.position).y).maxColorComponent);
         }
     }
 // not working
