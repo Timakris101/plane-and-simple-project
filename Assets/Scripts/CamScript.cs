@@ -17,6 +17,7 @@ public class CamScript : MonoBehaviour {
 
     [Header("Mode")]
     [SerializeField] private bool missionEditor;
+    [SerializeField] private bool mainMenu;
 
     [Header("CamStats")]
     [SerializeField] private int minP; //min for perspective
@@ -33,6 +34,8 @@ public class CamScript : MonoBehaviour {
     GameObject dialHandler;
     
     void Start() {
+        if (mainMenu) return;
+
         offset = new Vector3(0, 0, transform.position.z);
         
         GameObject vehicleToControlAtStart = null;
@@ -53,6 +56,8 @@ public class CamScript : MonoBehaviour {
     }
 
     void Update() {
+        if (mainMenu) return;
+        
         if (GameObject.Find("NetworkManager") != null) {
             if (NetworkManager.Singleton.LocalClient.PlayerObject == null) return;
             takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);

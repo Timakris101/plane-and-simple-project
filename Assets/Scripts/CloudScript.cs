@@ -10,6 +10,7 @@ public class CloudScript : MonoBehaviour {
     private float speed;
     private float speedOfDissilution = 0.1f;
     private float speedOfExpansion = 0.01f;
+    private float awooooo;
 
     private Color color => GetComponent<SpriteRenderer>().material.color;
 
@@ -18,12 +19,13 @@ public class CloudScript : MonoBehaviour {
     }
 
     void Start() {
+        awooooo = Random.Range(.5f, .9f);
         speed = Random.Range(-maxSpeed, maxSpeed);
         lifeTime = Random.Range(0f, maxLifeTime);
     }
 
     void Update() {
-        if (color.a < .8f && timer < lifeTime) GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, color.a + speedOfDissilution * Time.deltaTime);
+        if (color.a < awooooo && timer < lifeTime) GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, color.a + speedOfDissilution * Time.deltaTime);
 
         transform.position += Vector3.right * speed * Time.deltaTime;
         
