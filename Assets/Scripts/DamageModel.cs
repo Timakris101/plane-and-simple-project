@@ -21,6 +21,9 @@ public class DamageModel : NetworkBehaviour {
     [Header("Engine")]
     [SerializeField] private float fireDamagePerSec;
 
+    [Header("Fuel")]
+    [SerializeField] private float fuelFireFuelConsumptionPerSec;
+
     [Header("Tail")]
     [SerializeField] private GameObject tailPos;
     [SerializeField] private GameObject tailNeg;

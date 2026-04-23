@@ -75,21 +75,17 @@ public class SquadronSpawner : MonoBehaviour {
 
     void Update() {
         if (camera != null && selectionSpawner && inEditor) {
-            if (Input.GetMouseButtonDown(0)) {
-                foreach (Collider2D col in Physics2D.OverlapCircleAll(camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -camera.transform.position.z)), .1f)) {
+            if (Input.GetMouseButtonDown(0) || Input.touchCount == 1) {
+                foreach (Collider2D col in Physics2D.OverlapCircleAll(camera.GetComponent<CustomInputs>().pointerPositionInput(), .1f)) {
                     if (col.transform.GetComponent<SquadronSpawner>() != null) setCurrentSelectedObj(col.gameObject != curSelected ? col.gameObject : curSelected);
                 }
             }
             if (Input.GetKey(KeyCode.Escape)) {
-                setCurrentSelectedObj(curSelected);
-                if (curSelected != null) containsPlayerToggle.GetComponent<Toggle>().isOn = false;
-                setCurrentSelectedObj(null);
+                confirmSqsp();
             }
-            if (Input.GetKey(KeyCode.Backspace) && !amountTextField.GetComponent<TMP_InputField>().isFocused) Destroy(curSelected);
-            if (Input.GetMouseButtonDown(1) && curSelected == null) {
-                GameObject newSpawner = Instantiate(baseSpawner, camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -camera.transform.position.z)), Quaternion.identity);
-                setSpawnerToPanelStats(newSpawner);
-                setCurrentSelectedObj(newSpawner);
+            if (Input.GetKey(KeyCode.Backspace)) destroySpawner();
+            if ((Input.GetMouseButtonDown(1) || Input.touchCount == 2) && curSelected == null) {
+                makeNewSpawnerAt(camera.GetComponent<CustomInputs>().pointerPositionInput());
             }
             editSpawner(curSelected);
         }
@@ -106,15 +102,41 @@ public class SquadronSpawner : MonoBehaviour {
             }
         }
         if (GetComponent<SpriteRenderer>() != null) {
-            GetComponent<LineRenderer>().material = new Material(Shader.Find("Sprites/Default"));
-            if (GetComponent<SpriteRenderer>().enabled) {
-                GetComponent<LineRenderer>().SetPosition(0, transform.position);
-                GetComponent<LineRenderer>().SetPosition(1, new Vector3(camera.transform.position.x, camera.transform.position.y, 0));
-            } else {
-                GetComponent<LineRenderer>().SetPosition(0, transform.position);
-                GetComponent<LineRenderer>().SetPosition(1, transform.position);
-            }
+            handleLr();
         }
+    }
+
+    private void handleLr() {
+        GetComponent<LineRenderer>().material = new Material(Shader.Find("Sprites/Default"));
+        if (GetComponent<SpriteRenderer>().enabled) {
+            GetComponent<LineRenderer>().SetPosition(0, transform.position);
+            GetComponent<LineRenderer>().SetPosition(1, new Vector3(camera.transform.position.x, camera.transform.position.y, 0));
+        } else {
+            GetComponent<LineRenderer>().SetPosition(0, transform.position);
+            GetComponent<LineRenderer>().SetPosition(1, transform.position);
+        }
+    }
+
+    public void destroySpawner() {
+        if (!amountTextField.GetComponent<TMP_InputField>().isFocused) Destroy(curSelected);
+    }
+
+    public void makeNewSpawnerAt(Vector3 position) {
+        GameObject newSpawner = Instantiate(baseSpawner, position, Quaternion.identity);
+        setSpawnerToPanelStats(newSpawner);
+        setCurrentSelectedObj(newSpawner);
+    }
+
+    public void makeNewSpawnerAt() {
+        GameObject newSpawner = Instantiate(baseSpawner, new Vector3(camera.transform.position.x, camera.transform.position.y, 0f), Quaternion.identity);
+        setSpawnerToPanelStats(newSpawner);
+        setCurrentSelectedObj(newSpawner);
+    }
+
+    public void confirmSqsp() {
+        setCurrentSelectedObj(curSelected);
+        if (curSelected != null) containsPlayerToggle.GetComponent<Toggle>().isOn = false;
+        setCurrentSelectedObj(null);
     }
 
     public bool anyVehiclesLeft(string alliance) {
@@ -136,14 +158,14 @@ public class SquadronSpawner : MonoBehaviour {
         if (spawnerToEdit != null && inEditor) {
             setSpawnerToPanelStats(spawnerToEdit);
             setContainsPlayer(spawnerToEdit);
-            if (Input.GetMouseButton(0)) {
-                Vector3 dir = camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -camera.transform.position.z)) - curSelected.transform.position;
+            if (Input.GetMouseButton(0) || Input.touchCount == 1) {
+                Vector3 dir = camera.GetComponent<CustomInputs>().pointerPositionInput() - curSelected.transform.position;
                 if (dir.magnitude < curSelected.GetComponent<CircleCollider2D>().radius * 2f) {
                     spawnerToEdit.transform.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.normalized.y, dir.normalized.x) * 180f / 3.14f);
                 }
             }
-            if (Input.GetMouseButton(1)) {
-                spawnerToEdit.transform.position = camera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -camera.transform.position.z));
+            if (Input.GetMouseButton(1) || Input.touchCount == 2) {
+                spawnerToEdit.transform.position = camera.GetComponent<CustomInputs>().pointerPositionInput();
             }
         }
     }
@@ -264,4 +286,6 @@ public class SquadronSpawner : MonoBehaviour {
             curSelected = null;
         }
     }
+
+    public bool isInEditor() {return inEditor;}
 }

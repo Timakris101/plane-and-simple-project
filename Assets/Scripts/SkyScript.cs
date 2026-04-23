@@ -14,7 +14,7 @@ public class SkyScript : MonoBehaviour {
     // private float stepSize = 10000f;
     // private float maxStepCount = 500f;
     // [SerializeField] private float baseScatter = 400f;
-    [SerializeField] private float physicalSize;
+    private float physicalSize = 2000f;
     [SerializeField] private float distBack;
     [SerializeField] private float endarkeningFactor;
     [SerializeField] private bool takesMax;

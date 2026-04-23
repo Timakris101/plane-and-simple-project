@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateOnAwake: 0
   arcade: 0
+  clankerTraining: 0
+  menu: 0
   selectionSpawner: 0
   curSelected: {fileID: 0}
   vehicles: []

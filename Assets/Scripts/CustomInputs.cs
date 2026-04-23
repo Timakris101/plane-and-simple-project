@@ -19,7 +19,7 @@ public class InteractableModePair {
 public class CustomInputs : MonoBehaviour {
 
     List<InteractableModePair> controlList = new List<InteractableModePair>();
-    string baseControlFind = "Canvas/Controls/";
+    string baseControlFind = "Canvas/SafeArea/Controls/";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -492,7 +492,11 @@ public class CustomInputs : MonoBehaviour {
     public Vector3 mobileControlBasedTouchInput(out bool buttonsTouched) {
         buttonsTouched = Input.touchCount > 0;
         if (!buttonsTouched) return new Vector3(0,0,0);
-        return GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
+        Vector3 totalPos = Vector3.zero;
+        for (int i = 0; i < Input.touchCount; i++) {
+            totalPos += GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(i).position.x, Input.GetTouch(i).position.y, -transform.position.z));
+        }
+        return totalPos / Input.touchCount;
     }
 
 //-------------------------------------------------------------------------------------------------

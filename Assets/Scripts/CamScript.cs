@@ -52,7 +52,7 @@ public class CamScript : MonoBehaviour {
 
         initCrosshairPos = GameObject.Find("Canvas").transform.Find("CrosshairHolder").GetChild(0).localPosition;
 
-        dialHandler = GameObject.Find("Canvas").transform.Find("DialHandler").gameObject;
+        dialHandler = GameObject.Find("Canvas").transform.Find("SafeArea").transform.Find("DialHandler").gameObject;
     }
 
     void Update() {
@@ -171,24 +171,26 @@ public class CamScript : MonoBehaviour {
 
     private void handleVehicleSwitching() {
         if (missionEditor) {
-            if (GetComponent<CustomInputs>().spectatePlaneInput()) {
-                if (vehicleToControl == null) {
-                    scrollSpectatableVehicles();
-                } else {
-                    spectatedVehicle = vehicleToControl;
-                    vehicleToControl = null;
+            if (!GameObject.Find("Canvas").GetComponent<SquadronSpawner>().isInEditor()) {
+                if (GetComponent<CustomInputs>().spectatePlaneInput()) {
+                    if (vehicleToControl == null) {
+                        scrollSpectatableVehicles();
+                    } else {
+                        spectatedVehicle = vehicleToControl;
+                        vehicleToControl = null;
+                    }
                 }
-            }
-            if (GetComponent<CustomInputs>().swapPlaneInput()) {
-                if (spectatedVehicle == null || spectatedVehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
-                    scrollCrewedVehicles();
-                } else {
-                    takeControlOfVehicle(spectatedVehicle);
-                    spectatedVehicle = null;
+                if (GetComponent<CustomInputs>().swapPlaneInput()) {
+                    if (spectatedVehicle == null || spectatedVehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
+                        scrollCrewedVehicles();
+                    } else {
+                        takeControlOfVehicle(spectatedVehicle);
+                        spectatedVehicle = null;
+                    }
                 }
-            }
-            if (GetComponent<CustomInputs>().escapeInput()) {
-                uncoupleCam();
+                if (GetComponent<CustomInputs>().escapeInput()) {
+                    uncoupleCam();
+                }
             }
         }
         if (vehicleToControl != null) {
@@ -212,15 +214,16 @@ public class CamScript : MonoBehaviour {
     private void handleCam() {
         transform.localScale = Vector3.one;
         Camera camera = gameObject.GetComponent<Camera>();
-
-        if (Input.touchCount == 0) {
-            Vector3 prevMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
+        
+        if (Input.touchCount == 0 || Input.touchCount == 2) {
+            Vector3 prevPos = GetComponent<CustomInputs>().pointerPositionInput();
             
             if (getControlledOrSpectatedVehicle() != null) {
                 if (GetComponent<CustomInputs>().zoomCamInput()) zoomed = !zoomed;
                 camera.fieldOfView += zoomPID.calculate(camera.fieldOfView, (zoomed ? zoomInFoV : zoomOutFoV), Time.deltaTime) * Time.deltaTime;
             } else {
-                camera.fieldOfView -= Input.mouseScrollDelta.y;
+                if (Input.touchCount == 0) camera.fieldOfView -= Input.mouseScrollDelta.y;
+                if (Input.touchCount == 2) camera.fieldOfView -= Vector2.Dot(Input.GetTouch(0).deltaPosition, Input.GetTouch(1).deltaPosition);
             }
 
             if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
@@ -230,24 +233,9 @@ public class CamScript : MonoBehaviour {
                 camera.fieldOfView = minP;
             }
 
-            Vector3 newMousePos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
+            Vector3 newPos = GetComponent<CustomInputs>().pointerPositionInput();
 
-            if (getControlledOrSpectatedVehicle() == null) transform.position += prevMousePos - newMousePos;
-        } else if (Input.touchCount == 2) {
-            Vector3 prevTouchPos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
-            
-            camera.fieldOfView -= Input.GetTouch(0).deltaPosition.y;
-
-            if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
-                camera.fieldOfView = maxP;
-            }
-            if (camera.fieldOfView < minP) { //makes cam size unable to go below min
-                camera.fieldOfView = minP;
-            }
-
-            Vector3 newTouchPos = gameObject.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, -transform.position.z));
-
-            if (getControlledOrSpectatedVehicle() == null) transform.position += prevTouchPos - newTouchPos;
+            if (getControlledOrSpectatedVehicle() == null) transform.position += prevPos - newPos;
         }
 
         if (transform.parent != null) {
@@ -261,9 +249,12 @@ public class CamScript : MonoBehaviour {
                 if (Input.GetKey("a")) movementVec += new Vector3(-1, 0, 0);
                 if (Input.GetKey("s")) movementVec += new Vector3(0, -1, 0);
                 if (Input.GetKey("d")) movementVec += new Vector3(1, 0, 0);
-                if (Input.touchCount == 1) movementVec += (Vector3) Input.GetTouch(0).deltaPosition.normalized;
-
                 transform.position += movementVec.normalized * freeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
+                float curCamScaling = (GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
+                if (Input.touchCount == 1) {
+                    movementVec = -(Vector3) Input.GetTouch(0).deltaPosition / curCamScaling;
+                    transform.position += movementVec;
+                }
             }
         }
         transform.eulerAngles = new Vector3(0, 0, 0);
