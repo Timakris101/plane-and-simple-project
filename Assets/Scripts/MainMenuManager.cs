@@ -25,9 +25,12 @@ public class MainMenuManager : MonoBehaviour {
         optionsMenuOpeningButton.SetActive(false);
         optionsMenuClosingButton.SetActive(true);
 
+        int amountActive = 0;
         foreach (GameObject g in selectableControlModes) {
+            if (g.name == PlayerPrefs.GetString(g.GetComponent<PlayerPrefHolder>().getKey())) amountActive++;
             g.SetActive(g.name == PlayerPrefs.GetString(g.GetComponent<PlayerPrefHolder>().getKey()));
         }
+        if (amountActive == 0) selectableControlModes[0].SetActive(true);
     }
 
     public void closeOptionsMenu() {
