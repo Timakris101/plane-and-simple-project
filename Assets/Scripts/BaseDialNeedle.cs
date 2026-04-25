@@ -14,6 +14,8 @@ public class BaseDialNeedle : MonoBehaviour {
     [SerializeField] private float needleThickness;
     [SerializeField] private bool bounded;
 
+    private GameObject fuelTank;
+
     protected virtual void setReadingVal() {
         if (GameObject.Find("Camera") == null) return;
         GameObject vehicle = GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle();
@@ -33,6 +35,11 @@ public class BaseDialNeedle : MonoBehaviour {
             case "Rotation": 
             valueToRead = () => (vehicle != null ? vehicle.transform.localEulerAngles.z : 0f);
             transform.localScale = new Vector3(1, vehicle.transform.localScale.y, 1);
+            break;
+
+            case "Fuel":
+            if (fuelTank == null) fuelTank = allObjectsInTreeWith<FuelTankScript>(vehicle)[0];
+            valueToRead = () => fuelTank.GetComponent<FuelTankScript>().fuelPercent();
             break;
 
             default: 

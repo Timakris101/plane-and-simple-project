@@ -36,6 +36,7 @@ public class BaseDial : MonoBehaviour {
         }
         float valToStartWritingFrom = angleStepDir == 1f ? startVal : endVal;
         for (int i = 0; i < validAngles.Count; i++) {
+            if (numberScaling == 0) continue;
             float valAtThisAngle = valToStartWritingFrom + angleStepDir * i * stepSize;
             Vector3 localPosToMakeNum = new Vector3(Mathf.Cos(validAngles[i] * Mathf.Deg2Rad), Mathf.Sin(validAngles[i] * Mathf.Deg2Rad), 0f) * numDistanceFromCenter;
             GameObject newNumText = Instantiate(baseNumberText, new Vector3(0,0,0), Quaternion.identity, transform);

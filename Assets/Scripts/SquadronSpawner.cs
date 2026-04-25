@@ -10,6 +10,7 @@ public class SquadronSpawner : MonoBehaviour {
     [SerializeField] private bool activateOnAwake;
 
     [Header("Mode")]
+    [SerializeField] private bool keepUp;
     [SerializeField] private bool arcade;
     private bool arcadeOn;
     [SerializeField] private bool clankerTraining;
@@ -90,9 +91,13 @@ public class SquadronSpawner : MonoBehaviour {
             editSpawner(curSelected);
         }
         if (arcade && arcadeOn) {
-            if (!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance())) {
-                spawnVehicles();
-                GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : 1)).ToString();
+            if (keepUp) {
+                spawnVehicles(amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()));
+            } else {
+                if (!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance())) {
+                    spawnVehicles();
+                    GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : 1)).ToString();
+                }
             }
         }
         if (clankerTraining || menu) {
@@ -152,6 +157,18 @@ public class SquadronSpawner : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    public int vehicleCount(string alliance) {
+        int counter = 0;
+        foreach (GameObject vehicle in allVehiclesOfTags("Plane", "GroundVehicle")) {
+            if (vehicle.GetComponent<AllianceHolder>().getAlliance() == alliance) {
+                if (!vehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
+                    counter++;
+                }
+            }
+        }
+        return counter;
     }
 
     public void editSpawner(GameObject spawnerToEdit) {
@@ -233,6 +250,10 @@ public class SquadronSpawner : MonoBehaviour {
     }
 
     public void spawnVehicles() {
+        spawnVehicles(amt);
+    }
+
+    public void spawnVehicles(float amt) {
         List<GameObject> planes = new List<GameObject>();
         for (int i = 0; i < amt; i++) {
             GameObject newVehicle = Instantiate(vehicle, transform.position + (Vector3) offset * i, transform.rotation);
@@ -250,6 +271,7 @@ public class SquadronSpawner : MonoBehaviour {
                 }
             }
         }
+        if (amt == 0) return;
         if (aiControllerOfVehicle(planes[0]).GetType().ToString() == "AiPlaneController") {
             foreach (GameObject plane in planes) {
                 ((AiPlaneController) aiControllerOfVehicle(plane)).setSquadronList(planes);

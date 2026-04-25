@@ -22,7 +22,9 @@ public class DamageModel : NetworkBehaviour {
     [SerializeField] private float fireDamagePerSec;
 
     [Header("Fuel")]
+    [SerializeField] private float fuelFireDamagePerSec;
     [SerializeField] private float fuelFireFuelConsumptionPerSec;
+    [SerializeField] private float damageToLeekRate;
 
     [Header("Tail")]
     [SerializeField] private GameObject tailPos;
@@ -108,9 +110,20 @@ public class DamageModel : NetworkBehaviour {
                     break;
 
                 case "Engine":
+                    if (destructiveEffect == null) break;
+                    if (destructiveEffect.transform.childCount == 0) break;
                     foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(gameObject)) {
                         damageModel.GetComponent<DamageModel>().damage(fireDamagePerSec * Time.deltaTime, false);
                     }
+                    break;
+
+                case "Fuel":
+                    if (destructiveEffect == null) break;
+                    if (destructiveEffect.transform.childCount == 0) break;
+                    foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(gameObject)) {
+                        damageModel.GetComponent<DamageModel>().damage(fuelFireDamagePerSec * Time.deltaTime, false);
+                    }
+                    GetComponent<FuelTankScript>().setLeekRate(fuelFireFuelConsumptionPerSec);
                     break;
             }   
         }
@@ -201,6 +214,10 @@ public class DamageModel : NetworkBehaviour {
 
             case "Engine":
                 GetComponent<EngineScript>().setVal(health <= 0 ? 0 : startingValOfEffect * (1 - ((maxHealth - health) * effectivenessFalloffRate / maxHealth)));
+                break;
+
+            case "Fuel":
+                GetComponent<FuelTankScript>().addLeekRate(amt * damageToLeekRate);
                 break;
         }
     }

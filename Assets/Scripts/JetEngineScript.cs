@@ -19,11 +19,15 @@ public class JetEngineScript : EngineScript {
     }
 
     public override float getThrustNewtons() {
-        return enginesOn ? (((PlaneController) vc).getInWEP() ? thrustKn * baseThrustToAb : thrustKn) * 1000f * enginePowerByAlt.Evaluate(transform.position.y) * throttle : 0f;
+        return (enginesOn && canUseEngineGeneral()) ? (((PlaneController) vc).getInWEP() ? thrustKn * baseThrustToAb : thrustKn) * 1000f * enginePowerByAlt.Evaluate(transform.position.y) * throttle : 0f;
     }
 
     public override string getType() {return "thrust";}
 
     public override float getVal() {return thrustKn;}
     public override float getOverPowerVal() {return afterBurner;}
+
+    public override float consumptionRateFuelPerSec() {return ((enginesOn && canUseEngineGeneral()) ? (((PlaneController) vc).getInWEP() ? thrustKn * baseThrustToAb : thrustKn) : 0) * throttle * fuelConsumedPerUnitThrustPerSecond;}
+
+    public override bool canUseEngineSpecific() {return true;}
 }

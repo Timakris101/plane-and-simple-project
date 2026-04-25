@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utils;
 
 public class EngineScript : MonoBehaviour {
     protected VehicleController vc;
     [SerializeField] protected float throttle;
     [SerializeField] protected bool enginesOn;
+    [SerializeField] protected float fuelConsumedPerUnitThrustPerSecond;
 
     [SerializeField] private GameObject wepOrAbEffect;
     GameObject instantiatedEffect;
+    GameObject fuelTank;
 
     void Start() {
+        if (allObjectsInTreeWith<FuelTankScript>(gameObject).Count != 0) fuelTank = allObjectsInTreeWith<FuelTankScript>(gameObject)[0];
         setVehicleController(); 
         if (wepOrAbEffect != null) {
             instantiatedEffect = Instantiate(wepOrAbEffect, transform);
@@ -41,6 +45,8 @@ public class EngineScript : MonoBehaviour {
         }
     }
 
+    public virtual float consumptionRateFuelPerSec() {return 0;}
+
     public virtual void setVal(float val) {}
 
     void setVehicleController() {
@@ -61,6 +67,13 @@ public class EngineScript : MonoBehaviour {
     public virtual float getThrustNewtons() {return 0f;}
 
     public virtual string getType() {return "";}
+
+    public bool canUseEngineGeneral() {
+        if (fuelTank == null) return canUseEngineSpecific();
+        return canUseEngineSpecific() && !fuelTank.GetComponent<FuelTankScript>().empty();
+    }
+
+    public virtual bool canUseEngineSpecific() {return true;}
 
     public void setThrottle(float f) {
         throttle = f;
