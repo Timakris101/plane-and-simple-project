@@ -18,6 +18,10 @@ public class InteractableModePair {
 
 public class CustomInputs : MonoBehaviour {
 
+    void Start() {
+        Input.simulateMouseWithTouches = false;
+    }
+
     List<InteractableModePair> controlList = new List<InteractableModePair>();
     string baseControlFind = "Canvas/SafeArea/Controls/";
 
