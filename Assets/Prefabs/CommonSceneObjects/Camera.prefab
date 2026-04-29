@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2881951019515571489}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 200, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -112,8 +112,9 @@ MonoBehaviour:
     m_Extent: {x: 16000, y: 0, z: 0}
   zoomed: 0
   zoomInFoV: 150
-  zoomOutFoV: 174
+  zoomOutFoV: 170
   missionEditor: 1
+  mainMenu: 0
   minP: 60
   maxP: 175
   freeCamSpeedScaler: 30

@@ -85,7 +85,7 @@ public class SquadronSpawner : MonoBehaviour {
                 confirmSqsp();
             }
             if (Input.GetKey(KeyCode.Backspace)) destroySpawner();
-            if ((Input.GetMouseButtonDown(1) || Input.touchCount == 2) && curSelected == null) {
+            if (Input.GetMouseButtonDown(1) && curSelected == null) {
                 makeNewSpawnerAt(camera.GetComponent<CustomInputs>().pointerPositionInput());
             }
             editSpawner(curSelected);
