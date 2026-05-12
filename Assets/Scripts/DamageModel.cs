@@ -13,7 +13,8 @@ public class DamageModel : NetworkBehaviour {
     [SerializeField] private float health;
     [SerializeField] private bool crewRole;
     [SerializeField] private bool criticalSystem;
-    [SerializeField] private GameObject destructiveEffect;
+    [SerializeField] private GameObject idealDestructiveEffect;
+    private GameObject destructiveEffect;
     [SerializeField] private Sprite replacementSprite;
     private float startingValOfEffect;
     [SerializeField] private float effectivenessFalloffRate;
@@ -86,9 +87,9 @@ public class DamageModel : NetworkBehaviour {
         if (health > maxHealth) health = maxHealth;
         if (health <= 0) {
             if (transform.parent.GetComponent<ObjectOnVehicleScript>() != null) transform.parent.GetComponent<ObjectOnVehicleScript>().kill();
-            if (destructiveEffect != null && !effectApplied) {
+            if (idealDestructiveEffect != null && !effectApplied) {
                 effectApplied = true;
-                Instantiate(destructiveEffect, transform.position, Quaternion.identity, transform);
+                destructiveEffect = Instantiate(idealDestructiveEffect, transform.position, Quaternion.identity, transform);
             }
             if (GetComponent<SpriteRenderer>() != null) GetComponent<SpriteRenderer>().sprite = replacementSprite;
             switch (effect) {
@@ -164,10 +165,6 @@ public class DamageModel : NetworkBehaviour {
         hitChanceByAngle = hitChances;
     }
 
-    public void setMaxHealth(float val) {
-        maxHealth = val;
-        if (health > val) health = val;
-    }
     public void damage(float amt) {damage(amt, true);}
     public void damage(float amt, bool shakeScreen) {
         if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject) && shakeScreen) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, amt / maxAncestor(gameObject).GetComponent<Rigidbody2D>().mass * screenShakeFactor);
@@ -319,6 +316,10 @@ public class DamageModel : NetworkBehaviour {
 
     public void kill() {
         damage(health);
+    }
+
+    public void repair() {
+        damage(health - maxHealth);
     }
 
     public bool isAlive() {

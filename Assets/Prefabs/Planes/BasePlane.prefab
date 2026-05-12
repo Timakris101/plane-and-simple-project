@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 0}
   fireRate: 0.005
   maxAmmunition: 2000
   ammunition: 0
@@ -315,11 +315,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -776,7 +778,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   irlTurnTime: 0
   elevatorDeflection: 0
-  speedOfControlEffectiveness: 3
 --- !u!114 &5593220574017246992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1039,11 +1040,13 @@ MonoBehaviour:
   health: 0
   crewRole: 1
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1198,11 +1201,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1389,11 +1394,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
+  idealDestructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1414,6 +1421,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PistonEngineScript
   throttle: 0
   enginesOn: 0
+  fuelConsumedPerUnitThrustPerSecond: 0
+  wepOrAbEffect: {fileID: 0}
   enginePowerByAlt:
     serializedVersion: 2
     m_Curve:
@@ -1485,7 +1494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  bullet: {fileID: 1432378121075399777, guid: e475071f6bd884c64af066a5e3f6e119, type: 3}
+  belt: {fileID: 0}
   fireRate: 0.005
   maxAmmunition: 0
   ammunition: 0
@@ -1988,11 +1997,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -2147,11 +2158,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 200
@@ -2309,11 +2322,13 @@ MonoBehaviour:
   health: 0
   crewRole: 1
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
-  wepOrAbEffect: {fileID: 0}
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0

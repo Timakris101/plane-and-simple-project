@@ -103,7 +103,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
@@ -250,7 +250,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
@@ -411,7 +411,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
@@ -872,7 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1462149018
+  GlobalObjectIdHash: 2762231117
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1221,6 +1221,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PacketDropper
   packets:
   - {fileID: 1163761000374979194, guid: 5ef6cce7bda7a4588b7c9e105cf34c2a, type: 3}
+  - {fileID: 1163761000374979194, guid: 823927f0f1153443d9890da9710b7e9d, type: 3}
+  - {fileID: 1163761000374979194, guid: fe2ede2ff82934aa5af36f176cf9cfac, type: 3}
 --- !u!1 &3243776034602253726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,7 +1371,7 @@ MonoBehaviour:
   health: 0
   crewRole: 1
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
@@ -1615,7 +1617,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
+  idealDestructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
@@ -1818,7 +1820,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0

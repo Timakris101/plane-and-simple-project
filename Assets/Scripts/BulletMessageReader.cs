@@ -38,7 +38,7 @@ public class BulletMessageReader : NetworkBehaviour {
 
             GameObject newText = Instantiate(basicTextObj);
             newText.transform.SetParent(GameObject.Find("Canvas").transform, false);
-            newText.transform.position = GameObject.Find(message.Substring(0, message.IndexOf(" "))).transform.position;
+            newText.transform.position = GameObject.Find(message.Substring(0, message.IndexOf(" "))).transform.position + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
             progenyWithScript<TMP_Text>(newText)[0].GetComponent<TMP_Text>().text = Mathf.Round(float.Parse(message.Substring(message.IndexOf(":") + 1, (message.IndexOf(",") == -1 ? message.Length - 1 : message.IndexOf(",")) - (message.IndexOf(":") + 1)).Trim())).ToString();
             if (message.Contains("critical")) {
                 progenyWithScript<TMP_Text>(newText)[0].GetComponent<TMP_Text>().color = Color.orange;

@@ -14,6 +14,7 @@ public class CamScript : MonoBehaviour {
     [SerializeField] private float zoomInFoV;
     [SerializeField] private float zoomOutFoV;
     private PIDController zoomPID = new PIDController(4f, .3f, 0f);
+    private PIDController movePID = new PIDController(.1f, 0f, 0f);
 
     [Header("Mode")]
     [SerializeField] private bool missionEditor;
@@ -239,10 +240,12 @@ public class CamScript : MonoBehaviour {
         }
 
         if (transform.parent != null) {
-            transform.position = transform.parent.position + offset;
+            transform.localPosition = new Vector3(transform.localPosition.x + movePID.calculate(transform.localPosition.x, 0f, Time.deltaTime), transform.localPosition.y + movePID.calculate(transform.localPosition.y, 0f, Time.deltaTime), 0f) + offset;
         } else {
             if (spectatedVehicle != null) {
-                transform.position = spectatedVehicle.transform.position + offset;
+                transform.position = new Vector3(transform.position.x + movePID.calculate(transform.position.x, spectatedVehicle.transform.position.x, Time.deltaTime), transform.position.y + movePID.calculate(transform.position.y, spectatedVehicle.transform.position.y, Time.deltaTime), 0f);
+                transform.position = Vector3.Lerp(transform.position, spectatedVehicle.transform.position, Mathf.Exp(-Mathf.Pow(Vector3.Distance(transform.position, spectatedVehicle.transform.position) / spectatedVehicle.GetComponent<Rigidbody2D>().linearVelocity.magnitude, 2f)));
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0f) + offset;
             } else {
                 Vector3 movementVec = new Vector3(0, 0, 0);
                 if (Input.GetKey("w")) movementVec += new Vector3(0, 1, 0);

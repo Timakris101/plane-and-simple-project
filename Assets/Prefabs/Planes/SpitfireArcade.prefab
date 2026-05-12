@@ -1,58 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &833638887899241115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6943059656007632015}
-  - component: {fileID: 2614390582131786546}
-  m_Layer: 3
-  m_Name: Gun (7)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6943059656007632015
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833638887899241115}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -0.7, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 184840216773921968}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2614390582131786546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 833638887899241115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
-  fireRate: 0.05
-  maxAmmunition: 350
-  ammunition: 0
-  bulletFuse: 0
-  minDeflection: 0
-  maxDeflection: 0
-  fixedToOtherGun: 0
 --- !u!1 &1495135828232498333
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
-  fireRate: 0.05
-  maxAmmunition: 350
+  belt: {fileID: 3850267047446635593, guid: 7ece22e7495b84b4491129604692dd5c, type: 3}
+  fireRate: 0.1
+  maxAmmunition: 100
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -285,7 +232,7 @@ MonoBehaviour:
   health: 0
   crewRole: 1
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
@@ -447,13 +394,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 2226748883049470077, guid: 8a6d30a5380ba424b8a62c8c2aeb26c6, type: 3}
+  idealDestructiveEffect: {fileID: 2226748883049470077, guid: 8a6d30a5380ba424b8a62c8c2aeb26c6, type: 3}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 100
-  fuelFireDamagePerSec: 100
+  fuelFireDamagePerSec: 1000
   fuelFireFuelConsumptionPerSec: 10000
-  damageToLeekRate: 1
+  damageToLeekRate: 100
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -475,7 +422,7 @@ MonoBehaviour:
   fuelAmt: 0
   maxFuel: 500000
   leekRate: 0
-  unleekRateRate: 100
+  unleekRateRate: 10000
   engine: {fileID: 0}
   leekEffect: {fileID: 1098018352613022840, guid: eff5ab9d59b964c229693e433835c382, type: 3}
 --- !u!1 &2852677247149118171
@@ -569,8 +516,6 @@ Transform:
   - {fileID: 5736170703523502693}
   - {fileID: 2226045945562639762}
   - {fileID: 7627320220465318759}
-  - {fileID: 898460795165077511}
-  - {fileID: 6943059656007632015}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &976550408184665366
@@ -716,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3565243810
+  GlobalObjectIdHash: 2181902215
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -1108,9 +1053,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
-  fireRate: 0.05
-  maxAmmunition: 350
+  belt: {fileID: 3850267047446635593, guid: 7ece22e7495b84b4491129604692dd5c, type: 3}
+  fireRate: 0.1
+  maxAmmunition: 100
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -1317,7 +1262,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
@@ -1464,7 +1409,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
@@ -1477,59 +1422,6 @@ MonoBehaviour:
   wingPos: {fileID: 0}
   wingNeg: {fileID: 0}
   animatorSpeedFactor: 0
---- !u!1 &6502742539424677809
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 898460795165077511}
-  - component: {fileID: 1582372165181723937}
-  m_Layer: 3
-  m_Name: Gun (6)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &898460795165077511
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6502742539424677809}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -0.6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 184840216773921968}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1582372165181723937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6502742539424677809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
-  fireRate: 0.05
-  maxAmmunition: 350
-  ammunition: 0
-  bulletFuse: 0
-  minDeflection: 0
-  maxDeflection: 0
-  fixedToOtherGun: 0
 --- !u!1 &6620047551645823982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,7 +1758,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
+  idealDestructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
@@ -2254,7 +2146,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
@@ -2415,7 +2307,7 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0

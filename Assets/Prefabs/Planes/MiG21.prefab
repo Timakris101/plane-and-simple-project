@@ -265,10 +265,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -378,10 +381,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1100,10 +1106,13 @@ MonoBehaviour:
   health: 0
   crewRole: 1
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1258,10 +1267,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 0
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 3329704741098306423, guid: 6efc0c7728e1e4d0f8e3f12918839648, type: 3}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1635,10 +1647,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
+  idealDestructiveEffect: {fileID: 2226748883049470077, guid: 6e9623b101a0f42f7a8f755ba627baf1, type: 3}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
   fireDamagePerSec: 10
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -1659,6 +1674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JetEngineScript
   throttle: 0
   enginesOn: 0
+  fuelConsumedPerUnitThrustPerSecond: 0
   wepOrAbEffect: {fileID: 2226748883049470077, guid: 25806837707984f699c3c36a89f5faee, type: 3}
   enginePowerByAlt:
     serializedVersion: 2
@@ -2060,10 +2076,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 0
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0
   fireDamagePerSec: 0
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 0
@@ -2218,10 +2237,13 @@ MonoBehaviour:
   health: 0
   crewRole: 0
   criticalSystem: 1
-  destructiveEffect: {fileID: 0}
+  idealDestructiveEffect: {fileID: 0}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 0.5
   fireDamagePerSec: 0
+  fuelFireDamagePerSec: 0
+  fuelFireFuelConsumptionPerSec: 0
+  damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
   ripSpeed: 500

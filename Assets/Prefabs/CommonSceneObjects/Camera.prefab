@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1595398529170154010}
   - component: {fileID: 2886172220141251920}
   - component: {fileID: 4557786857321085439}
+  - component: {fileID: 5295015419398331258}
   m_Layer: 3
   m_Name: Camera
   m_TagString: Untagged
@@ -178,3 +179,19 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &5295015419398331258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2881951019515571489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c2eba6eaa434510a827873d55906db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CursorBehavior
+  cursorVehicle: {fileID: 2800000, guid: 5033fd1b14b9c49abad567cddfc28d55, type: 3}
+  hotspotCursorVehicle: {x: 34, y: 27}
+  cursorNoVehicle: {fileID: 2800000, guid: ce9966006fa4b471b8fb9ca73d96be5f, type: 3}
+  hotspotCursorNoVehicle: {x: 20, y: 20}

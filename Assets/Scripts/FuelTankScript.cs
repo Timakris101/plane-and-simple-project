@@ -11,7 +11,7 @@ public class FuelTankScript : MonoBehaviour {
     [SerializeField] private float unleekRateRate;
     [SerializeField] private GameObject engine;
     [SerializeField] private GameObject leekEffect;
-    private float leekRepresentationAmount = 10f;
+    private float leekRepresentationAmount = 100f;
     private int maxLeeks = 3;
     private List<GameObject> leeks = new List<GameObject>();
 
@@ -28,7 +28,7 @@ public class FuelTankScript : MonoBehaviour {
                                                            0f);
             leeks.Add(newLeek);
         }
-        if (leekRepresentationAmount * leeks.Count > leekRate || leeks.Count > maxLeeks) {
+        if ((leekRepresentationAmount * leeks.Count > leekRate || leeks.Count > maxLeeks) && leeks.Count != 0) {
             GameObject leek = leeks[0];
             leeks.Remove(leek);
             var emissionModule = leek.GetComponent<ParticleSystem>().emission;

@@ -101,6 +101,10 @@ public class GunScript : NetworkBehaviour {
         shooting = b;
     }
 
+    public void fillAmmo() {
+        ammunition = maxAmmunition;
+    }
+
     public GameObject getBullet() {
         return bullet;
     }

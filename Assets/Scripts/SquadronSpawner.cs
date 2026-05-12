@@ -92,6 +92,7 @@ public class SquadronSpawner : MonoBehaviour {
         }
         if (arcade && arcadeOn) {
             if (keepUp) {
+                GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()))).ToString();
                 spawnVehicles(amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()));
             } else {
                 if (!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance())) {
