@@ -254,7 +254,7 @@ public class CamScript : MonoBehaviour {
                 if (Input.GetKey("d")) movementVec += new Vector3(1, 0, 0);
                 transform.position += movementVec.normalized * freeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
                 float curCamScaling = (GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
-                if (Input.touchCount == 1) {
+                if (Input.touchCount == 1 && freeCamSpeedScaler != 0) {
                     movementVec = -(Vector3) Input.GetTouch(0).deltaPosition / curCamScaling;
                     transform.position += movementVec;
                 }

@@ -64,6 +64,10 @@ public class CustomInputs : MonoBehaviour {
         return basicSliderInput(control, computerControlBasedDirectionInput, readDirection);
     } 
 
+    public GameObject directionInputObj() {
+        return GameObject.Find(baseControlFind + "ControlSlider");
+    }
+
     public float computerControlBasedDirectionInput(out bool buttonsTouched) {
         buttonsTouched = false;
         int val = 0;
