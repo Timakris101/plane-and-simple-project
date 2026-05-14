@@ -131,7 +131,7 @@ public class SkyScript : MonoBehaviour {
 
         frameCounter++;
         int index = 0;
-        int groupCount = 3;
+        int groupCount = 5;
         foreach (GameObject star in stars) {
             index++;
             if (index % groupCount != frameCounter % groupCount) continue;

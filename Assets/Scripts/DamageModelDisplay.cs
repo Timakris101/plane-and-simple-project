@@ -37,6 +37,8 @@ public class CoupledModule {
 }
 
 public class DamageModelDisplay : MonoBehaviour {
+    private int frameDelayAmt = 5;
+    private int frameCounter = 0;
     [SerializeField] private GameObject vehicle;
     [SerializeField] private GameObject moduleImage;
     [SerializeField] private Gradient healthDispGradient;
@@ -154,6 +156,8 @@ public class DamageModelDisplay : MonoBehaviour {
     }
 
     void Update() {
+        frameCounter++;
+        if (frameCounter % frameDelayAmt != 0) return;
         if (camera == null) return;
         displayVehicle(camera.GetComponent<CamScript>().getControlledOrSpectatedVehicle());
     }

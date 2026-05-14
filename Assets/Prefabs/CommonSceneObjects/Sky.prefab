@@ -3300,7 +3300,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkyScript
   size: 20
   sunPosOnScreen: {x: 11.61336, y: 11.108486, z: 0}
-  physicalSize: 2000
   distBack: 10
   endarkeningFactor: 0.2
   takesMax: 1
@@ -3546,7 +3545,7 @@ MonoBehaviour:
   altitudeCoef: 0.001
   irlTime: 0
   star: {fileID: 4833848853949433566, guid: 7ab7ef912ad5f48c7b85198b2124f7dd, type: 3}
-  starCount: 80
+  starCount: 40
   starAppearenceVal: 0.8
 --- !u!1 &4477943194522215617
 GameObject:

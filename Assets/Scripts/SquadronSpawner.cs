@@ -90,25 +90,14 @@ public class SquadronSpawner : MonoBehaviour {
             }
             editSpawner(curSelected);
         }
-        if (arcade && arcadeOn) {
-            if (keepUp) {
-                GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()))).ToString();
-                spawnVehicles(amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()));
-            } else {
-                if (!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance())) {
-                    spawnVehicles();
-                    GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + (containsPlayer ? -1 : 1)).ToString();
-                }
-            }
-        }
-        if (clankerTraining || menu) {
-            //Debug.Log(!anyVehiclesLeft(vehicle.GetComponent<AllianceHolder>().getAlliance()) + alliance);
-            if (!anyVehiclesLeft(alliance)) {
-                spawnVehicles();
-            }
-        }
+
         if (GetComponent<SpriteRenderer>() != null) {
             handleLr();
+        }
+        
+        if ((arcadeOn || (menu || clankerTraining)) && keepUp) {
+            if (arcadeOn) GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance())).ToString();
+            spawnVehicles(amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()));
         }
     }
 

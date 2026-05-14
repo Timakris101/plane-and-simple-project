@@ -82,12 +82,9 @@ public class PlaneController : VehicleController {
 
     public float altitudeFromTerrain() {
         float altitude = Mathf.Infinity;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, Vector3.down, Mathf.Abs(transform.position.y), LayerMask.GetMask("Terrain"));
-        foreach (RaycastHit2D hit in hits) {
-            if (hit.transform.tag == "Ground") {
-                altitude = (hit.point - (Vector2) transform.position).magnitude;
-                break;
-            }
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, Mathf.Abs(transform.position.y), LayerMask.GetMask("Terrain"));
+        if (hit) {
+            altitude = (hit.point - (Vector2) transform.position).magnitude;
         }
         return altitude;
     }

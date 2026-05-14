@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
     public void load(string name) {
-        SceneManager.LoadSceneAsync(name);
+        string cur =  SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(name);
+        SceneManager.UnloadScene(cur);
     }
 }

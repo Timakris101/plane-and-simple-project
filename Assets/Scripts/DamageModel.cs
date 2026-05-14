@@ -87,12 +87,12 @@ public class DamageModel : NetworkBehaviour {
     void Update() {
         if (health > maxHealth) health = maxHealth;
         if (health <= 0) {
-            if (transform.parent.GetComponent<ObjectOnVehicleScript>() != null) transform.parent.GetComponent<ObjectOnVehicleScript>().kill();
+            //if (transform.parent.GetComponent<ObjectOnVehicleScript>() != null) transform.parent.GetComponent<ObjectOnVehicleScript>().kill();
             if (idealDestructiveEffect != null && !effectApplied) {
                 effectApplied = true;
                 destructiveEffect = Instantiate(idealDestructiveEffect, transform.position, Quaternion.identity, transform);
             }
-            if (GetComponent<SpriteRenderer>() != null) GetComponent<SpriteRenderer>().sprite = replacementSprite;
+            //if (GetComponent<SpriteRenderer>() != null) GetComponent<SpriteRenderer>().sprite = replacementSprite;
             switch (effect) {
                 case "Wing":
                     transform.parent.GetComponent<Animator>().speed = Mathf.Min(transform.parent.GetComponent<Rigidbody2D>().linearVelocity.magnitude / animatorSpeedFactor, 2f);
@@ -114,7 +114,9 @@ public class DamageModel : NetworkBehaviour {
                 case "Engine":
                     if (destructiveEffect == null) break;
                     if (destructiveEffect.transform.childCount == 0) break;
-                    foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(gameObject)) {
+                    foreach (GameObject damageModel in otherDamageModels) {
+                        if (damageModel == null) continue;
+                        if (maxAncestor(damageModel) != maxAncestor(gameObject)) continue;
                         damageModel.GetComponent<DamageModel>().damage(fireDamagePerSec * Time.deltaTime, false);
                     }
                     break;
@@ -123,7 +125,9 @@ public class DamageModel : NetworkBehaviour {
                     GetComponent<FuelTankScript>().setLeekRate(brokenTankLeekRate);
                     if (destructiveEffect == null) break;
                     if (destructiveEffect.transform.childCount == 0) break;
-                    foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(gameObject)) {
+                    foreach (GameObject damageModel in otherDamageModels) {
+                        if (damageModel == null) continue;
+                        if (maxAncestor(damageModel) != maxAncestor(gameObject)) continue;
                         damageModel.GetComponent<DamageModel>().damage(fuelFireDamagePerSec * Time.deltaTime, false);
                     }
                     GetComponent<FuelTankScript>().setLeekRate(fuelFireFuelConsumptionPerSec);
