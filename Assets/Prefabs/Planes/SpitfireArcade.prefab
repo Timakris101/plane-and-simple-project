@@ -393,7 +393,7 @@ MonoBehaviour:
   maxHealth: 1000
   health: 0
   crewRole: 0
-  criticalSystem: 1
+  criticalSystem: 0
   idealDestructiveEffect: {fileID: 2226748883049470077, guid: 8a6d30a5380ba424b8a62c8c2aeb26c6, type: 3}
   replacementSprite: {fileID: 0}
   effectivenessFalloffRate: 1
@@ -661,7 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2181902215
+  GlobalObjectIdHash: 3565243810
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

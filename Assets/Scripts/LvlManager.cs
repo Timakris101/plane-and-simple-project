@@ -16,17 +16,25 @@ public class LvlManager : MonoBehaviour {
     }
     
     void Update() {
-        if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle() == null && gameStarted) {
+        if (lossCondition() && gameStarted) {
             Invoke(nameof(bringUpLossScreen), 2f);
             return;
         } else {
             CancelInvoke(nameof(bringUpLossScreen));
         }
-        if (allEnemiesGone() && gameStarted) {
+        if (winCondition() && gameStarted) {
             Invoke(nameof(bringUpWinScreen), 2f);
         } else {
             CancelInvoke(nameof(bringUpWinScreen));
         }
+    }
+
+    private bool lossCondition() {
+        return GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle() == null;
+    }
+
+    private bool winCondition() {
+        return allEnemiesGone();
     }
 
     private void bringUpWinScreen() {

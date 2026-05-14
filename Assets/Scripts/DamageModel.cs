@@ -25,6 +25,7 @@ public class DamageModel : NetworkBehaviour {
     [Header("Fuel")]
     [SerializeField] private float fuelFireDamagePerSec;
     [SerializeField] private float fuelFireFuelConsumptionPerSec;
+    [SerializeField] private float brokenTankLeekRate;
     [SerializeField] private float damageToLeekRate;
 
     [Header("Tail")]
@@ -119,6 +120,7 @@ public class DamageModel : NetworkBehaviour {
                     break;
 
                 case "Fuel":
+                    GetComponent<FuelTankScript>().setLeekRate(brokenTankLeekRate);
                     if (destructiveEffect == null) break;
                     if (destructiveEffect.transform.childCount == 0) break;
                     foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(gameObject)) {
@@ -127,6 +129,8 @@ public class DamageModel : NetworkBehaviour {
                     GetComponent<FuelTankScript>().setLeekRate(fuelFireFuelConsumptionPerSec);
                     break;
             }   
+        } else {
+            effectApplied = false;
         }
 
         if (effect == "Wing") {
