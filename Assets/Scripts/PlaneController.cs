@@ -90,6 +90,7 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual float wantedDir() {
+        if (INPUTS == null) return 0;
         if (INPUTS.transform.parent != transform) return 0;
         switch (PlayerPrefs.GetString("ControlMode")) {
             case "Joystick": 
@@ -128,6 +129,7 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleNonPilotControls() {
+        if (INPUTS == null) return;
         if (INPUTS.transform.parent != transform) return;
         if (INPUTS.GetComponent<CustomInputs>().ejectInput()) {
             GetComponent<BailoutHandler>().callBailOut();
@@ -135,6 +137,7 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleSwapping() {
+        if (INPUTS == null) return;
         if (INPUTS.transform.parent != transform) return;
         if (INPUTS.GetComponent<CustomInputs>().swapViewInput()) {
             toggleGunners();
@@ -142,6 +145,7 @@ public class PlaneController : VehicleController {
     }
 
     protected virtual void handleControls() {
+        if (INPUTS == null) return;
         if (INPUTS.transform.parent != transform) return;
 
         setThrottle(INPUTS.GetComponent<CustomInputs>().throttleInput());

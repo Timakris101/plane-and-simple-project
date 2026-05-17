@@ -34,7 +34,7 @@ public class CloudScript : MonoBehaviour {
             GetComponent<SpriteRenderer>().material.color = new Color(color.r, color.g, color.b, color.a - speedOfDissilution * Time.deltaTime);
             transform.localScale = new Vector3(transform.localScale.x * (1f + speedOfExpansion * Time.deltaTime), transform.localScale.y * (1f + speedOfExpansion * Time.deltaTime), 1f);
         }
-
+        if (GameObject.Find("Camera") == null) return;
         float xDiff = Mathf.Abs(GameObject.Find("Camera").transform.position.x - transform.position.x);
         if (xDiff > GameObject.Find("CloudManager").GetComponent<CloudManagerScript>().xDiff()) timer += Mathf.Infinity;
 

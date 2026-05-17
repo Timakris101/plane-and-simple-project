@@ -59,7 +59,7 @@ public class CamScript : MonoBehaviour {
     void Update() {
         if (mainMenu) return;
         
-        if (GameObject.Find("NetworkManager") != null) {
+        if (NetworkManager.Singleton != null) {
             if (NetworkManager.Singleton.LocalClient.PlayerObject == null) return;
             takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
             matchParentToPlane();

@@ -1,6 +1,8 @@
 using UnityEngine;
 using Unity.Services.Core;
+using System.Collections.Generic;
 using Unity.Services.Authentication;
+using Unity.Services.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
@@ -10,9 +12,13 @@ using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using static Utils;
 using TMPro;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
+using Unity.Networking.Transport.Relay;
+using Unity.Netcode.Transports.UTP;
 
-public class Lobby : NetworkBehaviour {
-    private static int maxEloDifference = 100;
+public class Lobby : MonoBehaviour {
+    private static int maxEloDifference = 100000;
     private static Unity.Services.Lobbies.Models.Lobby currentLobby = null;
     private static bool isTheOneWhoKnocks = false;
     private static bool signedIn = false;
@@ -21,8 +27,14 @@ public class Lobby : NetworkBehaviour {
     private float scoreOfMatch;
     private bool enemyResigned;
 
+    private Allocation hostAllocation;
+
     [SerializeField] private GameObject createInputField;
     [SerializeField] private GameObject searchInputField;
+
+    void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
 
     private async void Start() {
         if (SceneManager.GetActiveScene().name != "MultiplayerTest") {
@@ -43,18 +55,28 @@ public class Lobby : NetworkBehaviour {
 
             leftLobby = false;
         } else {
-            if (isTheOneWhoKnocks) {
-                NetworkManager.Singleton.StartHost();
-                Debug.Log("started host");
-            } else {
-                NetworkManager.Singleton.StartClient();
-                Debug.Log("started client");
-            }
+            
         }
     }
 
+    public async void StartHostWithRelay() {
+        Debug.Log(currentLobby.Data["RelayJoinCode"].Value);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(hostAllocation, "udp"));
+        NetworkManager.Singleton.StartHost();
+    }
+
+    public async void StartClientWithRelay() {
+        Debug.Log(currentLobby.Data["RelayJoinCode"].Value);
+        string relayJoinCode = currentLobby.Data["RelayJoinCode"].Value;
+        JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode: relayJoinCode);
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, "udp"));
+        NetworkManager.Singleton.StartClient();
+    }
+
+
     private static bool gameStarted;
     private static float timer;
+    private static bool querying;
     async void Update() {
         // if (NetworkManager.Singleton != null) {
         //     if (NetworkManager.Singleton.IsConnectedClient) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
@@ -63,14 +85,32 @@ public class Lobby : NetworkBehaviour {
         timer += Time.deltaTime;
         if (currentLobby != null && !gameStarted) {
             if (currentLobby.Players.Count == 2) {
-                if (isTheOneWhoKnocks) {
+                if (isTheOneWhoKnocks && !querying) {
+                    querying = true;
+                    hostAllocation = await RelayService.Instance.CreateAllocationAsync(currentLobby.Players.Count - 1);
+                    string relayJoinCode = await RelayService.Instance.GetJoinCodeAsync(hostAllocation.AllocationId);
                     UpdateLobbyOptions options = new UpdateLobbyOptions();
                     options.IsPrivate = true;
+                    options.Data = new Dictionary<string, DataObject>()
+                    {
+                        { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode) }
+                    };
                     currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, options);
                 }
-
-                gameStarted = true;
-                SceneManager.LoadScene("MultiplayerTest");
+                if (!isTheOneWhoKnocks && currentLobby.Data["RelayJoinCode"].Value == "") {//nullref
+                    if (currentLobby.Id != null && LobbyService.Instance != null) currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                }
+                if (currentLobby.Data["RelayJoinCode"].Value != "") {
+                    if (isTheOneWhoKnocks) {
+                        StartHostWithRelay();
+                        NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerTest", LoadSceneMode.Single);
+                    } else {
+                        StartClientWithRelay();
+                    }
+                    gameStarted = true;
+                    querying = false;
+                }
+                return;
             }
         }
 
@@ -100,7 +140,7 @@ public class Lobby : NetworkBehaviour {
             Debug.Log("score: " + scoreOfMatch);
         }
 
-        if (timer > 2f && currentLobby != null) {
+        if (timer > 2f && currentLobby != null) {//nullref
             timer = 0f;
             currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
         }
@@ -133,8 +173,13 @@ public class Lobby : NetworkBehaviour {
     private async void createLobby(bool customName, string nameOtherThanElo) {
         string name = (!customName ? PlayerPrefs.GetInt("Elo").ToString() : nameOtherThanElo);
         int maxPlayers = 2;
+
         CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions {
-            IsPrivate = false
+            IsPrivate = false,
+            Data = new Dictionary<string, DataObject>()
+            {
+                { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, "") }
+            }
         };
         Unity.Services.Lobbies.Models.Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(name, maxPlayers, createLobbyOptions);
         currentLobby = lobby;
@@ -192,9 +237,13 @@ public class Lobby : NetworkBehaviour {
             MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
 
             string playerId = AuthenticationService.Instance.PlayerId;
+            if (isTheOneWhoKnocks) {
+                NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
+            } else {
+                SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
+            }
             if (NetworkManager.Singleton != null) Unity.Netcode.NetworkManager.Singleton.Shutdown();
             await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
-            SceneManager.LoadScene("MultiplayerMainMenu");
 
             currentLobby = null;
             isTheOneWhoKnocks = false;
@@ -207,6 +256,7 @@ public class Lobby : NetworkBehaviour {
     public async void cancel() {
         if (currentLobby == null) return;
         if (isTheOneWhoKnocks) {
+            if (NetworkManager.Singleton != null) Unity.Netcode.NetworkManager.Singleton.Shutdown();
             LobbyService.Instance.DeleteLobbyAsync(currentLobby.Id);
         } else {
             leaveLobby(false);
@@ -229,5 +279,9 @@ public class Lobby : NetworkBehaviour {
     [Rpc(SendTo.NotMe)]
     public void sendResignationToOthersRpc() {
         enemyResigned = true;
+    }
+
+    void OnDisable() {
+        if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();
     }
 }

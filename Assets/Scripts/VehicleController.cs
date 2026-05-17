@@ -55,7 +55,6 @@ public class VehicleController : NetworkBehaviour {
 
     protected void Awake() {
         origSprite = GetComponent<SpriteRenderer>().sprite;
-        INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
         damageModels = progenyWithScript<DamageModel>(gameObject);
         guns = progenyWithScript<GunScript>(gameObject);
         bombHolders = progenyWithScript<BombHolderScript>(gameObject);
@@ -67,6 +66,7 @@ public class VehicleController : NetworkBehaviour {
     }
 
     protected virtual void Start() {
+        INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
         vcs = GameObject.Find("VehicleCache").GetComponent<VehicleCacheScript>();
         if (this == aiControllerOfVehicle(gameObject)) tagsToTarget = nonAiControllerOfVehicle(gameObject).tagsToTarget;
         vcs.forceUpdate();
@@ -81,6 +81,7 @@ public class VehicleController : NetworkBehaviour {
     }
 
     protected virtual void Update() {
+        if (INPUTS == null) INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
         if (transform.Find("Camera") == null) {
             foreach (VehicleController controller in GetComponents<VehicleController>()) {
                 controller.enabled = controller == aiControllerOfVehicle(gameObject);
