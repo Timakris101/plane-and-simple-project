@@ -11,7 +11,7 @@ public class BulletMessageReader : NetworkBehaviour {
     [SerializeField] private GameObject basicTextObj;
 
     public void receivePacket(BulletMessagePacket packet) {
-        if (!IsOwner && GameObject.Find("NetworkManager") != null) {
+        if (!IsOwner && IsClient && GameObject.Find("NetworkManager") != null) {
             sendPacketRpc(packet.ToString());
         } else {
             foreach (BulletMessage message in packet.getMessages()) {

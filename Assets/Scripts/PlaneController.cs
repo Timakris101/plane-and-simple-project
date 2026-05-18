@@ -63,7 +63,7 @@ public class PlaneController : VehicleController {
     }
 
     public float getDir() {
-        if (!pilotDeadOrGone() && (IsOwner || GameObject.Find("NetworkManager") == null)) {
+        if (!pilotDeadOrGone()/* && (IsOwner || GameObject.Find("NetworkManager") == null)*/) {
             if (altitudeFromTerrain() == Mathf.Infinity) {
                 if (Vector3.Dot(transform.right, Vector3.up) <= 0 && transform.position.y < GetComponent<AiPlaneController>().getMinAlt() + Constants.Water.seaLevel) {
                     return GetComponent<AiPlaneController>().pointTowards(transform.position + Vector3.up + Vector3.right * Mathf.Clamp(transform.position.x, -1, 1));
@@ -107,7 +107,7 @@ public class PlaneController : VehicleController {
 
     private float oobCounter;
     public override void handleFeasibleControls() {
-        if (!pilotDeadOrGone() && !unconcious && (IsOwner || GameObject.Find("NetworkManager") == null)) {
+        if (!pilotDeadOrGone() && !unconcious/* && (IsOwner || GameObject.Find("NetworkManager") == null)*/) {
             if (gunnersAreManual()) {
                 GetComponent<AiPlaneController>().handleControls();
             } else {

@@ -28,7 +28,7 @@ public class GunScript : NetworkBehaviour {
     protected virtual void shoot() {
         if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, bullet.GetComponent<Rigidbody2D>().mass / maxAncestor(gameObject).GetComponent<Rigidbody2D>().mass * bullet.GetComponent<BulletScript>().getInitSpeed() * screenShakeFactor);
         ammunition--;
-        if (GameObject.Find("NetworkManager") != null) {
+        if (IsClient) {
             float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
 
             pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency * 2f, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);

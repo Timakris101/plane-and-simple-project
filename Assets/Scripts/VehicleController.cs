@@ -86,11 +86,12 @@ public class VehicleController : NetworkBehaviour {
             foreach (VehicleController controller in GetComponents<VehicleController>()) {
                 controller.enabled = controller == aiControllerOfVehicle(gameObject);
             }
-        }
-        if (GameObject.Find("NetworkManager") != null) {
+        } else {
+        // if (GameObject.Find("NetworkManager") != null) {
             foreach (VehicleController controller in GetComponents<VehicleController>()) {
                 controller.enabled = controller != aiControllerOfVehicle(gameObject);
             }
+        // }
         }
 
         handleFeasibleControls();

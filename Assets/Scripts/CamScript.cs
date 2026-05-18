@@ -60,9 +60,12 @@ public class CamScript : MonoBehaviour {
         if (mainMenu) return;
         
         if (NetworkManager.Singleton != null) {
-            if (NetworkManager.Singleton.LocalClient.PlayerObject == null) return;
-            takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
-            matchParentToPlane();
+            if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+                takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
+                matchParentToPlane();
+            } else {
+                handleVehicleSwitching();
+            }
         } else {
             handleVehicleSwitching();
         }

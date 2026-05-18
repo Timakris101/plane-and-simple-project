@@ -16,7 +16,7 @@ public class Water : MonoBehaviour {
             if (GameObject.Find("NetworkManager") == null) {
                 Destroy(other.transform.gameObject);
             } else {
-                GameObject.Find("NetworkManager").GetComponent<MultiplayerCreateAndDestroy>().destroy(other.transform.gameObject);
+                GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(other.transform.gameObject);
             }
         }
         if (other.transform.parent == null) {
@@ -27,7 +27,7 @@ public class Water : MonoBehaviour {
             if (GameObject.Find("NetworkManager") == null) {
                 Destroy(newSplash);
             } else {
-                GameObject.Find("NetworkManager").GetComponent<MultiplayerCreateAndDestroy>().destroy(newSplash);
+                GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newSplash);
             }
         }
     }

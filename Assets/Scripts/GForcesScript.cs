@@ -62,9 +62,9 @@ public class GForcesScript : NetworkBehaviour {
         
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
-            GameObject effect = GameObject.Find("NetworkManager") != null ? GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(explosion, transform.position, Quaternion.identity) : Instantiate(explosion, transform.position, Quaternion.identity);
-            if (GameObject.Find("NetworkManager") != null) {
-                GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(effect, 10f);
+            GameObject effect = IsClient ? GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(explosion, transform.position, Quaternion.identity) : Instantiate(explosion, transform.position, Quaternion.identity);
+            if (GameObject.Find("NetworkManager") != null && IsClient) {
+                GameObject.Find("NetworkManager").GetComponent<MultiplayerCreateAndDestroy>().destroy(effect, 10f);
             } else {
                 Destroy(effect, 10f);
             }

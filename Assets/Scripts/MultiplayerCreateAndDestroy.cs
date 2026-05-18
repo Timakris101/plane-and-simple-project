@@ -5,7 +5,13 @@ using System.Collections.Generic;
 public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     List<FiniteGameObject> hitList = new List<FiniteGameObject>();
 
+    void Start() {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Update() {
+        if (!IsClient) return;
+
         for (int i = 0; i < hitList.Count; i++) {
             if (hitList[i].gameObject == null) {
                 hitList.Remove(hitList[i]);
@@ -32,11 +38,15 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     }
 
     public void destroy(GameObject g) {
-        hitList.Add(new FiniteGameObject(g, 0f));
+        destroy(g, 0f);
     }
 
     public void destroy(GameObject g, float life) {
-        hitList.Add(new FiniteGameObject(g, life));
+        if (!IsClient) {
+            Destroy(g, life);
+        } else {
+            hitList.Add(new FiniteGameObject(g, life));
+        }
     }
 
 //----------------------------------------------------------------------

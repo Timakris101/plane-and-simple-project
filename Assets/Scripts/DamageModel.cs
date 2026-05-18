@@ -181,7 +181,7 @@ public class DamageModel : NetworkBehaviour {
             serverHitSetHealthRpc(health);
             whackThisManRpc();
             return;
-        } else if (GameObject.Find("NetworkManager") == null) {
+        } else if (!IsClient) {
             health -= amt;
         }
         
