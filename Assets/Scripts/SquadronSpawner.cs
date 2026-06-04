@@ -96,7 +96,6 @@ public class SquadronSpawner : MonoBehaviour {
         }
         
         if ((arcadeOn || (menu || clankerTraining)) && keepUp) {
-            if (arcadeOn) GameObject.Find("Score").GetComponent<TMP_Text>().text = (int.Parse(GameObject.Find("Score").GetComponent<TMP_Text>().text) + amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance())).ToString();
             spawnVehicles(amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()));
         }
     }
@@ -149,7 +148,7 @@ public class SquadronSpawner : MonoBehaviour {
         return false;
     }
 
-    public int vehicleCount(string alliance) {
+    public static int vehicleCount(string alliance) {
         int counter = 0;
         foreach (GameObject vehicle in allVehiclesOfTags("Plane", "GroundVehicle")) {
             if (vehicle.GetComponent<AllianceHolder>().getAlliance() == alliance) {
@@ -300,4 +299,12 @@ public class SquadronSpawner : MonoBehaviour {
     }
 
     public bool isInEditor() {return inEditor;}
+
+    public void setAmount(int amt) {
+        this.amt = amt;
+    }
+
+    public int getAmount() {
+        return amt;
+    }
 }

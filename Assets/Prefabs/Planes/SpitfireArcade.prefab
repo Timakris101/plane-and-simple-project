@@ -47,7 +47,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 7ece22e7495b84b4491129604692dd5c, type: 3}
   fireRate: 0.1
-  maxAmmunition: 100
+  maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -238,6 +238,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -400,6 +401,7 @@ MonoBehaviour:
   fireDamagePerSec: 100
   fuelFireDamagePerSec: 1000
   fuelFireFuelConsumptionPerSec: 10000
+  brokenTankLeekRate: 0
   damageToLeekRate: 100
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -1055,7 +1057,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 7ece22e7495b84b4491129604692dd5c, type: 3}
   fireRate: 0.1
-  maxAmmunition: 100
+  maxAmmunition: 1000
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -1108,7 +1110,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
-  maxAmmunition: 350
+  maxAmmunition: 3500
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -1268,6 +1270,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -1415,6 +1418,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -1764,6 +1768,7 @@ MonoBehaviour:
   fireDamagePerSec: 10
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -1860,7 +1865,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
-  maxAmmunition: 350
+  maxAmmunition: 3500
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -2152,6 +2157,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -2313,6 +2319,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 4683264650455025820, guid: 9561f3e590dea44eda95b0e7ecb2ed9e, type: 3}
   tailNeg: {fileID: 0}
@@ -2529,7 +2536,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
-  maxAmmunition: 350
+  maxAmmunition: 3500
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0
@@ -2582,7 +2589,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   belt: {fileID: 3850267047446635593, guid: 3ff09856c45804a1487eba7205c4c447, type: 3}
   fireRate: 0.05
-  maxAmmunition: 350
+  maxAmmunition: 3500
   ammunition: 0
   bulletFuse: 0
   minDeflection: 0

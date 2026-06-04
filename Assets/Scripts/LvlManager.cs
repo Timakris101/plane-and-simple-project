@@ -56,7 +56,7 @@ public class LvlManager : MonoBehaviour {
         string friendlyAlliance = GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle().GetComponent<AllianceHolder>().getAlliance();
         foreach (GameObject vehicle in allVehiclesOfTags("Plane", "GroundVehicle")) {
             if (vehicle.GetComponent<AllianceHolder>().getAlliance() == friendlyAlliance) continue;
-            if (!vehicle.GetComponent<VehicleController>().vehicleDead()) {
+            if (!vehicle.GetComponent<VehicleController>().allCrewGoneFromVehicle()) {
                 return false;
             }
         }
