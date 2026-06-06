@@ -6,7 +6,7 @@ using Unity.Services.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
-//using ParrelSync;
+using ParrelSync;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
@@ -16,9 +16,11 @@ using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using Unity.Networking.Transport.Relay;
 using Unity.Netcode.Transports.UTP;
+using System.Text.RegularExpressions;
+using UnityEngine.UI;
 
 public class Lobby : MonoBehaviour {
-    private static int maxEloDifference = 100000;
+    public static int maxEloDifference = 100;
     private static Unity.Services.Lobbies.Models.Lobby currentLobby = null;
     private static bool isTheOneWhoKnocks = false;
     private static bool signedIn = false;
@@ -31,31 +33,30 @@ public class Lobby : MonoBehaviour {
 
     [SerializeField] private GameObject createInputField;
     [SerializeField] private GameObject searchInputField;
+    [SerializeField] private GameObject tierSlider;
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
     }
 
     private async void Start() {
-        if (SceneManager.GetActiveScene().name != "MultiplayerTest") {
+        if (!signedIn) {
             InitializationOptions options = new InitializationOptions();
-            // if (ClonesManager.IsClone()) {
-            //     options.SetProfile("clone");
-            // }
+            if (ClonesManager.IsClone()) {
+                options.SetProfile("clone");
+            }
 
             if (!signedIn) {
                 await UnityServices.InitializeAsync(options);
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 Debug.Log("SIGNED IN: " + AuthenticationService.Instance.PlayerId);
-                PlayerPrefs.SetInt("Elo", Random.Range(0, 100));
+                PlayerPrefs.SetInt("Elo", 100);
                 Debug.Log("Bestowed Elo: " + PlayerPrefs.GetInt("Elo"));
             }
 
             signedIn = true;
 
             leftLobby = false;
-        } else {
-            
         }
     }
 
@@ -78,6 +79,11 @@ public class Lobby : MonoBehaviour {
     private static float timer;
     private static bool querying;
     async void Update() {
+        if (SceneManager.GetActiveScene().name == "MultiplayerMainMenu") {
+            if (createInputField == null) createInputField = GameObject.Find("CreateCustomField");
+            if (searchInputField == null) searchInputField = GameObject.Find("SearchCustomField");
+            if (tierSlider == null) tierSlider = GameObject.Find("TierSlider");
+        }
         // if (NetworkManager.Singleton != null) {
         //     if (NetworkManager.Singleton.IsConnectedClient) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
         // }
@@ -93,14 +99,17 @@ public class Lobby : MonoBehaviour {
                     options.IsPrivate = true;
                     options.Data = new Dictionary<string, DataObject>()
                     {
-                        { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode) }
+                        { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, relayJoinCode) },
+                        { "Info", new DataObject(DataObject.VisibilityOptions.Public, lobbyInfo.ToString()) }
                     };
                     currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, options);
                 }
-                if (!isTheOneWhoKnocks && currentLobby.Data["RelayJoinCode"].Value == "") {//nullref
-                    if (currentLobby.Id != null && LobbyService.Instance != null) currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                if (!isTheOneWhoKnocks && currentLobby.Data["RelayJoinCode"].Value == "rjc") {//nullref
+                    Debug.Log("searching for cod");
+                    currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
                 }
-                if (currentLobby.Data["RelayJoinCode"].Value != "") {
+                if (currentLobby.Data["RelayJoinCode"].Value != "rjc") {
+                    Debug.Log("cod!");
                     if (isTheOneWhoKnocks) {
                         StartHostWithRelay();
                         NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerTest", LoadSceneMode.Single);
@@ -112,6 +121,7 @@ public class Lobby : MonoBehaviour {
                 }
                 return;
             }
+            checkUpdateCurLobbyWithNewInfo();
         }
 
         if (gameStarted) {
@@ -140,7 +150,8 @@ public class Lobby : MonoBehaviour {
             Debug.Log("score: " + scoreOfMatch);
         }
 
-        if (timer > 2f && currentLobby != null) {//nullref
+        if (timer > 1f && currentLobby != null) {//nullref
+            inMoodForUpdate = true;
             timer = 0f;
             currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
         }
@@ -153,32 +164,59 @@ public class Lobby : MonoBehaviour {
         }
     }
 
-    public async void startMatch() {
+    bool inMoodForUpdate;
+
+    public void forceLobbyUpdate() {
+        inMoodForUpdate = true;
+    }
+
+    private async void checkUpdateCurLobbyWithNewInfo() {
+        if (!inMoodForUpdate || currentLobby == null || currentLobby.Players.Count == 2) return;
+        inMoodForUpdate = false;
+        lobbyInfo = new LobbyInfo((int) tierSlider.GetComponent<Slider>().value, PlayerPrefs.GetInt("Elo"), lobbyInfo.isPrivate, lobbyInfo.isRanked, lobbyInfo.accessCode);
+        if (!isTheOneWhoKnocks || querying) return;
+        UpdateLobbyOptions updateLobbyOptions = new UpdateLobbyOptions {
+            IsPrivate = false,
+            Data = new Dictionary<string, DataObject>()
+            {
+                { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, "rjc") },
+                { "Info", new DataObject(DataObject.VisibilityOptions.Public, lobbyInfo.ToString()) }
+            }
+        };
+        currentLobby = await LobbyService.Instance.UpdateLobbyAsync(currentLobby.Id, updateLobbyOptions);
+        Debug.Log("tier: " + LobbyInfo.Parse(currentLobby.Data["Info"].Value).tier);
+    }
+
+    public async void startMatchPublic(bool isRanked) {
+        startMatch(false, isRanked, true);
+    }
+
+    public async void startMatchPrivate(bool creatingLobby) {
+        startMatch(true, false, creatingLobby);
+    }
+
+    private async void startMatch(bool isPrivate, bool isRanked, bool creatingLobby) {
+        if (currentLobby != null) {
+            Debug.Log("nuh uh buddy");
+            return;
+        }
+        lobbyInfo = new LobbyInfo((int) tierSlider.GetComponent<Slider>().value, PlayerPrefs.GetInt("Elo"), isPrivate, isRanked, creatingLobby ? createInputField.GetComponent<TMP_InputField>().text : searchInputField.GetComponent<TMP_InputField>().text);
         bool canJoin = await tryJoinLobby();
         if (!canJoin) createLobby();
     }
 
-    public async void createLobbyWithInputtedName() {
-        createLobby(createInputField.GetComponent<TMP_InputField>().text);
-    }
+    LobbyInfo lobbyInfo;
 
     private async void createLobby() {
-        createLobby(false, "");
-    }
-
-    private async void createLobby(string name) {
-        createLobby(true, name);
-    }
-
-    private async void createLobby(bool customName, string nameOtherThanElo) {
-        string name = (!customName ? PlayerPrefs.GetInt("Elo").ToString() : nameOtherThanElo);
+        string name = "Come Up With Something Funny Later";
         int maxPlayers = 2;
 
         CreateLobbyOptions createLobbyOptions = new CreateLobbyOptions {
             IsPrivate = false,
             Data = new Dictionary<string, DataObject>()
             {
-                { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, "") }
+                { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, "rjc") },
+                { "Info", new DataObject(DataObject.VisibilityOptions.Public, lobbyInfo.ToString()) }
             }
         };
         Unity.Services.Lobbies.Models.Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(name, maxPlayers, createLobbyOptions);
@@ -187,38 +225,15 @@ public class Lobby : MonoBehaviour {
         Debug.Log("created lobby");
     }
 
-    public async void tryJoinLobbyWithInputtedName() {
-        tryJoinLobby(searchInputField.GetComponent<TMP_InputField>().text);
-    }
-
     private async Task<bool> tryJoinLobby() {
-        return await tryJoinLobby(false, "");
-    }
-
-    public async Task<bool> tryJoinLobby(string name) {
-        return await tryJoinLobby(true, name);
-    }
-
-    private async Task<bool> tryJoinLobby(bool findSpecificGame, string findGameString) {
-        int elo = PlayerPrefs.GetInt("Elo");
         QueryResponse queryResponse = await LobbyService.Instance.QueryLobbiesAsync();
         foreach (Unity.Services.Lobbies.Models.Lobby l in queryResponse.Results) {
-            if (findSpecificGame) {
-                if (l.Name == findGameString) {
-                    await LobbyService.Instance.JoinLobbyByIdAsync(l.Id);
-                    currentLobby = l;
-                    isTheOneWhoKnocks = false;
-                    Debug.Log("joined lobby");
-                    return true;
-                }
-            } else {
-                if (elo < int.Parse(l.Name) + maxEloDifference && elo > int.Parse(l.Name) - maxEloDifference && l.Players.Count == 1) {
-                    await LobbyService.Instance.JoinLobbyByIdAsync(l.Id);
-                    currentLobby = l;
-                    isTheOneWhoKnocks = false;
-                    Debug.Log("joined lobby");
-                    return true;
-                }
+            if (LobbyInfo.Parse(l.Data["Info"].Value).isSuitableMatch(lobbyInfo)) {
+                await LobbyService.Instance.JoinLobbyByIdAsync(l.Id);
+                currentLobby = l;
+                isTheOneWhoKnocks = false;
+                Debug.Log("joined lobby");
+                return true;
             }
         }
         return false;
@@ -234,13 +249,15 @@ public class Lobby : MonoBehaviour {
             if (resigned) scoreOfMatch = 0;
             if (enemyResigned && resigned) scoreOfMatch = .5f;
 
-            MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
+            if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked) MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
 
             string playerId = AuthenticationService.Instance.PlayerId;
-            if (isTheOneWhoKnocks) {
-                NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
-            } else {
-                SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
+            if (NetworkManager.Singleton != null) {
+                if (isTheOneWhoKnocks) {
+                    NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
+                } else {
+                    SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
+                }
             }
             if (NetworkManager.Singleton != null) Unity.Netcode.NetworkManager.Singleton.Shutdown();
             await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
@@ -283,5 +300,58 @@ public class Lobby : MonoBehaviour {
 
     void OnDisable() {
         if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();
+    }
+}
+
+public class LobbyInfo {
+    public int tier;
+    public int elo;
+    public bool isPrivate;
+    public bool isRanked;
+    public string accessCode;
+
+    public LobbyInfo() {}
+
+    public LobbyInfo(int tier, int elo, bool isPrivate, bool isRanked, string accessCode) {
+        this.tier = tier;
+        this.elo = elo;
+        this.isPrivate = isPrivate;
+        this.isRanked = isRanked;
+        this.accessCode = accessCode;
+    }
+
+    public override string ToString() {
+        return tier.ToString() + ", " +
+               elo.ToString() + ", " +
+               isPrivate.ToString() + ", " +
+               isRanked.ToString() + ", " +
+               accessCode.ToString();
+    }
+
+    public static LobbyInfo Parse(string infoAsString) {
+        string[] split = Regex.Split(infoAsString, ", ");
+        int fieldAmt = typeof(LobbyInfo).GetFields().Length;
+        string accessCodePastedBackTogether = "";
+        for (int i = fieldAmt - 1; i < split.Length; i++) {
+            accessCodePastedBackTogether += split[i];
+        }
+        return new LobbyInfo(
+            int.Parse(split[0]),
+            int.Parse(split[1]),
+            bool.Parse(split[2]),
+            bool.Parse(split[3]),
+            accessCodePastedBackTogether
+        );
+    }
+
+    public bool isSuitableMatch(LobbyInfo myInfo) {
+        if (!isPrivate) {
+            if (tier != myInfo.tier) return false;
+            if (Mathf.Abs(elo - myInfo.elo) > Lobby.maxEloDifference && isRanked) return false;
+            if (isRanked != myInfo.isRanked) return false;
+        } else if (accessCode != myInfo.accessCode) {
+            return false;
+        }
+        return true;
     }
 }
