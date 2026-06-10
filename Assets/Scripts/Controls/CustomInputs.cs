@@ -91,6 +91,64 @@ public class CustomInputs : MonoBehaviour {
     }
 
 //-------------------------------------------------------------------------------------------------
+
+    public delegate Vector2 JoystickInputDelegate(out bool change);
+
+    public Vector2 basicJoystickInput(JoystickControl joystick, JoystickInputDelegate controlOfComp, InitializeVector2Type init) {
+        bool changeToComp;
+        controlOfComp(out changeToComp);
+        if (changeToComp) setModeOf(joystick.gameObject, "computer");
+
+        Vector2 val = init();
+        switch (modeOfObj(joystick.gameObject)) {
+            case "computer": 
+            val = controlOfComp(out bool b);
+            joystick.setVal(val);
+            break;
+
+            case "mobile": 
+            val = joystick.getVal();
+            break;
+
+            default: 
+            joystick.setVal(val);
+            return val;
+        }
+
+        return val;
+    }
+
+    public delegate Vector2 InitializeVector2Type();
+
+//-------------------------------------------------------------------------------------------------
+    public Vector2 directionInput1() {
+        GameObject uiInput = GameObject.Find(baseControlFind + "ControlCircle");
+        if (uiInput == null) return computerControlBasedDirectionInput1(out bool b);
+
+        JoystickControl control = uiInput.GetComponent<JoystickControl>();
+        return basicJoystickInput(control, computerControlBasedDirectionInput1, readDirection1);
+    } 
+
+    public GameObject directionInput1Obj() {
+        return GameObject.Find(baseControlFind + "ControlCircle");
+    }
+
+    public Vector2 computerControlBasedDirectionInput1(out bool buttonsTouched) {//rad, theta
+        Vector3 movementVec = new Vector3(0, 0, 0);
+        if (Input.GetKey("w")) movementVec += new Vector3(0, 1, 0);
+        if (Input.GetKey("a")) movementVec += new Vector3(-1, 0, 0);
+        if (Input.GetKey("s")) movementVec += new Vector3(0, -1, 0);
+        if (Input.GetKey("d")) movementVec += new Vector3(1, 0, 0);
+        buttonsTouched = movementVec.magnitude != 0;
+        float desiredTheta = Mathf.Atan2(movementVec.y, movementVec.x);
+        return new Vector2(movementVec.magnitude, desiredTheta);
+    }
+
+    public Vector2 readDirection1() {
+        return new Vector2(0f, 0f);
+    }
+
+//-------------------------------------------------------------------------------------------------
     public float throttleInput() {
         GameObject uiInput = GameObject.Find(baseControlFind + "ThrottleSlider");
         if (uiInput == null) return computerControlBasedThrottleInput(out bool b);
@@ -106,16 +164,20 @@ public class CustomInputs : MonoBehaviour {
         buttonsTouched = false;
         GameObject vehicle = parentWithScript<VehicleController>(gameObject);
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
-        if (Input.GetKey("w") && pc.getThrottle() < 1) {
+        if (Input.GetKey(throttleUpKey) && pc.getThrottle() < 1) {
             buttonsTouched = true;
             return pc.getThrottle() + pc.throttleChangeSpeed * Time.deltaTime;
         }
-        if (Input.GetKey("s") && pc.getThrottle() > 0) {
+        if (Input.GetKey(throttleDownKey) && pc.getThrottle() > 0) {
             buttonsTouched = true;
             return pc.getThrottle() - pc.throttleChangeSpeed * Time.deltaTime;
         }
         return pc.getThrottle();
     }
+
+    public static KeyCode throttleUpKey => PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
+
+    public static KeyCode throttleDownKey => PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftCommand : KeyCode.S;
 
     public float readThrottle() {
         GameObject vehicle = parentWithScript<VehicleController>(gameObject);
@@ -236,11 +298,13 @@ public class CustomInputs : MonoBehaviour {
         GameObject vehicle = parentWithScript<VehicleController>(gameObject);
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         bool inWEP = false;
-        if (Input.GetKey("w") && pc.getThrottle() + pc.throttleChangeSpeed * Time.deltaTime > 1) {
+        KeyCode throttleUpKey = PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
+        KeyCode throttleDownKey = PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftControl : KeyCode.S;
+        if (Input.GetKey(throttleUpKey) && pc.getThrottle() + pc.throttleChangeSpeed * Time.deltaTime > 1) {
             inWEP = true;
         }
         buttonsTouched = false;
-        if (Input.GetKey("s") || Input.GetKey("w")) buttonsTouched = true;
+        if (Input.GetKey(throttleDownKey) || Input.GetKey(throttleUpKey)) buttonsTouched = true;
 
         return inWEP;
     }
@@ -313,10 +377,10 @@ public class CustomInputs : MonoBehaviour {
     }
 
     public bool computerControlBasedBrakeInput(out bool buttonsTouched) {
-        buttonsTouched = Input.GetKey("s");
+        buttonsTouched = Input.GetKey(throttleDownKey);
         GameObject vehicle = parentWithScript<VehicleController>(gameObject);
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
-        return Input.GetKey("s") && pc.getThrottle() - pc.throttleChangeSpeed * Time.deltaTime < 0;
+        return Input.GetKey(throttleDownKey) && pc.getThrottle() - pc.throttleChangeSpeed * Time.deltaTime < 0;
     }
 
     public bool readBrake() {

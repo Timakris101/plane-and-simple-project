@@ -37,7 +37,7 @@ public class LvlManager : MonoBehaviour {
         return allEnemiesGone();
     }
 
-    private void bringUpWinScreen() {
+    public void bringUpWinScreen() {
         PlayerPrefs.SetInt("MaxLevelUnlocked", levelNum + 1);
         GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
         winScreen.SetActive(true);

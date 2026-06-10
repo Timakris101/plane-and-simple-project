@@ -180,8 +180,7 @@ public class CamScript : MonoBehaviour {
                     if (vehicleToControl == null) {
                         scrollSpectatableVehicles();
                     } else {
-                        spectatedVehicle = vehicleToControl;
-                        vehicleToControl = null;
+                        spectateVehicle(vehicleToControl);
                     }
                 }
                 if (GetComponent<CustomInputs>().swapPlaneInput()) {
@@ -189,7 +188,6 @@ public class CamScript : MonoBehaviour {
                         scrollCrewedVehicles();
                     } else {
                         takeControlOfVehicle(spectatedVehicle);
-                        spectatedVehicle = null;
                     }
                 }
                 if (GetComponent<CustomInputs>().escapeInput()) {
@@ -208,6 +206,11 @@ public class CamScript : MonoBehaviour {
             }
         }
         matchParentToPlane();
+    }
+
+    public void spectateVehicle(GameObject vehicle) {
+        spectatedVehicle = vehicle;
+        vehicleToControl = null;
     }
 
     public void uncoupleCam() {
@@ -329,6 +332,7 @@ public class CamScript : MonoBehaviour {
                 controller.enabled = controller.GetType() != aiControllerOfVehicle(vehicle).GetType();
             }
         }
+        spectatedVehicle = null;
     }
 
     private GameObject findNewVehicle(string alliance) {

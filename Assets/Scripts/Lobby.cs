@@ -64,6 +64,8 @@ public class Lobby : MonoBehaviour {
         Debug.Log(currentLobby.Data["RelayJoinCode"].Value);
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(hostAllocation, "udp"));
         NetworkManager.Singleton.StartHost();
+        NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
+        NetworkManager.Singleton.LocalClient.PlayerObject.transform.localEulerAngles += new Vector3(0f, 0f, 180f);
     }
 
     public async void StartClientWithRelay() {
@@ -84,9 +86,9 @@ public class Lobby : MonoBehaviour {
             if (searchInputField == null) searchInputField = GameObject.Find("SearchCustomField");
             if (tierSlider == null) tierSlider = GameObject.Find("TierSlider");
         }
-        // if (NetworkManager.Singleton != null) {
-        //     if (NetworkManager.Singleton.IsConnectedClient) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
-        // }
+        if (NetworkManager.Singleton != null) {
+            if (NetworkManager.Singleton.IsConnectedClient) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
+        }
 
         timer += Time.deltaTime;
         if (currentLobby != null && !gameStarted) {
@@ -243,11 +245,14 @@ public class Lobby : MonoBehaviour {
     public async void leaveLobby(bool resigned) {
         if (currentLobby != null) {
             leftLobby = true;
-            // if (resigned && NetworkManager.Singleton != null) sendResignationToOthersRpc();
+            if (resigned && NetworkManager.Singleton != null) sendResignationToOthersRpc();
 
             if (enemyResigned) scoreOfMatch = 1;
             if (resigned) scoreOfMatch = 0;
             if (enemyResigned && resigned) scoreOfMatch = .5f;
+
+            enemyResigned = false;
+            resigned = false;
 
             if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked) MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
 

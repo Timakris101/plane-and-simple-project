@@ -12,7 +12,7 @@ public class BaseControl : MonoBehaviour, IPointerDownHandler {
     public bool noQuery;
     public int noQueryCounter;
 
-    public void Start() {
+    public virtual void Start() {
         hide(true);
         noQuery = true;
     }
@@ -21,10 +21,10 @@ public class BaseControl : MonoBehaviour, IPointerDownHandler {
         GameObject.Find("Camera").GetComponent<CustomInputs>().setModeOf(gameObject, "mobile");
     }
 
-    public void Update() {
+    public virtual void Update() {
         if (!alwaysUseful && noQueryCounter > 5) hide(true);
         if (noQuery) noQueryCounter++;
-        if (!noQuery) {
+        if (!noQuery || alwaysUseful) {
             noQueryCounter = 0;
             noQuery = true;
             hide(false);

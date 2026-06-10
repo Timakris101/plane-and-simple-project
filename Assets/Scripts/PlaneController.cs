@@ -100,6 +100,12 @@ public class PlaneController : VehicleController {
                 float input = GetComponent<AiPlaneController>().pointTowards(screenToWorld);
                 INPUTS.directionInputObj().GetComponent<SliderControl>().setVal(input);
                 return input;
+            case "Joystick1":
+                float desiredTheta = INPUTS.directionInput1().y;
+                Vector3 control = transform.position + new Vector3(Mathf.Cos(desiredTheta), Mathf.Sin(desiredTheta), 0f);
+                float input1 = GetComponent<AiPlaneController>().pointTowards(control);
+                if (INPUTS.directionInput1().x == 0) input1 = 0;
+                return input1;
             default:
                 return 0f;
         }

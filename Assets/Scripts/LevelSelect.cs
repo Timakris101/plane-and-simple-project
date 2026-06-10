@@ -7,12 +7,12 @@ public class LevelSelect : MonoBehaviour {
     [SerializeField] private bool locked;
 
     void Start() {
-        updateLvlLocs();
+        //updateLvlLocs();
     }
 
     void Update() {
         for (int i = 0; i < lvls.Length; i++) {
-            lvls[i].SetActive(i <= (PlayerPrefs.GetInt("MaxLevelUnlocked", 1) - 1));
+            lvls[i].SetActive(i <= (PlayerPrefs.GetInt("MaxLevelUnlocked", 0)));
         }
         if (!locked) {
             updateLvlLocs();
