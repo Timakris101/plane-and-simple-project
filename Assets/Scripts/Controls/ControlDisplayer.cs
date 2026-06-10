@@ -12,11 +12,11 @@ public class ControlDisplayer : MonoBehaviour {
         foreach (GameObject controlDisplay in controlDisplays) {
             if (controlDisplay.GetComponent<Graphic>() != null) {
                 controlDisplay.SetActive(showing);
-                mafiaReport();
+                //mafiaReport();
             }
             foreach (GameObject imgObj in progenyWithScript<Graphic>(controlDisplay)) {
                 imgObj.SetActive(showing);
-                mafiaReport();
+                //mafiaReport();
             }
         }
     }

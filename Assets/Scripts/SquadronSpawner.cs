@@ -164,11 +164,14 @@ public class SquadronSpawner : MonoBehaviour {
 
     public void editSpawner(GameObject spawnerToEdit) {
         if (spawnerToEdit != null && inEditor) {
+            camera.GetComponent<CamScript>().lockCam();
             setSpawnerToPanelStats(spawnerToEdit);
             setContainsPlayer(spawnerToEdit);
             if ((Input.GetMouseButton(0) || Input.touchCount == 1) && !pointerInPanel()) {
                 spawnerToEdit.transform.position = camera.GetComponent<CustomInputs>().pointerPositionInput();
             }
+        } else {
+            camera.GetComponent<CamScript>().unlockCam();
         }
     }
 

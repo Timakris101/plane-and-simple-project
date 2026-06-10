@@ -218,6 +218,16 @@ public class CamScript : MonoBehaviour {
         spectatedVehicle = null;
     }
 
+    public void lockCam() {
+        effFreeCamSpeedScaler = 0;
+    }
+
+    public void unlockCam() {
+        effFreeCamSpeedScaler = freeCamSpeedScaler;
+    }
+
+    private float effFreeCamSpeedScaler;
+
     private void handleCam() {
         transform.localScale = Vector3.one;
         Camera camera = gameObject.GetComponent<Camera>();
@@ -242,7 +252,9 @@ public class CamScript : MonoBehaviour {
 
             Vector3 newPos = GetComponent<CustomInputs>().pointerPositionInput();
 
-            if (getControlledOrSpectatedVehicle() == null) transform.position += prevPos - newPos;
+            if (getControlledOrSpectatedVehicle() == null && effFreeCamSpeedScaler != 0) {
+                transform.position += prevPos - newPos;
+            }
         }
 
         if (transform.parent != null) {
@@ -258,9 +270,9 @@ public class CamScript : MonoBehaviour {
                 if (Input.GetKey("a")) movementVec += new Vector3(-1, 0, 0);
                 if (Input.GetKey("s")) movementVec += new Vector3(0, -1, 0);
                 if (Input.GetKey("d")) movementVec += new Vector3(1, 0, 0);
-                transform.position += movementVec.normalized * freeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
+                transform.position += movementVec.normalized * effFreeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
                 float curCamScaling = (GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
-                if (Input.touchCount == 1 && freeCamSpeedScaler != 0) {
+                if (Input.touchCount == 1 && effFreeCamSpeedScaler != 0) {
                     movementVec = -(Vector3) Input.GetTouch(0).deltaPosition / curCamScaling;
                     transform.position += movementVec;
                 }
