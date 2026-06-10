@@ -43,6 +43,11 @@ public class SquadronSpawner : MonoBehaviour {
     [SerializeField] private GameObject allianceDropdown;
     [SerializeField] private GameObject headingSlider;
 
+    [Header("Buttons")]
+    [SerializeField] private GameObject addButton;
+    [SerializeField] private GameObject destroyButton;
+    [SerializeField] private GameObject confirmButton;
+
     private bool inEditor;
 
     void Awake() {
@@ -170,8 +175,16 @@ public class SquadronSpawner : MonoBehaviour {
             if ((Input.GetMouseButton(0) || Input.touchCount == 1) && !pointerInPanel()) {
                 spawnerToEdit.transform.position = camera.GetComponent<CustomInputs>().pointerPositionInput();
             }
+
+            addButton.GetComponent<Button>().interactable = false;
+            destroyButton.GetComponent<Button>().interactable = true;
+            confirmButton.GetComponent<Button>().interactable = true;
         } else {
             camera.GetComponent<CamScript>().unlockCam();
+
+            addButton.GetComponent<Button>().interactable = true;
+            destroyButton.GetComponent<Button>().interactable = false;
+            confirmButton.GetComponent<Button>().interactable = false;
         }
     }
 
