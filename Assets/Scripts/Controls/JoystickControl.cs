@@ -34,6 +34,7 @@ public class JoystickControl : BaseControl, IPointerUpHandler {
         if (Input.touchCount < 0) return;
         int index = validTouch();
         if (index == -1) {
+            stick.transform.localPosition = new Vector2(0f, 0f);
             return;
         }
         if (Input.GetTouch(index).phase == TouchPhase.Ended) {
