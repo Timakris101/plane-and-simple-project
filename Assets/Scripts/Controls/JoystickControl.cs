@@ -14,6 +14,7 @@ public class JoystickControl : BaseControl, IPointerUpHandler {
     public void setVal(Vector2 f) {
         query();
         stick.transform.localPosition = new Vector2(Mathf.Cos(f.y), Mathf.Sin(f.y)) * f.x * range;
+        normalizeIfOutOfRange();
     }
 
     public Vector2 getVal() {
@@ -36,7 +37,7 @@ public class JoystickControl : BaseControl, IPointerUpHandler {
             return;
         }
         if (Input.GetTouch(index).phase == TouchPhase.Ended) {
-            OnPointerUp(null);
+            OnPointerUp();
             return;
         }
         if (Input.GetTouch(index).phase == TouchPhase.Began) {
@@ -63,6 +64,12 @@ public class JoystickControl : BaseControl, IPointerUpHandler {
     }
 
     public void OnPointerUp(PointerEventData eventData) {
+        // if (returns) stick.transform.localPosition = new Vector2(0f, 0f);
+        // transform.position = startFullJoystickPos;
+        // startPos = new Vector2(0, 0);
+    }
+
+     public void OnPointerUp() {
         if (returns) stick.transform.localPosition = new Vector2(0f, 0f);
         transform.position = startFullJoystickPos;
         startPos = new Vector2(0, 0);

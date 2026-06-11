@@ -270,7 +270,7 @@ public class CamScript : MonoBehaviour {
                 if (Input.GetKey("a")) movementVec += new Vector3(-1, 0, 0);
                 if (Input.GetKey("s")) movementVec += new Vector3(0, -1, 0);
                 if (Input.GetKey("d")) movementVec += new Vector3(1, 0, 0);
-                transform.position += movementVec.normalized * effFreeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
+                transform.position += movementVec.normalized * freeCamSpeedScaler * Mathf.Tan(camera.fieldOfView / 2f / 180f * 3.14f) * Time.deltaTime;
                 float curCamScaling = (GetComponent<Camera>().WorldToScreenPoint(new Vector3(0,0,0)) - GetComponent<Camera>().WorldToScreenPoint(new Vector3(1,0,0))).magnitude;
                 if (Input.touchCount == 1 && effFreeCamSpeedScaler != 0) {
                     movementVec = -(Vector3) Input.GetTouch(0).deltaPosition / curCamScaling;

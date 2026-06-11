@@ -224,6 +224,8 @@ public class SquadronSpawner : MonoBehaviour {
         }
 
         inEditor = false;
+
+        camera.GetComponent<CamScript>().unlockCam();
     }
 
     private void saveObjectsToNotClear() {
@@ -244,6 +246,8 @@ public class SquadronSpawner : MonoBehaviour {
         }
 
         clearUnsavedObjects();
+
+        setCurrentSelectedObj(null);
 
         inEditor = true;
     }
