@@ -48,6 +48,10 @@ public class SquadronSpawner : MonoBehaviour {
     [SerializeField] private GameObject destroyButton;
     [SerializeField] private GameObject confirmButton;
 
+    [Header("Time")]
+    [SerializeField] private GameObject sky;
+    [SerializeField] private GameObject timeSlider;
+
     private bool inEditor;
 
     void Awake() {
@@ -104,6 +108,10 @@ public class SquadronSpawner : MonoBehaviour {
         
         if ((arcadeOn || (menu || clankerTraining)) && keepUp) {
             spawnVehicles(amt - vehicleCount(vehicle.GetComponent<AllianceHolder>().getAlliance()));
+        }
+
+        if (inEditor && sky != null) {
+            sky.GetComponent<SkyScript>().setTime(timeSlider.GetComponent<Slider>().value);
         }
     }
 

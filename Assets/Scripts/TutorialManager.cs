@@ -10,16 +10,20 @@ public class TutorialManager : MonoBehaviour {
     [SerializeField] GameObject camera;
     [SerializeField] private GameObject textObj;
     private Instruction[] instructions = new Instruction[] {
-        new Instruction("Kindly perform a counter-clockwise turn, soldier", () => TutorialManager.plen.GetComponent<Rigidbody2D>().angularVelocity > 1f, 1f)
+        new Instruction("Kindly perform a counter-clockwise turn, soldier", () => TutorialManager.plen.GetComponent<Rigidbody2D>().angularVelocity > 1f, 1f),
+        new Instruction("Fire your weapons", () => TutorialManager.inputs.GetComponent<CustomInputs>().gunInput(), 1f),
     };
     [SerializeField] private int instructionIndex;
     [SerializeField] GameObject lvlManager;
 
     public static GameObject plen;
+    public static CustomInputs inputs;
 
     float timeUnderCondition = 0f;
     void Update() {
         plen = camera.GetComponent<CamScript>().getControlledOrSpectatedVehicle();
+        inputs = camera.GetComponent<CustomInputs>();
+        
         if (plen == null) return;
 
         bool danger = plen.GetComponent<PlaneController>().altitudeFromTerrain() < 100f;

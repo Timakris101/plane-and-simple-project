@@ -221,4 +221,8 @@ public class SkyScript : MonoBehaviour {
     private Vector2 worldToPixel(Vector3 pos) {
         return new Vector2((int) (pos.x * baseSize / transform.lossyScale.x), (int) (pos.y * baseSize / transform.lossyScale.y)) - new Vector2((int) (transform.position.x * baseSize / transform.lossyScale.x), (int) (transform.position.y * baseSize / transform.lossyScale.x));
     }
+
+    public void setTime(float time) {
+        this.time = time;
+    }
 }
