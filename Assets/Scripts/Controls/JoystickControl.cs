@@ -31,7 +31,7 @@ public class JoystickControl : BaseControl, IPointerUpHandler {
     public override void Update() {
         base.Update();
         normalizeIfOutOfRange();
-        if (Input.touchCount < 0) return;
+        if (Input.touchCount == 0) return;
         int index = validTouch();
         if (index == -1) {
             stick.transform.localPosition = new Vector2(0f, 0f);
