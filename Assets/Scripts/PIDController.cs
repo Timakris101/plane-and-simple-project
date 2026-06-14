@@ -1,9 +1,10 @@
 using UnityEngine;
 
+[System.Serializable]
 public class PIDController {
-    private float kP;
-    private float kI;
-    private float kD;
+    [SerializeField] private float kP;
+    [SerializeField] private float kI;
+    [SerializeField] private float kD;
 
     private float totalError;
     private float prevError;
@@ -16,6 +17,12 @@ public class PIDController {
         kP = p;
         kI = i;
         kD = d;
+    }
+
+    public PIDController(PIDController other) {
+        kP = other.kP;
+        kI = other.kI;
+        kD = other.kD;
     }
 
     public PIDController withContinuity(float min, float max) {

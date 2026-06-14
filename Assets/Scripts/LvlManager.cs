@@ -38,7 +38,7 @@ public class LvlManager : MonoBehaviour {
     }
 
     public void bringUpWinScreen() {
-        PlayerPrefs.SetInt("MaxLevelUnlocked", levelNum + 1);
+        if (PlayerPrefs.GetInt("MaxLevelUnlocked") < levelNum + 1) PlayerPrefs.SetInt("MaxLevelUnlocked", levelNum + 1);
         GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
         winScreen.SetActive(true);
         winScreen.transform.localPosition += new Vector3(0f, screenPID.calculate(winScreen.transform.localPosition.y, 0f, Time.deltaTime), 0f);
@@ -65,5 +65,9 @@ public class LvlManager : MonoBehaviour {
 
     public void startGame() {
         gameStarted = true;
+    }
+
+    public int getLevelNum() {
+        return levelNum;
     }
 }

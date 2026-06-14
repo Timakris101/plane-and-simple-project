@@ -15,6 +15,7 @@ public class CamScript : MonoBehaviour {
     [SerializeField] private float zoomOutFoV;
     private PIDController zoomPID = new PIDController(4f, .3f, 0f);
     private PIDController movePID = new PIDController(.1f, 0f, 0f);
+    bool inTransition;
 
     [Header("Mode")]
     [SerializeField] private bool missionEditor;
@@ -166,8 +167,8 @@ public class CamScript : MonoBehaviour {
     }
 
     private void matchParentToPlane() {
-        if (vehicleToControl != null) {
-            transform.parent = vehicleToControl.transform;
+        if (getControlledOrSpectatedVehicle() != null) {
+            transform.parent = getControlledOrSpectatedVehicle().transform;
         } else {
             transform.parent = null;
         }
@@ -257,13 +258,25 @@ public class CamScript : MonoBehaviour {
             }
         }
 
-        if (transform.parent != null) {
-            transform.localPosition = new Vector3(transform.localPosition.x + movePID.calculate(transform.localPosition.x, 0f, Time.deltaTime), transform.localPosition.y + movePID.calculate(transform.localPosition.y, 0f, Time.deltaTime), 0f) + offset;
+        if (vehicleToControl != null) {
+            if (inTransition) inTransition = (camera.WorldToScreenPoint(vehicleToControl.transform.position) - new Vector3(camera.pixelWidth / 2f, camera.pixelHeight / 2f, 0f)).magnitude > camera.pixelWidth / 4f;
+            transform.parent = vehicleToControl.transform;
+
+            if (!inTransition) {
+                transform.localPosition = offset;
+            } else {
+                transform.position = new Vector3(transform.position.x + movePID.calculate(transform.position.x, vehicleToControl.transform.position.x, Time.deltaTime), transform.position.y + movePID.calculate(transform.position.y, vehicleToControl.transform.position.y, Time.deltaTime), offset.z);
+            }
         } else {
             if (spectatedVehicle != null) {
-                transform.position = new Vector3(transform.position.x + movePID.calculate(transform.position.x, spectatedVehicle.transform.position.x, Time.deltaTime), transform.position.y + movePID.calculate(transform.position.y, spectatedVehicle.transform.position.y, Time.deltaTime), 0f);
-                transform.position = Vector3.Lerp(transform.position, spectatedVehicle.transform.position, Mathf.Exp(-Mathf.Pow(Vector3.Distance(transform.position, spectatedVehicle.transform.position) / spectatedVehicle.GetComponent<Rigidbody2D>().linearVelocity.magnitude, 2f)));
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0f) + offset;
+                if (inTransition) inTransition = (camera.WorldToScreenPoint(spectatedVehicle.transform.position) - new Vector3(camera.pixelWidth / 2f, camera.pixelHeight / 2f, 0f)).magnitude > camera.pixelWidth / 4f;
+                transform.parent = spectatedVehicle.transform;
+
+                if (!inTransition) {
+                    transform.localPosition = offset;
+                } else {
+                    transform.position = new Vector3(transform.position.x + movePID.calculate(transform.position.x, spectatedVehicle.transform.position.x, Time.deltaTime), transform.position.y + movePID.calculate(transform.position.y, spectatedVehicle.transform.position.y, Time.deltaTime), offset.z);
+                }
             } else {
                 Vector3 movementVec = new Vector3(0, 0, 0);
                 if (Input.GetKey("w")) movementVec += new Vector3(0, 1, 0);
@@ -299,11 +312,15 @@ public class CamScript : MonoBehaviour {
             for (int i = 0; i < vehicles.Length; i++) {
                 if (vehicles[i] == spectatedVehicle) {
                     spectatedVehicle = vehicles[(i + 1) % vehicles.Length];
+                    inTransition = true;
                     break;
                 }
             }
         } else {
-            if (vehicles.Length > 0) spectatedVehicle = vehicles[0];
+            if (vehicles.Length > 0) {
+                inTransition = true;
+                spectatedVehicle = vehicles[0];
+            }
         }
     }
 
@@ -339,6 +356,7 @@ public class CamScript : MonoBehaviour {
 
     public void takeControlOfVehicle(GameObject vehicle) {
         if (vehicle != null) {
+            inTransition = true;
             vehicleToControl = vehicle;
             foreach (VehicleController controller in vehicle.GetComponents<VehicleController>()) {
                 controller.enabled = controller.GetType() != aiControllerOfVehicle(vehicle).GetType();

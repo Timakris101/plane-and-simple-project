@@ -82,7 +82,7 @@ public class VehicleController : NetworkBehaviour {
 
     protected virtual void Update() {
         if (INPUTS == null) INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
-        if (transform.Find("Camera") == null) {
+        if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) {
             foreach (VehicleController controller in GetComponents<VehicleController>()) {
                 controller.enabled = controller == aiControllerOfVehicle(gameObject);
             }

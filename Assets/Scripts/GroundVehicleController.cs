@@ -19,12 +19,12 @@ public class GroundVehicleController : VehicleController {
     }
 
     protected virtual Vector3 moveDir() {
-        if (progenyWithScript<CamScript>(gameObject).Count == 0) return new Vector3(0,0,0);
+        if (Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return new Vector3(0,0,0);
         return progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().directionInput() * transform.right * transform.localScale.y;
     }
 
     protected virtual void handleFacing() {
-        if (progenyWithScript<CamScript>(gameObject).Count == 0) return;
+        if (Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return;
         if (progenyWithScript<CamScript>(gameObject)[0].GetComponent<CustomInputs>().rotateVehicleInput()) {
             transform.localScale = new Vector3(1f, transform.localScale.y * -1f, 1f);
             transform.localEulerAngles += new Vector3(0f, 0f, 180f);

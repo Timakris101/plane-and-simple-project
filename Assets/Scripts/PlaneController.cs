@@ -52,7 +52,7 @@ public class PlaneController : VehicleController {
     }
 
     public void removeCam() {
-        if (transform.Find("Camera") != null) transform.Find("Camera").GetComponent<CamScript>().uncoupleCam();
+        GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
     }
 
     public bool pilotDeadOrGone() {
@@ -91,7 +91,7 @@ public class PlaneController : VehicleController {
 
     protected virtual float wantedDir() {
         if (INPUTS == null) return 0;
-        if (INPUTS.transform.parent != transform) return 0;
+        if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return 0f;
         switch (PlayerPrefs.GetString("ControlMode")) {
             case "Joystick": 
                 return INPUTS.directionInput();
@@ -136,47 +136,47 @@ public class PlaneController : VehicleController {
 
     protected virtual void handleNonPilotControls() {
         if (INPUTS == null) return;
-        if (INPUTS.transform.parent != transform) return;
-        if (INPUTS.GetComponent<CustomInputs>().ejectInput()) {
+        if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return;
+        if (INPUTS.ejectInput()) {
             GetComponent<BailoutHandler>().callBailOut();
         }
     }
 
     protected virtual void handleSwapping() {
         if (INPUTS == null) return;
-        if (INPUTS.transform.parent != transform) return;
-        if (INPUTS.GetComponent<CustomInputs>().swapViewInput()) {
+        if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return;
+        if (INPUTS.swapViewInput()) {
             toggleGunners();
         }
     }
 
     protected virtual void handleControls() {
         if (INPUTS == null) return;
-        if (INPUTS.transform.parent != transform) return;
+        if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return;
 
-        setThrottle(INPUTS.GetComponent<CustomInputs>().throttleInput());
+        setThrottle(INPUTS.throttleInput());
 
-        inWEP = INPUTS.GetComponent<CustomInputs>().wepInput();
+        inWEP = INPUTS.wepInput();
 
-        if (INPUTS.GetComponent<CustomInputs>().engineInput()) toggleEngines();
+        if (INPUTS.engineInput()) toggleEngines();
 
         if (transform.Find("Flaps") != null) {
-            if (INPUTS.GetComponent<CustomInputs>().flapInput()) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
+            if (INPUTS.flapInput()) transform.Find("Flaps").GetComponent<FlapScript>().toggleFlaps();
         }
 
         if (transform.Find("Gear") && !onGround) {
-            if (INPUTS.GetComponent<CustomInputs>().gearInput()) {
+            if (INPUTS.gearInput()) {
                 foreach (GameObject gear in gears) {
                     if (gear != null) gear.GetComponent<GearScript>().toggleGear();
                 }
             }
         }
         if (transform.Find("Gear")) {
-            if (INPUTS.GetComponent<CustomInputs>().brakeInput()) transform.Find("Gear").GetComponent<GearScript>().brake();
+            if (INPUTS.brakeInput()) transform.Find("Gear").GetComponent<GearScript>().brake();
         }
 
-        if (checkForGunAmmo()) setGuns(INPUTS.GetComponent<CustomInputs>().gunInput());
-        if (checkForBombAmmo()) setBombs(INPUTS.GetComponent<CustomInputs>().bombInput());
+        if (checkForGunAmmo()) setGuns(INPUTS.gunInput());
+        if (checkForBombAmmo()) setBombs(INPUTS.bombInput());
     }
 
     protected bool checkForGunAmmo() {

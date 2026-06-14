@@ -28,7 +28,7 @@ public class GroundVehicleGunnerScript : GunnerScript {
                     attemptToShoot(false);
                 }
             } else {
-                if (maxAncestor.transform.Find("Camera") != null) {
+                if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle() == maxAncestor) {
                     Vector3 screenToWorld = INPUTS.pointerPositionInput();
                     pointGunAt(new Vector3(screenToWorld.x, screenToWorld.y, 0));
                     attemptToShoot(new Vector3(screenToWorld.x, screenToWorld.y, 0), INPUTS.gunInput());

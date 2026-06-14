@@ -48,8 +48,6 @@ public class BailoutHandler : MonoBehaviour {
         Destroy(newCrew, 10f);
         newCrew.GetComponent<Rigidbody2D>().linearVelocity = GetComponent<Rigidbody2D>().linearVelocity + (Vector2) transform.up * transform.localScale.y * ejectionSeatStrength * (Mathf.Abs((4f - animIndex) / 2f) - 1f);
 
-        if (transform.Find("Camera") != null) transform.Find("Camera").parent = null;
-
         crewToBail.GetComponent<BoxCollider2D>().size = newCrew.GetComponent<BoxCollider2D>().size;
         crewToBail.GetComponent<BoxCollider2D>().offset = newCrew.GetComponent<BoxCollider2D>().offset;
         crewToBail.transform.rotation = newCrew.transform.rotation;

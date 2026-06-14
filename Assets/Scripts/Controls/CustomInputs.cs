@@ -162,7 +162,7 @@ public class CustomInputs : MonoBehaviour {
 
     public float computerControlBasedThrottleInput(out bool buttonsTouched) {
         buttonsTouched = false;
-        GameObject vehicle = parentWithScript<VehicleController>(gameObject);
+        GameObject vehicle = GetComponent<CamScript>().getControlledVehicle();
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         if (Input.GetKey(throttleUpKey) && pc.getThrottle() < 1) {
             buttonsTouched = true;
@@ -180,7 +180,7 @@ public class CustomInputs : MonoBehaviour {
     public static KeyCode throttleDownKey => PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftCommand : KeyCode.S;
 
     public float readThrottle() {
-        GameObject vehicle = parentWithScript<VehicleController>(gameObject);
+        GameObject vehicle = GetComponent<CamScript>().getControlledVehicle();
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         return pc.getThrottle();
     }
@@ -295,7 +295,7 @@ public class CustomInputs : MonoBehaviour {
     }
 
     public bool computerControlBasedWepInput(out bool buttonsTouched) {
-        GameObject vehicle = parentWithScript<VehicleController>(gameObject);
+        GameObject vehicle = GetComponent<CamScript>().getControlledVehicle();
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         bool inWEP = false;
         KeyCode throttleUpKey = PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
@@ -378,7 +378,7 @@ public class CustomInputs : MonoBehaviour {
 
     public bool computerControlBasedBrakeInput(out bool buttonsTouched) {
         buttonsTouched = Input.GetKey(throttleDownKey);
-        GameObject vehicle = parentWithScript<VehicleController>(gameObject);
+        GameObject vehicle = GetComponent<CamScript>().getControlledVehicle();
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         return Input.GetKey(throttleDownKey) && pc.getThrottle() - pc.throttleChangeSpeed * Time.deltaTime < 0;
     }
