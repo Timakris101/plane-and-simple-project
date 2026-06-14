@@ -10,7 +10,7 @@ public class TutorialManager : MonoBehaviour {
     [SerializeField] GameObject camera;
     [SerializeField] private GameObject textObj;
     private Instruction[] instructions = new Instruction[] {
-        new Instruction("Kindly perform a counter-clockwise turn, soldier", () => TutorialManager.plen.GetComponent<Rigidbody2D>().angularVelocity > 0f, 1f)
+        new Instruction("Kindly perform a counter-clockwise turn, soldier", () => TutorialManager.plen.GetComponent<Rigidbody2D>().angularVelocity > 1f, 1f)
     };
     [SerializeField] private int instructionIndex;
     [SerializeField] GameObject lvlManager;
@@ -33,6 +33,8 @@ public class TutorialManager : MonoBehaviour {
         }
         if (instructions[instructionIndex].conditionMet()) {
             timeUnderCondition += Time.deltaTime; 
+        } else {
+            timeUnderCondition = 0;
         }
         if (timeUnderCondition > instructions[instructionIndex].getTime()) {
             instructionIndex++;
