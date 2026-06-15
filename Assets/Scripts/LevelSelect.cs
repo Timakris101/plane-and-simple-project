@@ -7,7 +7,7 @@ public class LevelSelect : MonoBehaviour {
     [SerializeField] private bool locked;
 
     void Start() {
-        //updateLvlLocs();
+        updateLvlLocs();
     }
 
     void Update() {
