@@ -31,4 +31,8 @@ public class WorkWithLobby : MonoBehaviour {
     public void setReadiness() {
         lobbyManager.GetComponent<Lobby>().setReadiness();
     }
+
+    public void makeSelection(string str) {
+        lobbyManager.GetComponent<Lobby>().makeSelection(str);
+    }
 }

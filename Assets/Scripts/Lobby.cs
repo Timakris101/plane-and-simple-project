@@ -35,8 +35,6 @@ public class Lobby : NetworkBehaviour {
     [SerializeField] private GameObject searchInputField;
     [SerializeField] private GameObject tierSlider;
 
-    [SerializeField] private GameObject[] playerObjList;
-
     private GameObject selectionScreen;
 
     void Awake() {
@@ -93,6 +91,7 @@ public class Lobby : NetworkBehaviour {
     private static bool inSelectionScreen = false;
     private bool isEnemyReady;
     private bool isSelfReady;
+    private string mySelected;
     private static float selectionTimer;
     async void Update() {
         if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
@@ -147,17 +146,16 @@ public class Lobby : NetworkBehaviour {
         if (gameStarted) {
             if (inSelectionScreen) {
                 selectionTimer -= Time.deltaTime;
+                selectionScreen.transform.Find("Timer").GetComponent<TMP_Text>().text = selectionTimer.ToString();
                 if (selectionTimer < 0) {
                     isSelfReady = true;
                     sendReadinessToEnemyRpc();
                     Debug.Log("readiness forced");
                 }
-                hide(selectionScreen, false);
-                sendSelectionToEnemyRpc((isTheOneWhoKnocks ? ":P" : ":p"));
-                //Debug.Log("nonrpc: " + (isTheOneWhoKnocks ? ":P" : ":p"));
+                
                 if (isEnemyReady && isSelfReady) {
                     startRound();
-                    spawnPlayer(playerObjList[0]);
+                    spawnPlayer(mySelected);
                 }
             }
 
@@ -206,9 +204,16 @@ public class Lobby : NetworkBehaviour {
         }
     }
 
-    private void spawnPlayer(GameObject objSelected) {
-        GameObject obj = GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(objSelected, objSelected.transform.position, objSelected.transform.rotation, NetworkManager.Singleton.LocalClientId);
-        Debug.Log("crear: " + obj);
+    private void spawnPlayer(string selection) {
+        int cost = 0;
+        foreach (GameObject b in progenyWithScript<Button>(transform.Find("YourOptions").gameObject)) {
+            if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection) {
+                cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+                break;
+            }
+        }
+        tickets -= cost;
+        GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().createServerRpc(selection + "Multiplayer", NetworkManager.Singleton.LocalClientId);
         if (isTheOneWhoKnocks) {
             NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
             NetworkManager.Singleton.LocalClient.PlayerObject.transform.localEulerAngles += new Vector3(0f, 0f, 180f);
@@ -221,10 +226,24 @@ public class Lobby : NetworkBehaviour {
         sendReadinessToEnemyRpc();
     }
 
+    public void makeSelection(string selection) {
+        mySelected = selection;
+        foreach (GameObject b in progenyWithScript<Button>(transform.Find("YourOptions").gameObject)) {
+            if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection) {
+                int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+                selectionScreen.transform.Find("YourOptions").Find("Tickets").GetComponent<TMP_Text>().text = (tickets - cost).ToString();
+            }
+            progenyWithScript<Image>(b)[0].GetComponent<Image>().enabled = b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection;
+        }
+        sendSelectionToEnemyRpc(selection);
+    }
+
     [Rpc(SendTo.NotMe)]
     public void sendSelectionToEnemyRpc(string selection) {
         string enemySelection = selection;
-        //Debug.Log("rpc: " + enemySelection);
+        foreach (GameObject b in progenyWithScript<Button>(transform.Find("EnemyOptions").gameObject)) {
+            progenyWithScript<Image>(b)[0].GetComponent<Image>().enabled = b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection;
+        }
     }
 
     [Rpc(SendTo.NotMe)]
@@ -234,8 +253,16 @@ public class Lobby : NetworkBehaviour {
     }
 
     public void goToSelectionScreen() {
+        hide(selectionScreen, false);
         selectionTimer = 100f;
+        makeSelection("bf110");
         inSelectionScreen = true;
+        foreach (GameObject b in progenyWithScript<Button>(transform.Find("YourOptions").gameObject)) {
+            int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+            if (cost > tickets) {
+                b.GetComponent<Button>().interactable = false;
+            }
+        }
         GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
         GameObject.Find("Camera").transform.parent = null;
         if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {

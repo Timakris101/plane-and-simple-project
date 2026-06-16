@@ -95,6 +95,20 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
         NetworkObject m_SpawnedNetworkObject = lilManSpawned.GetComponent<NetworkObject>();
         if (m_SpawnedNetworkObject != null) m_SpawnedNetworkObject.SpawnAsPlayerObject(clientId, true);
     }
+
+    [Rpc(SendTo.Server)]
+    public void createServerRpc(string objName, ulong clientId) {
+        foreach (GameObject obj in spawnableObjs) {
+            Debug.Log(obj.name + ", " + objName);
+            if (obj.name == objName) {
+                lilManToSpawn = obj;
+                break;
+            }
+        }
+        lilManSpawned = Instantiate(lilManToSpawn, lilManToSpawn.transform.position, lilManToSpawn.transform.rotation);
+        NetworkObject m_SpawnedNetworkObject = lilManSpawned.GetComponent<NetworkObject>();
+        if (m_SpawnedNetworkObject != null) m_SpawnedNetworkObject.SpawnAsPlayerObject(clientId, true);
+    }
 }
 
 public class FiniteGameObject {
