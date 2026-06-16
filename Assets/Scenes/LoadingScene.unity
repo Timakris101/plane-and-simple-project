@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
   sceneToLoadAutomtically: MainMenu
+  lvlManager: {fileID: 0}
 --- !u!4 &1411017878
 Transform:
   m_ObjectHideFlags: 0
@@ -335,7 +336,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1641650035}
-    PlayerPrefab: {fileID: 778651146784760480, guid: 986f21cf380df47dea11b562dfc22643, type: 3}
+    PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 4402c4ce0ca9548f2bcfb9e2a45f4384, type: 2}
@@ -437,6 +438,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplayerCreateAndDestroy
   ShowTopMostFoldoutHeaderGroup: 1
+  spawnableObjs:
+  - {fileID: 778651146784760480, guid: 986f21cf380df47dea11b562dfc22643, type: 3}
+  - {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
+  - {fileID: 2753116861903886285, guid: a1af85ce5725f47d5861fff331c89b9f, type: 3}
 --- !u!114 &1884124534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +491,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1945165741}
+  - component: {fileID: 1945165742}
   - component: {fileID: 1945165740}
   m_Layer: 0
   m_Name: Lobby
@@ -506,9 +512,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2385f5a95ab434f8af3d23d177609d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lobby
+  ShowTopMostFoldoutHeaderGroup: 1
   createInputField: {fileID: 0}
   searchInputField: {fileID: 0}
   tierSlider: {fileID: 0}
+  playerObjList:
+  - {fileID: 778651146784760480, guid: 986f21cf380df47dea11b562dfc22643, type: 3}
 --- !u!4 &1945165741
 Transform:
   m_ObjectHideFlags: 0
@@ -524,6 +533,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1945165742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945165739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 997510233
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

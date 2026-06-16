@@ -50,21 +50,50 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     }
 
 //----------------------------------------------------------------------
-
+    // BAD: lilmantospawn only is affected on local client, to solve, have list of spawnable objs and have the createserverrpc compare by name or index or something
     GameObject lilManToSpawn;
     GameObject lilManSpawned;
 
+    [SerializeField] private GameObject[] spawnableObjs;
+
     public GameObject create(GameObject obj, Vector3 pos, Quaternion rot) {
         lilManToSpawn = obj;
-        createServerRpc(pos, rot);
+        createServerRpc(obj.name, pos, rot);
         return lilManSpawned;
     }
 
     [Rpc(SendTo.Server)]
-    public void createServerRpc(Vector3 pos, Quaternion rot) {
+    public void createServerRpc(string objName, Vector3 pos, Quaternion rot) {
+        foreach (GameObject obj in spawnableObjs) {
+            Debug.Log(obj.name + ", " + objName);
+            if (obj.name == objName) {
+                lilManToSpawn = obj;
+                break;
+            }
+        }
         lilManSpawned = Instantiate(lilManToSpawn, pos, rot);
         NetworkObject m_SpawnedNetworkObject = lilManSpawned.GetComponent<NetworkObject>();
         if (m_SpawnedNetworkObject != null) m_SpawnedNetworkObject.Spawn();
+    }
+
+    public GameObject create(GameObject obj, Vector3 pos, Quaternion rot, ulong clientId) {
+        lilManToSpawn = obj;
+        createServerRpc(obj.name, pos, rot, clientId);
+        return lilManSpawned;
+    }
+
+    [Rpc(SendTo.Server)]
+    public void createServerRpc(string objName, Vector3 pos, Quaternion rot, ulong clientId) {
+        foreach (GameObject obj in spawnableObjs) {
+            Debug.Log(obj.name + ", " + objName);
+            if (obj.name == objName) {
+                lilManToSpawn = obj;
+                break;
+            }
+        }
+        lilManSpawned = Instantiate(lilManToSpawn, pos, rot);
+        NetworkObject m_SpawnedNetworkObject = lilManSpawned.GetComponent<NetworkObject>();
+        if (m_SpawnedNetworkObject != null) m_SpawnedNetworkObject.SpawnAsPlayerObject(clientId, true);
     }
 }
 

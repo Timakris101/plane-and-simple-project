@@ -27,4 +27,8 @@ public class WorkWithLobby : MonoBehaviour {
     public async void leaveLobby(bool resigned) {
         lobbyManager.GetComponent<Lobby>().leaveLobby(resigned);
     }
+
+    public void setReadiness() {
+        lobbyManager.GetComponent<Lobby>().setReadiness();
+    }
 }

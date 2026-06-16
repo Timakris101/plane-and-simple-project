@@ -120,4 +120,16 @@ public class Utils {
         }
         return newCoeffs;
     }
+
+    public static void hide(GameObject g, bool b) {
+        if (g.GetComponent<Graphic>() != null) {
+            g.GetComponent<Graphic>().enabled = !b;
+        }
+        foreach (GameObject imgObj in progenyWithScript<Graphic>(g)) {
+            imgObj.GetComponent<Graphic>().enabled = !b;
+        }
+        foreach (GameObject buttonObj in progenyWithScript<Button>(g)) {
+            buttonObj.GetComponent<Button>().enabled = !b;
+        }
+    }
 }

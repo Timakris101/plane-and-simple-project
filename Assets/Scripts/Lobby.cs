@@ -6,7 +6,7 @@ using Unity.Services.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
-//using ParrelSync;
+using ParrelSync;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
@@ -19,7 +19,7 @@ using Unity.Netcode.Transports.UTP;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 
-public class Lobby : MonoBehaviour {
+public class Lobby : NetworkBehaviour {
     public static int maxEloDifference = 100;
     private static Unity.Services.Lobbies.Models.Lobby currentLobby = null;
     private static bool isTheOneWhoKnocks = false;
@@ -35,6 +35,10 @@ public class Lobby : MonoBehaviour {
     [SerializeField] private GameObject searchInputField;
     [SerializeField] private GameObject tierSlider;
 
+    [SerializeField] private GameObject[] playerObjList;
+
+    private GameObject selectionScreen;
+
     void Awake() {
         DontDestroyOnLoad(gameObject);
     }
@@ -42,15 +46,15 @@ public class Lobby : MonoBehaviour {
     private async void Start() {
         if (!signedIn) {
             InitializationOptions options = new InitializationOptions();
-            // if (ClonesManager.IsClone()) {
-            //     options.SetProfile("clone");
-            // }
+            if (ClonesManager.IsClone()) {
+                options.SetProfile("clone");
+            }
 
             if (!signedIn) {
                 await UnityServices.InitializeAsync(options);
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 Debug.Log("SIGNED IN: " + AuthenticationService.Instance.PlayerId);
-                PlayerPrefs.SetInt("Elo", 100);
+                PlayerPrefs.SetInt("Elo", PlayerPrefs.GetInt("Elo", 100));
                 Debug.Log("Bestowed Elo: " + PlayerPrefs.GetInt("Elo"));
             }
 
@@ -64,8 +68,9 @@ public class Lobby : MonoBehaviour {
         Debug.Log(currentLobby.Data["RelayJoinCode"].Value);
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(hostAllocation, "udp"));
         NetworkManager.Singleton.StartHost();
-        NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
-        NetworkManager.Singleton.LocalClient.PlayerObject.transform.localEulerAngles += new Vector3(0f, 0f, 180f);
+        // NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
+        // NetworkManager.Singleton.LocalClient.PlayerObject.transform.localEulerAngles += new Vector3(0f, 0f, 180f);
+        goToSelectionScreen();
     }
 
     public async void StartClientWithRelay() {
@@ -74,13 +79,24 @@ public class Lobby : MonoBehaviour {
         JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode: relayJoinCode);
         NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(AllocationUtils.ToRelayServerData(allocation, "udp"));
         NetworkManager.Singleton.StartClient();
+        goToSelectionScreen();
     }
 
 
     private static bool gameStarted;
     private static float timer;
     private static bool querying;
+    private static int roundNum;
+    private static int roundAmt = 3;
+    private static int tickets;
+    private static int startTickets = 10;
+    private static bool inSelectionScreen = false;
+    private bool isEnemyReady;
+    private bool isSelfReady;
+    private static float selectionTimer;
     async void Update() {
+        if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
+
         if (SceneManager.GetActiveScene().name == "MultiplayerMainMenu") {
             if (createInputField == null) createInputField = GameObject.Find("CreateCustomField");
             if (searchInputField == null) searchInputField = GameObject.Find("SearchCustomField");
@@ -120,6 +136,8 @@ public class Lobby : MonoBehaviour {
                     }
                     gameStarted = true;
                     querying = false;
+                    roundNum = 0;
+                    tickets = startTickets;
                 }
                 return;
             }
@@ -127,29 +145,51 @@ public class Lobby : MonoBehaviour {
         }
 
         if (gameStarted) {
+            if (inSelectionScreen) {
+                selectionTimer -= Time.deltaTime;
+                if (selectionTimer < 0) {
+                    isSelfReady = true;
+                    sendReadinessToEnemyRpc();
+                    Debug.Log("readiness forced");
+                }
+                hide(selectionScreen, false);
+                sendSelectionToEnemyRpc((isTheOneWhoKnocks ? ":P" : ":p"));
+                //Debug.Log("nonrpc: " + (isTheOneWhoKnocks ? ":P" : ":p"));
+                if (isEnemyReady && isSelfReady) {
+                    startRound();
+                    spawnPlayer(playerObjList[0]);
+                }
+            }
+
             GameObject enemyPlayer = null;
             foreach (GameObject g in allVehiclesOfTags("Plane")) {
                 if (g != NetworkManager.Singleton.LocalClient.PlayerObject.gameObject) enemyPlayer = g;
             }
 
-            if (enemyPlayer != null) {
-                bool gameEnd = false;
+            Debug.Log(enemyPlayer);
+
+            if (enemyPlayer != null && !inSelectionScreen) {
+                isSelfReady = false;
+                isEnemyReady = false;
                 if (enemyPlayer.GetComponent<VehicleController>().vehicleDead()) {
-                    scoreOfMatch = 1f;
-                    gameEnd = true;
+                    scoreOfMatch += 1f / roundAmt;
+                    roundNum++;
+                    goToSelectionScreen();
                 }
                 if (NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead()) {
-                    scoreOfMatch = 0f;
-                    gameEnd = true;
+                    scoreOfMatch += 0f / roundAmt;
+                    roundNum++;
+                    goToSelectionScreen();
                 }
                 if (enemyPlayer.GetComponent<VehicleController>().vehicleDead() && NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead()) {
-                    scoreOfMatch = 0.5f;
-                    gameEnd = true;
+                    scoreOfMatch += 0.5f / roundAmt;
+                    roundNum++;
+                    goToSelectionScreen();
                 }
-                if (gameEnd) leaveLobby(false);
             }
-
             Debug.Log("score: " + scoreOfMatch);
+
+            if (roundNum == roundAmt) leaveLobby(false);
         }
 
         if (timer > 1f && currentLobby != null) {//nullref
@@ -164,6 +204,55 @@ public class Lobby : MonoBehaviour {
             Debug.Log("leaving bc no players");
             leaveLobby(false);
         }
+    }
+
+    private void spawnPlayer(GameObject objSelected) {
+        GameObject obj = GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(objSelected, objSelected.transform.position, objSelected.transform.rotation, NetworkManager.Singleton.LocalClientId);
+        Debug.Log("crear: " + obj);
+        if (isTheOneWhoKnocks) {
+            NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
+            NetworkManager.Singleton.LocalClient.PlayerObject.transform.localEulerAngles += new Vector3(0f, 0f, 180f);
+        }
+    }
+
+
+    public void setReadiness() {
+        isSelfReady = true;
+        sendReadinessToEnemyRpc();
+    }
+
+    [Rpc(SendTo.NotMe)]
+    public void sendSelectionToEnemyRpc(string selection) {
+        string enemySelection = selection;
+        //Debug.Log("rpc: " + enemySelection);
+    }
+
+    [Rpc(SendTo.NotMe)]
+    public void sendReadinessToEnemyRpc() {
+        GameObject.Find("Lobby").GetComponent<Lobby>().isEnemyReady = true;
+        Debug.Log("EnemyReadiness: " + isEnemyReady);
+    }
+
+    public void goToSelectionScreen() {
+        selectionTimer = 100f;
+        inSelectionScreen = true;
+        GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
+        GameObject.Find("Camera").transform.parent = null;
+        if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+            Debug.Log("por favor destruirlo");
+            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject, 3f);
+        }
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void hideScreenRpc() {
+        inSelectionScreen = false;
+        hide(selectionScreen, true);
+    }
+
+    public void startRound() {
+        hideScreenRpc();
+        Debug.Log("Startrnd");
     }
 
     bool inMoodForUpdate;
