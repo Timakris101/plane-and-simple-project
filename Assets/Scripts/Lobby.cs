@@ -95,7 +95,10 @@ public class Lobby : NetworkBehaviour {
     private string enemySelection;
     private static float selectionTimer;
     private bool deathSent;
+    private float altPerTicket = 500f;
     async void Update() {
+        if (PlayerPrefs.GetInt("Elo", 100) < 100) PlayerPrefs.SetInt("Elo", 100);
+
         if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
 
         if (SceneManager.GetActiveScene().name == "MultiplayerMainMenu") {
@@ -139,6 +142,7 @@ public class Lobby : NetworkBehaviour {
                     querying = false;
                     roundNum = 0;
                     tickets = startTickets;
+                    scoreOfMatch = 0f;
                 }
                 return;
             }
@@ -161,10 +165,37 @@ public class Lobby : NetworkBehaviour {
                 sendReadinessToEnemyRpc();
                 Debug.Log("readiness forced");
             }
+
+            foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
+                if (b.transform.GetChild(1) == null) continue;
+                int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+                if (cost > tickets) {
+                    b.GetComponent<Button>().interactable = false;
+                }
+            }
+
+            GameObject altitudeSlider = progenyWithScript<Slider>(selectionScreen.transform.Find("YourOptions").gameObject)[0];
+            int costOfCur = tickets;
+            foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
+                if (b.transform.GetChild(1) == null) continue;
+                int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+                if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == mySelected && mySelected != null) costOfCur = cost;
+            }
+            float maxAltAvailable = (float) Mathf.Min(4, tickets - costOfCur);
+
+            altitudeSlider.GetComponent<RectTransform>().offsetMax = new Vector2(altitudeSlider.GetComponent<RectTransform>().offsetMax.x, -(4f - maxAltAvailable) / 4f * altitudeSlider.transform.parent.GetComponent<RectTransform>().rect.height);
+            altitudeSlider.GetComponent<Slider>().maxValue = maxAltAvailable;
+            altitudeSlider.transform.Find("MaxAlt").GetComponent<TMP_Text>().text = maxAltAvailable.ToString();
+
+            sendAltToEnemyRpc((int) altitudeSlider.GetComponent<Slider>().value);
+
+            selectionScreen.transform.Find("YourOptions").Find("Tickets").GetComponent<TMP_Text>().text = (tickets - costOfCur - altitudeSlider.GetComponent<Slider>().value).ToString();
+
+            sendTicketCountToEnemyRpc((int) (tickets - costOfCur - altitudeSlider.GetComponent<Slider>().value));
             
             if (isEnemyReady && isSelfReady) {
                 startRound();
-                spawnPlayer(mySelected);
+                spawnPlayer(mySelected, costOfCur + (int) altitudeSlider.GetComponent<Slider>().value, altitudeSlider.GetComponent<Slider>().value * altPerTicket);
             }
         }
 
@@ -176,6 +207,8 @@ public class Lobby : NetworkBehaviour {
                 Debug.Log("checking for enemy");
                 if (g != NetworkManager.Singleton.LocalClient.PlayerObject.gameObject) enemyPlayer = g;
             }
+
+            enemyPlayer.GetComponent<AllianceHolder>().setAlliance("enemy");
 
             if (enemyPlayer != null) {
                 Debug.Log("EP: " + enemyPlayer);
@@ -221,27 +254,30 @@ public class Lobby : NetworkBehaviour {
     }
 
     [Rpc(SendTo.NotMe)]
+    private void sendTicketCountToEnemyRpc(int amt) {
+        selectionScreen.transform.Find("EnemyOptions").Find("Tickets").GetComponent<TMP_Text>().text = amt.ToString();
+    }
+
+    [Rpc(SendTo.NotMe)]
     private void sendDeathMessageRpc() {
         deathSent = true;
     }
 
-    private void spawnPlayer(string selection) {
-        int cost = 0;
-        foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
-            if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection) {
-                cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
-                break;
-            }
-        }
+    [Rpc(SendTo.NotMe)]
+    private void sendAltToEnemyRpc(int val) {
+        GameObject altitudeSlider = progenyWithScript<Slider>(selectionScreen.transform.Find("EnemyOptions").gameObject)[0];
+        altitudeSlider.GetComponent<Slider>().value = val;
+    }
+
+    private void spawnPlayer(string selection, int cost, float additionalAlt) {
         tickets -= cost;
         Debug.Log("host: " + isTheOneWhoKnocks);
-        GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().createServerRpc(selection + "Multiplayer", NetworkManager.Singleton.LocalClientId);
+        GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().createServerRpc(selection + "Multiplayer", new Vector3(0f, 200f + additionalAlt, 0f), Quaternion.identity, NetworkManager.Singleton.LocalClientId);
         if (isTheOneWhoKnocks) {
             NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
             NetworkManager.Singleton.LocalClient.PlayerObject.transform.localEulerAngles += new Vector3(0f, 0f, 180f);
         }
     }
-
 
     public void setReadiness() {
         isSelfReady = true;
@@ -255,7 +291,6 @@ public class Lobby : NetworkBehaviour {
             Debug.Log("selecting: " + selection + "; " + "comparing: " + b.transform.GetChild(0).GetComponent<TMP_Text>().text);
             if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection) {
                 int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
-                selectionScreen.transform.Find("YourOptions").Find("Tickets").GetComponent<TMP_Text>().text = (tickets - cost).ToString();
             }
             progenyWithScript<Image>(b)[0].GetComponent<Image>().enabled = b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection;
         }
@@ -288,7 +323,7 @@ public class Lobby : NetworkBehaviour {
         GameObject.Find("Camera").transform.parent = null;
         if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
             Debug.Log("por favor destruirlo" + NetworkManager.Singleton.LocalClient.PlayerObject);
-            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
+            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject, .1f);
         }
         // if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
         selectionTimer = 100f;
@@ -303,9 +338,6 @@ public class Lobby : NetworkBehaviour {
             if (b.transform.GetChild(1) == null) continue;
             int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
             if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == mySelected && mySelected != "") costOfCur = cost;
-            if (cost > tickets) {
-                b.GetComponent<Button>().interactable = false;
-            }
         }
 
         Debug.Log("costofcur: " + costOfCur);
@@ -315,13 +347,11 @@ public class Lobby : NetworkBehaviour {
         }
 
         hide(selectionScreen, false);
-        //selectionScreen.transform.position = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
     }
 
     public void hideScreen() {
         inSelectionScreen = false;
         hide(selectionScreen, true);
-        //selectionScreen.transform.position += Vector3.up * 10000f;
     }
 
     public void startRound() {

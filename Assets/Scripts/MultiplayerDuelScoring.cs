@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MultiplayerDuelScoring : MonoBehaviour {
     public static void applyScoringToPlayer(int enemyElo, float score) {
+        Debug.Log("Enemy elo: " + enemyElo + "; My elo: " + PlayerPrefs.GetInt("Elo"));
         float k = 30f;
         float expected = 1f / (Mathf.Pow(10f, (float) (enemyElo - PlayerPrefs.GetInt("Elo")) / 400f) + 1f);
         float change = k * (score - expected);

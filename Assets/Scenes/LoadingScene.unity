@@ -357,7 +357,7 @@ MonoBehaviour:
     EnableNetworkLogs: 1
     NetworkTopology: 0
     UseCMBService: 0
-    AutoSpawnPlayerPrefabClientSide: 1
+    AutoSpawnPlayerPrefabClientSide: 0
     NetworkMessageMetrics: 1
     NetworkProfilingMetrics: 1
     OldPrefabList: []
@@ -440,8 +440,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   spawnableObjs:
   - {fileID: 778651146784760480, guid: 986f21cf380df47dea11b562dfc22643, type: 3}
-  - {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
-  - {fileID: 2753116861903886285, guid: a1af85ce5725f47d5861fff331c89b9f, type: 3}
 --- !u!114 &1884124534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,8 +514,6 @@ MonoBehaviour:
   createInputField: {fileID: 0}
   searchInputField: {fileID: 0}
   tierSlider: {fileID: 0}
-  playerObjList:
-  - {fileID: 778651146784760480, guid: 986f21cf380df47dea11b562dfc22643, type: 3}
 --- !u!4 &1945165741
 Transform:
   m_ObjectHideFlags: 0

@@ -411,8 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   targetedObj: {fileID: 0}
-  tagsToTarget:
-  - Plane
+  tagsToTarget: []
   throttleChangeSpeed: 1
 --- !u!114 &8982516478224298928
 MonoBehaviour:
