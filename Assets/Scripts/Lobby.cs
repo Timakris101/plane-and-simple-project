@@ -177,7 +177,7 @@ public class Lobby : NetworkBehaviour {
                 if (g != NetworkManager.Singleton.LocalClient.PlayerObject.gameObject) enemyPlayer = g;
             }
 
-            if (enemyPlayer != null) { //buggy, doesnt do anything when enemy supposedly dies
+            if (enemyPlayer != null) {
                 Debug.Log("EP: " + enemyPlayer);
 
                 isSelfReady = false;
