@@ -42,7 +42,7 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     }
 
     public void destroy(GameObject g, float life) {
-        if (!IsClient) {
+        if (!IsClient) { //sus
             Destroy(g, life);
         } else {
             hitList.Add(new FiniteGameObject(g, life));
@@ -50,7 +50,6 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     }
 
 //----------------------------------------------------------------------
-    // BAD: lilmantospawn only is affected on local client, to solve, have list of spawnable objs and have the createserverrpc compare by name or index or something
     GameObject lilManToSpawn;
     GameObject lilManSpawned;
 
@@ -99,7 +98,6 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     [Rpc(SendTo.Server)]
     public void createServerRpc(string objName, ulong clientId) {
         foreach (GameObject obj in spawnableObjs) {
-            Debug.Log(obj.name + ", " + objName);
             if (obj.name == objName) {
                 lilManToSpawn = obj;
                 break;

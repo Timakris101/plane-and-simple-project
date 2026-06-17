@@ -92,7 +92,9 @@ public class Lobby : NetworkBehaviour {
     private bool isEnemyReady;
     private bool isSelfReady;
     private string mySelected;
+    private string enemySelection;
     private static float selectionTimer;
+    private bool deathSent;
     async void Update() {
         if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
 
@@ -143,33 +145,45 @@ public class Lobby : NetworkBehaviour {
             checkUpdateCurLobbyWithNewInfo();
         }
 
-        if (gameStarted) {
-            if (inSelectionScreen) {
-                selectionTimer -= Time.deltaTime;
-                selectionScreen.transform.Find("Timer").GetComponent<TMP_Text>().text = selectionTimer.ToString();
-                if (selectionTimer < 0) {
-                    isSelfReady = true;
-                    sendReadinessToEnemyRpc();
-                    Debug.Log("readiness forced");
-                }
-                
-                if (isEnemyReady && isSelfReady) {
-                    startRound();
-                    spawnPlayer(mySelected);
-                }
+        if (inSelectionScreen) {
+            if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
+            GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
+            GameObject.Find("Camera").transform.parent = null;
+            //hide(selectionScreen, false);
+            Debug.Log("Sel: " + (mySelected == null ? "bf110" : mySelected));
+            makeSelection((mySelected == null ? "bf110" : mySelected));
+            makeEnemySelection((enemySelection == null ? "bf110" : enemySelection));
+            Debug.Log("areeee you ready kids: " + isSelfReady);
+            selectionTimer -= Time.deltaTime;
+            selectionScreen.transform.Find("Timer").GetComponent<TMP_Text>().text = selectionTimer.ToString();
+            if (selectionTimer < 0) {
+                isSelfReady = true;
+                sendReadinessToEnemyRpc();
+                Debug.Log("readiness forced");
             }
+            
+            if (isEnemyReady && isSelfReady) {
+                startRound();
+                spawnPlayer(mySelected);
+            }
+        }
+
+        if (gameStarted && !inSelectionScreen && NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+            GameObject.Find("Camera").GetComponent<CamScript>().takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
 
             GameObject enemyPlayer = null;
             foreach (GameObject g in allVehiclesOfTags("Plane")) {
+                Debug.Log("checking for enemy");
                 if (g != NetworkManager.Singleton.LocalClient.PlayerObject.gameObject) enemyPlayer = g;
             }
 
-            Debug.Log(enemyPlayer);
+            if (enemyPlayer != null) { //buggy, doesnt do anything when enemy supposedly dies
+                Debug.Log("EP: " + enemyPlayer);
 
-            if (enemyPlayer != null && !inSelectionScreen) {
                 isSelfReady = false;
                 isEnemyReady = false;
-                if (enemyPlayer.GetComponent<VehicleController>().vehicleDead()) {
+                Debug.Log(enemyPlayer.GetComponent<VehicleController>().vehicleDead());
+                if (enemyPlayer.GetComponent<VehicleController>().vehicleDead() || deathSent) {
                     scoreOfMatch += 1f / roundAmt;
                     roundNum++;
                     goToSelectionScreen();
@@ -177,6 +191,7 @@ public class Lobby : NetworkBehaviour {
                 if (NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead()) {
                     scoreOfMatch += 0f / roundAmt;
                     roundNum++;
+                    sendDeathMessageRpc();
                     goToSelectionScreen();
                 }
                 if (enemyPlayer.GetComponent<VehicleController>().vehicleDead() && NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead()) {
@@ -184,10 +199,11 @@ public class Lobby : NetworkBehaviour {
                     roundNum++;
                     goToSelectionScreen();
                 }
-            }
-            Debug.Log("score: " + scoreOfMatch);
 
-            if (roundNum == roundAmt) leaveLobby(false);
+                Debug.Log("score: " + scoreOfMatch);
+
+                if (roundNum == roundAmt) leaveLobby(false);
+            }
         }
 
         if (timer > 1f && currentLobby != null) {//nullref
@@ -204,15 +220,21 @@ public class Lobby : NetworkBehaviour {
         }
     }
 
+    [Rpc(SendTo.NotMe)]
+    private void sendDeathMessageRpc() {
+        deathSent = true;
+    }
+
     private void spawnPlayer(string selection) {
         int cost = 0;
-        foreach (GameObject b in progenyWithScript<Button>(transform.Find("YourOptions").gameObject)) {
+        foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
             if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection) {
                 cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
                 break;
             }
         }
         tickets -= cost;
+        Debug.Log("host: " + isTheOneWhoKnocks);
         GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().createServerRpc(selection + "Multiplayer", NetworkManager.Singleton.LocalClientId);
         if (isTheOneWhoKnocks) {
             NetworkManager.Singleton.LocalClient.PlayerObject.transform.position += new Vector3(500f, 0f, 0f);
@@ -227,8 +249,10 @@ public class Lobby : NetworkBehaviour {
     }
 
     public void makeSelection(string selection) {
+        if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
         mySelected = selection;
-        foreach (GameObject b in progenyWithScript<Button>(transform.Find("YourOptions").gameObject)) {
+        foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
+            Debug.Log("selecting: " + selection + "; " + "comparing: " + b.transform.GetChild(0).GetComponent<TMP_Text>().text);
             if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection) {
                 int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
                 selectionScreen.transform.Find("YourOptions").Find("Tickets").GetComponent<TMP_Text>().text = (tickets - cost).ToString();
@@ -238,10 +262,17 @@ public class Lobby : NetworkBehaviour {
         sendSelectionToEnemyRpc(selection);
     }
 
+    public void makeEnemySelection(string es) {
+        foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("EnemyOptions").gameObject)) {
+            progenyWithScript<Image>(b)[0].GetComponent<Image>().enabled = b.transform.GetChild(0).GetComponent<TMP_Text>().text == es;
+        }
+    }
+
     [Rpc(SendTo.NotMe)]
     public void sendSelectionToEnemyRpc(string selection) {
-        string enemySelection = selection;
-        foreach (GameObject b in progenyWithScript<Button>(transform.Find("EnemyOptions").gameObject)) {
+        enemySelection = selection;
+        if (!selectionScreen.GetComponent<Image>().enabled) return;
+        foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("EnemyOptions").gameObject)) {
             progenyWithScript<Image>(b)[0].GetComponent<Image>().enabled = b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection;
         }
     }
@@ -253,32 +284,49 @@ public class Lobby : NetworkBehaviour {
     }
 
     public void goToSelectionScreen() {
-        hide(selectionScreen, false);
+        GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
+        GameObject.Find("Camera").transform.parent = null;
+        if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+            Debug.Log("por favor destruirlo" + NetworkManager.Singleton.LocalClient.PlayerObject);
+            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
+        }
+        // if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
         selectionTimer = 100f;
-        makeSelection("bf110");
         inSelectionScreen = true;
-        foreach (GameObject b in progenyWithScript<Button>(transform.Find("YourOptions").gameObject)) {
+
+        if (mySelected == null) {
+            makeSelection("bf110");
+        }
+
+        int costOfCur = startTickets + 1;
+        foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
+            if (b.transform.GetChild(1) == null) continue;
             int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+            if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == mySelected && mySelected != "") costOfCur = cost;
             if (cost > tickets) {
                 b.GetComponent<Button>().interactable = false;
             }
         }
-        GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
-        GameObject.Find("Camera").transform.parent = null;
-        if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
-            Debug.Log("por favor destruirlo");
-            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject, 3f);
+
+        Debug.Log("costofcur: " + costOfCur);
+
+        if (costOfCur <= tickets) {
+            makeSelection(mySelected);
         }
+
+        hide(selectionScreen, false);
+        //selectionScreen.transform.position = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
     }
 
-    [Rpc(SendTo.Everyone)]
-    public void hideScreenRpc() {
+    public void hideScreen() {
         inSelectionScreen = false;
         hide(selectionScreen, true);
+        //selectionScreen.transform.position += Vector3.up * 10000f;
     }
 
     public void startRound() {
-        hideScreenRpc();
+        deathSent = false;
+        hideScreen();
         Debug.Log("Startrnd");
     }
 
@@ -360,6 +408,7 @@ public class Lobby : NetworkBehaviour {
     bool leftLobby;
     public async void leaveLobby(bool resigned) {
         if (currentLobby != null) {
+            inSelectionScreen = false;
             leftLobby = true;
             if (resigned && NetworkManager.Singleton != null) sendResignationToOthersRpc();
 

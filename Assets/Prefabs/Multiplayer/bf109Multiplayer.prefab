@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 5246110744016789156}
   - component: {fileID: 928580992643086790}
   m_Layer: 3
-  m_Name: Player
+  m_Name: bf109Multiplayer
   m_TagString: Plane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

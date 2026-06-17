@@ -128,8 +128,8 @@ public class Utils {
         foreach (GameObject imgObj in progenyWithScript<Graphic>(g)) {
             imgObj.GetComponent<Graphic>().enabled = !b;
         }
-        foreach (GameObject buttonObj in progenyWithScript<Button>(g)) {
-            buttonObj.GetComponent<Button>().enabled = !b;
-        }
+        // foreach (GameObject buttonObj in progenyWithScript<Button>(g)) {
+        //     buttonObj.GetComponent<Button>().enabled = !b;
+        // }
     }
 }

@@ -60,16 +60,26 @@ public class CamScript : MonoBehaviour {
     void Update() {
         if (mainMenu) return;
         
-        if (NetworkManager.Singleton != null) {
-            if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
-                takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
-                matchParentToPlane();
-            } else {
-                handleVehicleSwitching();
-            }
-        } else {
+        // if (NetworkManager.Singleton != null) {
+        //     GameObject enemyPlayer = null;
+        //     foreach (GameObject g in allVehiclesOfTags("Plane")) {
+        //         Debug.Log("checking for enemy");
+        //         if (g != NetworkManager.Singleton.LocalClient.PlayerObject.gameObject) enemyPlayer = g;
+        //     }
+        //     if (NetworkManager.Singleton.LocalClient.PlayerObject != null && enemyPlayer != null) {
+        //         if (!NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead() && !enemyPlayer.GetComponent<VehicleController>().vehicleDead()) {
+        //             takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
+        //             matchParentToPlane();
+        //         } else {
+        //             takeControlOfVehicle(null);
+        //             matchParentToPlane();
+        //         }
+        //     } else {
+        //         handleVehicleSwitching();
+        //     }
+        // } else {
             handleVehicleSwitching();
-        }
+        // }
         handleCam();
         handleGForceDisp();
         if (getControlledOrSpectatedVehicle() != null) dialHandler.GetComponent<BaseControl>().query();
@@ -361,6 +371,8 @@ public class CamScript : MonoBehaviour {
             foreach (VehicleController controller in vehicle.GetComponents<VehicleController>()) {
                 controller.enabled = controller.GetType() != aiControllerOfVehicle(vehicle).GetType();
             }
+        } else {
+            vehicleToControl = null;
         }
         spectatedVehicle = null;
     }
