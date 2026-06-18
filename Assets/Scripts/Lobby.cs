@@ -154,6 +154,13 @@ public class Lobby : NetworkBehaviour {
             GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
             GameObject.Find("Camera").transform.parent = null;
             //hide(selectionScreen, false);
+            foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
+                if (b.transform.GetChild(1) == null) continue;
+                int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
+                if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == mySelected && cost > tickets) {
+                    makeSelection("bf110");
+                }
+            }
             Debug.Log("Sel: " + (mySelected == null ? "bf110" : mySelected));
             makeSelection((mySelected == null ? "bf110" : mySelected));
             makeEnemySelection((enemySelection == null ? "bf110" : enemySelection));
@@ -174,28 +181,28 @@ public class Lobby : NetworkBehaviour {
                 }
             }
 
-            GameObject altitudeSlider = progenyWithScript<Slider>(selectionScreen.transform.Find("YourOptions").gameObject)[0];
+            // GameObject altitudeSlider = progenyWithScript<Slider>(selectionScreen.transform.Find("YourOptions").gameObject)[0];
             int costOfCur = tickets;
             foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("YourOptions").gameObject)) {
                 if (b.transform.GetChild(1) == null) continue;
                 int cost = int.Parse(b.transform.GetChild(1).GetComponent<TMP_Text>().text);
                 if (b.transform.GetChild(0).GetComponent<TMP_Text>().text == mySelected && mySelected != null) costOfCur = cost;
             }
-            float maxAltAvailable = (float) Mathf.Min(4, tickets - costOfCur);
+            // float maxAltAvailable = (float) Mathf.Min(4, tickets - costOfCur);
 
-            altitudeSlider.GetComponent<RectTransform>().offsetMax = new Vector2(altitudeSlider.GetComponent<RectTransform>().offsetMax.x, -(4f - maxAltAvailable) / 4f * altitudeSlider.transform.parent.GetComponent<RectTransform>().rect.height);
-            altitudeSlider.GetComponent<Slider>().maxValue = maxAltAvailable;
-            altitudeSlider.transform.Find("MaxAlt").GetComponent<TMP_Text>().text = maxAltAvailable.ToString();
+            // altitudeSlider.GetComponent<RectTransform>().offsetMax = new Vector2(altitudeSlider.GetComponent<RectTransform>().offsetMax.x, -(4f - maxAltAvailable) / 4f * altitudeSlider.transform.parent.GetComponent<RectTransform>().rect.height);
+            // altitudeSlider.GetComponent<Slider>().maxValue = maxAltAvailable;
+            // altitudeSlider.transform.Find("MaxAlt").GetComponent<TMP_Text>().text = maxAltAvailable.ToString();
 
-            sendAltToEnemyRpc((int) altitudeSlider.GetComponent<Slider>().value);
+            // sendAltToEnemyRpc((int) altitudeSlider.GetComponent<Slider>().value);
 
-            selectionScreen.transform.Find("YourOptions").Find("Tickets").GetComponent<TMP_Text>().text = (tickets - costOfCur - altitudeSlider.GetComponent<Slider>().value).ToString();
+            selectionScreen.transform.Find("YourOptions").Find("Tickets").GetComponent<TMP_Text>().text = (tickets - costOfCur/* - altitudeSlider.GetComponent<Slider>().value*/).ToString();
 
-            sendTicketCountToEnemyRpc((int) (tickets - costOfCur - altitudeSlider.GetComponent<Slider>().value));
+            sendTicketCountToEnemyRpc((int) (tickets - costOfCur/* - altitudeSlider.GetComponent<Slider>().value*/));
             
             if (isEnemyReady && isSelfReady) {
                 startRound();
-                spawnPlayer(mySelected, costOfCur + (int) altitudeSlider.GetComponent<Slider>().value, altitudeSlider.GetComponent<Slider>().value * altPerTicket);
+                spawnPlayer(mySelected, costOfCur/* + (int) altitudeSlider.GetComponent<Slider>().value*/,0 /*altitudeSlider.GetComponent<Slider>().value * altPerTicket*/);
             }
         }
 

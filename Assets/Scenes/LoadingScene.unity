@@ -440,6 +440,10 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   spawnableObjs:
   - {fileID: 778651146784760480, guid: 986f21cf380df47dea11b562dfc22643, type: 3}
+  - {fileID: 232945582501730601, guid: 1f3de4e0e45a643afab11e3490be4732, type: 3}
+  - {fileID: 1705815935406852650, guid: bf127296ca6bf4cc08618f19c48c86da, type: 3}
+  - {fileID: 8117271881959870144, guid: 02ee3750121e1434e92b2ea7d2f55307, type: 3}
+  - {fileID: 8015341027223098232, guid: 6ae25b50308974993bbbe8a57a128329, type: 3}
 --- !u!114 &1884124534
 MonoBehaviour:
   m_ObjectHideFlags: 0
