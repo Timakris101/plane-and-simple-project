@@ -30,7 +30,7 @@ public class Aerodynamics : MonoBehaviour {
     private float elevatorSpeed = 480f;
     private float baseTorque;
     private float instantaneousTurnRateFactor = 1.5f;
-    private float speedOfControlEffectiveness = 10f;
+    private float speedOfControlEffectiveness = 1f;
 
     [Header("Atmosphere")]
     private static float seaLevelAirDensity = 9f;
@@ -124,7 +124,7 @@ public class Aerodynamics : MonoBehaviour {
 
             elevatorDeflection = Mathf.MoveTowards(elevatorDeflection, -dirToTurn * maxElevatorDeflection, elevatorSpeed * Time.deltaTime);
 
-            // if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
+            if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
             float aVelToSet = torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque * (elevatorDeflection / maxElevatorDeflection);
             float perturbation = 0f;
             float torque = .5f * cT.Evaluate(AoA()) * transform.localScale.y * Mathf.Pow(rb.linearVelocity.magnitude, 2) * Mathf.Max(wingArea, startWingArea / 2f) * wingSpan * getAirDensity();

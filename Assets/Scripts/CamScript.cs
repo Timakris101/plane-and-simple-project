@@ -251,7 +251,7 @@ public class CamScript : MonoBehaviour {
             
             if (getControlledOrSpectatedVehicle() == null) {
                 if (Input.touchCount == 0) camera.fieldOfView -= Input.mouseScrollDelta.y;
-                if (Input.touchCount == 2) camera.fieldOfView -= Vector2.Distance(Input.GetTouch(0).position + Input.GetTouch(0).deltaPosition, Input.GetTouch(1).position + Input.GetTouch(1).deltaPosition) - Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position) * .1f;
+                if (Input.touchCount == 2) camera.fieldOfView -= (Vector2.Distance(Input.GetTouch(0).position + Input.GetTouch(0).deltaPosition, Input.GetTouch(1).position + Input.GetTouch(1).deltaPosition) - Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position)) * 0.05f;
             }
 
             if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
