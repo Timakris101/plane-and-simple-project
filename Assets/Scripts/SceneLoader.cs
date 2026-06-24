@@ -33,4 +33,8 @@ public class SceneLoader : MonoBehaviour {
             SceneManager.LoadScene("Level" + (lvlManager.GetComponent<LvlManager>().getLevelNum() + 1).ToString());
         }
     }
+
+    public void skeddadle() {
+        Application.Quit();
+    }
 }

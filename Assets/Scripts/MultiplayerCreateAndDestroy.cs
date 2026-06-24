@@ -43,8 +43,10 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     public void destroy(GameObject g, float life) {
         if (!IsClient) { //sus
             Destroy(g, life);
+            // Debug.Log("reg destroy, " + g);
         } else {
             hitList.Add(new FiniteGameObject(g, life));
+            // Debug.Log("irreg destroy, " + g);
         }
     }
 

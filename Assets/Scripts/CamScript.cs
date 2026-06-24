@@ -247,11 +247,11 @@ public class CamScript : MonoBehaviour {
             camera.fieldOfView += zoomPID.calculate(camera.fieldOfView, (zoomed ? zoomInFoV : zoomOutFoV), Time.deltaTime) * Time.deltaTime;
         }
         if (Input.touchCount == 0 || Input.touchCount == 2) {
-            Vector3 prevPos = GetComponent<CustomInputs>().pointerPositionInput();
+            Vector3 prevPos = GetComponent<CustomInputs>().pointerPositionInputAvg();
             
             if (getControlledOrSpectatedVehicle() == null) {
                 if (Input.touchCount == 0) camera.fieldOfView -= Input.mouseScrollDelta.y;
-                if (Input.touchCount == 2) camera.fieldOfView -= Vector2.Distance(Input.GetTouch(0).position + Input.GetTouch(0).deltaPosition, Input.GetTouch(1).position + Input.GetTouch(1).deltaPosition) - Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
+                if (Input.touchCount == 2) camera.fieldOfView -= Vector2.Distance(Input.GetTouch(0).position + Input.GetTouch(0).deltaPosition, Input.GetTouch(1).position + Input.GetTouch(1).deltaPosition) - Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position) * .1f;
             }
 
             if (camera.fieldOfView > maxP) { //makes cam size unable to go above max
@@ -261,7 +261,7 @@ public class CamScript : MonoBehaviour {
                 camera.fieldOfView = minP;
             }
 
-            Vector3 newPos = GetComponent<CustomInputs>().pointerPositionInput();
+            Vector3 newPos = GetComponent<CustomInputs>().pointerPositionInputAvg();
 
             if (getControlledOrSpectatedVehicle() == null && effFreeCamSpeedScaler != 0) {
                 transform.position += prevPos - newPos;

@@ -6,7 +6,7 @@ using Unity.Services.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
-using ParrelSync;
+//using ParrelSync;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
@@ -44,9 +44,9 @@ public class Lobby : NetworkBehaviour {
     private async void Start() {
         if (!signedIn) {
             InitializationOptions options = new InitializationOptions();
-            if (ClonesManager.IsClone()) {
-                options.SetProfile("clone");
-            }
+            // if (ClonesManager.IsClone()) {
+            //     options.SetProfile("clone");
+            // }
 
             if (!signedIn) {
                 await UnityServices.InitializeAsync(options);
@@ -540,8 +540,9 @@ public class LobbyInfo {
         int fieldAmt = typeof(LobbyInfo).GetFields().Length;
         string accessCodePastedBackTogether = "";
         for (int i = fieldAmt - 1; i < split.Length; i++) {
-            accessCodePastedBackTogether += split[i];
+            accessCodePastedBackTogether += split[i] + (i != split.Length - 1 ? "," : "");
         }
+        if (infoAsString.Substring(infoAsString.Length - 1).Equals(",")) accessCodePastedBackTogether += ",";
         return new LobbyInfo(
             int.Parse(split[0]),
             int.Parse(split[1]),

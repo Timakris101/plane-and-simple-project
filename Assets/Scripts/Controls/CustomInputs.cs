@@ -569,6 +569,27 @@ public class CustomInputs : MonoBehaviour {
 
 //-------------------------------------------------------------------------------------------------
 
+    public Vector3 pointerPositionInputAvg() {
+        return basicVectorInput(computerControlBasedMouseInputAvg, mobileControlBasedTouchInputAvg);
+    }
+    
+    public Vector3 computerControlBasedMouseInputAvg(out bool buttonsTouched) {
+        buttonsTouched = Input.touchCount == 0;
+        return GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -transform.position.z));
+    }
+
+    public Vector3 mobileControlBasedTouchInputAvg(out bool buttonsTouched) {
+        buttonsTouched = Input.touchCount > 0;
+        Vector3 sum = Vector3.zero;
+        for (int i = 0; i < Input.touchCount; i++) {
+            sum += GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Input.GetTouch(i).position.x, Input.GetTouch(i).position.y, -transform.position.z));
+        }
+        if (!buttonsTouched) return new Vector3(0,0,0);
+        return sum / Input.touchCount;
+    }
+
+//-------------------------------------------------------------------------------------------------
+
     public void setModeOf(GameObject objInPair, string mode) {
         foreach (InteractableModePair pair in controlList) {
             if (pair.obj == objInPair) {

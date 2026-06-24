@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 using static Utils;
 
-public class Water : MonoBehaviour {
+public class Water : NetworkBehaviour {
     [SerializeField] private float dragForceCoef;
     [SerializeField] private GameObject splashEffect;
     [SerializeField] private float splashCoef;
@@ -13,7 +14,7 @@ public class Water : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.transform.gameObject.layer != LayerMask.NameToLayer("Vehicle") && other.transform.gameObject.layer != LayerMask.NameToLayer("Crew") && other.transform.parent == null) {
-            if (GameObject.Find("NetworkManager") == null) {
+            if (NetworkManager.Singleton.IsListening) {
                 Destroy(other.transform.gameObject);
             } else {
                 GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(other.transform.gameObject);
@@ -24,7 +25,7 @@ public class Water : MonoBehaviour {
             Destroy(newSplash, 10f);
             var mainModule = newSplash.GetComponent<ParticleSystem>().main;
             mainModule.startSpeed = new ParticleSystem.MinMaxCurve(splashSize(other.transform.gameObject) / 2f, splashSize(other.transform.gameObject));
-            if (GameObject.Find("NetworkManager") == null) {
+            if (NetworkManager.Singleton.IsListening) {
                 Destroy(newSplash);
             } else {
                 GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newSplash);

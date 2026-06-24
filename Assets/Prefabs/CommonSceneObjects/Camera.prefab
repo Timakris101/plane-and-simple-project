@@ -113,7 +113,7 @@ MonoBehaviour:
     m_Extent: {x: 16000, y: 0, z: 0}
   zoomed: 0
   zoomInFoV: 150
-  zoomOutFoV: 170
+  zoomOutFoV: 171
   missionEditor: 1
   mainMenu: 0
   minP: 60

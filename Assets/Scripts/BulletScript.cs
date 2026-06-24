@@ -180,19 +180,19 @@ public class BulletScript : NetworkBehaviour {
     }
 
     private void makeEffectAndDestroyObj(Vector3 effectPos) {
-        GameObject newEffect = GameObject.Find("MultiplayerCreateDestroy") != null ? GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(effect, effectPos, Quaternion.identity) : Instantiate(effect, effectPos, Quaternion.identity);
+        GameObject newEffect = NetworkManager.Singleton.IsListening ? GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().create(effect, effectPos, Quaternion.identity) : Instantiate(effect, effectPos, Quaternion.identity);
         if (newEffect != null) {
             var mainModule = newEffect.GetComponent<ParticleSystem>().main;
             if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
 
-            if (GameObject.Find("MultiplayerCreateDestroy") != null) {
-                GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newEffect, effectLifeTime);
+            if (NetworkManager.Singleton.IsListening) {
+                GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newEffect, effectLifeTime);
             } else {
                 Destroy(newEffect, lifeTime);
             }
         }
-        if (GameObject.Find("MultiplayerCreateDestroy") != null) {
-            GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject);
+        if (NetworkManager.Singleton.IsListening) {
+            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject);
         } else {
             Destroy(gameObject);
         }
@@ -203,8 +203,8 @@ public class BulletScript : NetworkBehaviour {
     }
 
     void Start() {
-        if (GameObject.Find("MultiplayerCreateDestroy") != null) {
-            GameObject.Find("MultiplayerCreateDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject, lifeTime);
+        if (NetworkManager.Singleton.IsListening) {
+            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(gameObject, lifeTime);
             if (IsServer) {
                 GetComponent<Collider2D>().enabled = true;
             } else {

@@ -124,14 +124,17 @@ public class Aerodynamics : MonoBehaviour {
 
             elevatorDeflection = Mathf.MoveTowards(elevatorDeflection, -dirToTurn * maxElevatorDeflection, elevatorSpeed * Time.deltaTime);
 
-            if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
-                
-            rb.angularVelocity = torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque * (elevatorDeflection / maxElevatorDeflection);
-
+            // if (rb.linearVelocity.magnitude < speedOfControlEffectiveness) return;
+            float aVelToSet = torqueStrength.Evaluate(rb.linearVelocity.magnitude) * baseTorque * (elevatorDeflection / maxElevatorDeflection);
+            float perturbation = 0f;
             float torque = .5f * cT.Evaluate(AoA()) * transform.localScale.y * Mathf.Pow(rb.linearVelocity.magnitude, 2) * Mathf.Max(wingArea, startWingArea / 2f) * wingSpan * getAirDensity();
             if (Mathf.Abs(AoA()) > 3f) {
-                rb.angularVelocity += torque / rb.mass;
+                perturbation += torque / rb.mass;
             }
+
+            float wAvg = torqueStrength.Evaluate(rb.linearVelocity.magnitude);
+
+            rb.angularVelocity = wAvg * aVelToSet + (1 - wAvg) * rb.angularVelocity + perturbation;
         }
     }
 
