@@ -31,7 +31,7 @@ public class GunScript : NetworkBehaviour {
         if (IsClient) {
             float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
 
-            pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency * 2f, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);
+            pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);
         } else {
             GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * timeDif(), transform.rotation);
             newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;

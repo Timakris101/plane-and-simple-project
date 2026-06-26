@@ -271,6 +271,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -387,6 +388,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -477,7 +479,7 @@ Transform:
   - {fileID: 3203344213112057293}
   - {fileID: 5798037976464544950}
   - {fileID: 8383712961349694918}
-  - {fileID: 7936126270823666522}
+  - {fileID: 6089723608125732968}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6572080974519759259
@@ -1112,6 +1114,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -1273,6 +1276,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 3329704741098306423, guid: 6efc0c7728e1e4d0f8e3f12918839648, type: 3}
   tailNeg: {fileID: 0}
@@ -1653,6 +1657,7 @@ MonoBehaviour:
   fireDamagePerSec: 10
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -1702,59 +1707,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   thrustKn: 39.61887
   afterBurner: 72
---- !u!1 &5021081229832417601
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7936126270823666522}
-  - component: {fileID: 8590992288715027111}
-  m_Layer: 3
-  m_Name: Gun
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7936126270823666522
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5021081229832417601}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: -2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8341455162611562025}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8590992288715027111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5021081229832417601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1750104cd83474365be866a056d5b39e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  belt: {fileID: 3850267047446635593, guid: 6acebe9eb3e9f4035be5633c03de9aab, type: 3}
-  fireRate: 0.005
-  maxAmmunition: 240
-  ammunition: 0
-  bulletFuse: 0
-  minDeflection: 0
-  maxDeflection: 0
-  fixedToOtherGun: 0
 --- !u!1 &5412767384783969527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2082,6 +2034,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -2243,6 +2196,7 @@ MonoBehaviour:
   fireDamagePerSec: 0
   fuelFireDamagePerSec: 0
   fuelFireFuelConsumptionPerSec: 0
+  brokenTankLeekRate: 0
   damageToLeekRate: 0
   tailPos: {fileID: 0}
   tailNeg: {fileID: 0}
@@ -2250,3 +2204,73 @@ MonoBehaviour:
   wingPos: {fileID: 5318000950192467951, guid: 25e31c64e80b6472e8380ade00da3eae, type: 3}
   wingNeg: {fileID: 0}
   animatorSpeedFactor: 120
+--- !u!1001 &6857174866792138268
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8341455162611562025}
+    m_Modifications:
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4922772988370406520, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_Name
+      value: 30mmGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351872051815806782, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: fireRate
+      value: 0.005
+      objectReference: {fileID: 0}
+    - target: {fileID: 7351872051815806782, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: maxAmmunition
+      value: 240
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+--- !u!4 &6089723608125732968 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+  m_PrefabInstance: {fileID: 6857174866792138268}
+  m_PrefabAsset: {fileID: 0}

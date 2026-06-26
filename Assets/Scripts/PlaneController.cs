@@ -92,7 +92,7 @@ public class PlaneController : VehicleController {
     protected virtual float wantedDir() {
         if (INPUTS == null) return 0;
         if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) return 0f;
-        switch (PlayerPrefs.GetString("ControlMode")) {
+        switch (PlayerPrefs.GetString("ControlMode", "Joystick")) {
             case "Joystick": 
                 return INPUTS.directionInput();
             case "Touch":

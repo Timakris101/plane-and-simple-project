@@ -175,9 +175,9 @@ public class CustomInputs : MonoBehaviour {
         return pc.getThrottle();
     }
 
-    public static KeyCode throttleUpKey => PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
+    public static KeyCode throttleUpKey => PlayerPrefs.GetString("ControlMode", "Joystick") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
 
-    public static KeyCode throttleDownKey => PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftCommand : KeyCode.S;
+    public static KeyCode throttleDownKey => PlayerPrefs.GetString("ControlMode", "Joystick") == "Joystick1" ? KeyCode.LeftCommand : KeyCode.S;
 
     public float readThrottle() {
         GameObject vehicle = GetComponent<CamScript>().getControlledVehicle();
@@ -298,8 +298,8 @@ public class CustomInputs : MonoBehaviour {
         GameObject vehicle = GetComponent<CamScript>().getControlledVehicle();
         PlaneController pc = (PlaneController) nonAiControllerOfVehicle(vehicle);
         bool inWEP = false;
-        KeyCode throttleUpKey = PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
-        KeyCode throttleDownKey = PlayerPrefs.GetString("ControlMode") == "Joystick1" ? KeyCode.LeftControl : KeyCode.S;
+        KeyCode throttleUpKey = PlayerPrefs.GetString("ControlMode", "Joystick") == "Joystick1" ? KeyCode.LeftShift : KeyCode.W;
+        KeyCode throttleDownKey = PlayerPrefs.GetString("ControlMode", "Joystick") == "Joystick1" ? KeyCode.LeftControl : KeyCode.S;
         if (Input.GetKey(throttleUpKey) && pc.getThrottle() + pc.throttleChangeSpeed * Time.deltaTime > 1) {
             inWEP = true;
         }
