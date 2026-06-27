@@ -6,7 +6,7 @@ using Unity.Services.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
-using ParrelSync;
+// using ParrelSync;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
@@ -46,9 +46,9 @@ public class Lobby : NetworkBehaviour {
     private async void Start() {
         if (!signedIn) {
             InitializationOptions options = new InitializationOptions();
-            if (ClonesManager.IsClone()) {
-                options.SetProfile("clone");
-            }
+            // if (ClonesManager.IsClone()) {
+            //     options.SetProfile("clone");
+            // }
 
             if (!signedIn) {
                 await UnityServices.InitializeAsync(options);
