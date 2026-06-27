@@ -131,7 +131,7 @@ public class Lobby : NetworkBehaviour {
             }
         }
 
-        if (roundNum == 0 && lobbyExists && NetworkManager.Singleton.IsListening) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
+        if (roundNum < roundAmt && lobbyExists && NetworkManager.Singleton.IsListening) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
 
         if (selfWantsRematch && enemyWantsRematch) {
             startGame();
@@ -200,10 +200,12 @@ public class Lobby : NetworkBehaviour {
     }
 
     private void startGame() {
-        goToSelectionScreen();
+        resetGameVals();
+        hideWinLossScreen();
+        CancelInvoke("bringUpWinLossScreen");
+        Invoke("goToSelectionScreen", 2f);
         gameStarted = true;
         querying = false;
-        resetGameVals();
     }
 
     private void handleSelectionScreen() {
@@ -334,6 +336,7 @@ public class Lobby : NetworkBehaviour {
         GameObject.Find("Camera").transform.parent = null;
         selectionTimer = 99f;
         inSelectionScreen = true;
+        transitionIntoSelection = false;
         if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
         if (selectionScreen == null) return;
         if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
@@ -374,6 +377,7 @@ public class Lobby : NetworkBehaviour {
     }
 //-
 
+    bool transitionIntoSelection;
     private void handleGameplay() {
         GameObject.Find("Camera").GetComponent<CamScript>().takeControlOfVehicle(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject);
 
@@ -391,26 +395,36 @@ public class Lobby : NetworkBehaviour {
             isSelfReady = false;
             isEnemyReady = false;
             // Debug.Log(enemyPlayer.GetComponent<VehicleController>().vehicleDead());
+
+            if (transitionIntoSelection) return;
+
             if (enemyPlayer.GetComponent<VehicleController>().vehicleDead() || deathSent) {
                 scoreOfMatch += 1f / roundAmt;
                 roundNum++;
-                goToSelectionScreen();
+                if (roundNum == roundAmt) return;
+                Invoke("goToSelectionScreen", 2f);
+                transitionIntoSelection = true;
             }
             if (NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead()) {
                 scoreOfMatch += 0f / roundAmt;
                 roundNum++;
                 sendDeathMessageRpc();
-                goToSelectionScreen();
+                if (roundNum == roundAmt) return;
+                Invoke("goToSelectionScreen", 2f);
+                transitionIntoSelection = true;
             }
             if (enemyPlayer.GetComponent<VehicleController>().vehicleDead() && NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<VehicleController>().vehicleDead()) {
                 scoreOfMatch += 0.5f / roundAmt;
                 roundNum++;
-                goToSelectionScreen();
+                if (roundNum == roundAmt) return;
+                Invoke("goToSelectionScreen", 2f);
+                transitionIntoSelection = true;
             }
         }
     }
 
     private bool scoringAppliedThisGame;
+    private bool enemyScoringAppliedThisGame;
     float prevElo;
     public void endGame(bool resigned) {
         roundNum = roundAmt;
@@ -425,17 +439,26 @@ public class Lobby : NetworkBehaviour {
             sendResignationToOthersRpc();
         }
 
-        if (enemyResigned) scoreOfMatch = 1;
-        if (resigned) scoreOfMatch = 0;
-        if (enemyResigned && resigned) scoreOfMatch = .5f;
+        if (!scoringAppliedThisGame) {
+            scoreOfMatch += tickets * 0.01f;
+            if (enemyResigned) scoreOfMatch = 1;
+            if (resigned) scoreOfMatch = 0;
+            if (enemyResigned && resigned) scoreOfMatch = .5f;
+        }
 
         if (!scoringAppliedThisGame) prevElo = PlayerPrefs.GetInt("Elo");
         
         if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked && !scoringAppliedThisGame) MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
         scoringAppliedThisGame = true;
+        sendDonenessToOthersRpc();
 
         // Debug.Log("er: " + enemyResigned + ", r: " + resigned + "; combined: " + (!enemyResigned && !resigned));
-        bringUpWinLossScreen(!enemyResigned && !resigned);
+        Invoke("bringUpWinLossScreen", ((resigned || enemyResigned) ? 0f : 2f));
+    }
+
+    [Rpc(SendTo.NotMe)]
+    public void sendDonenessToOthersRpc() {
+        enemyScoringAppliedThisGame = true;
     }
 
     private void hideWinLossScreen() {
@@ -445,7 +468,9 @@ public class Lobby : NetworkBehaviour {
     }
 
     PIDController eloPid = new PIDController(.1f, 0f, 0f);
-    private void bringUpWinLossScreen(bool showRematchButton) {
+    private void bringUpWinLossScreen() {
+        bool showRematchButton = !enemyResigned && !resigned;
+
         GameObject wlScreen = GameObject.Find("WinLossScreen");
         hide(wlScreen, false);
         hide(wlScreen.transform.Find("RematchButton").gameObject, !showRematchButton);
@@ -619,7 +644,7 @@ public class Lobby : NetworkBehaviour {
     }
 
     void OnApplicationQuit() {
-        if (currentLobby != null) endGame(!scoringAppliedThisGame);
+        if (currentLobby != null) endGame(!scoringAppliedThisGame && !enemyScoringAppliedThisGame);
     }
 
     [Rpc(SendTo.NotMe)]

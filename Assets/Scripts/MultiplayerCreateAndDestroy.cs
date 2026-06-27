@@ -21,7 +21,11 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
 
             hitList[i] = new FiniteGameObject(hitList[i].gameObject, hitList[i].lifeTime - Time.deltaTime);
             if (hitList[i].lifeTime < 0f) {
-                killServerRpc(new NetworkObjectReference(hitList[i].gameObject));
+                if (hitList[i].gameObject.GetComponent<NetworkObject>().IsSpawned) {
+                    killServerRpc(new NetworkObjectReference(hitList[i].gameObject));
+                } else {
+                    Destroy(hitList[i].gameObject);
+                }
                 hitList.Remove(hitList[i]);
                 i--;
             }
@@ -32,6 +36,7 @@ public class MultiplayerCreateAndDestroy : NetworkBehaviour {
     public void killServerRpc(NetworkObjectReference nObjRef) {
         NetworkObject nObj = null;
         nObjRef.TryGet(out nObj, NetworkManager.Singleton);
+        if (nObj == null) return;
         nObj.Despawn(true);
         Destroy(nObj.gameObject);
     }
