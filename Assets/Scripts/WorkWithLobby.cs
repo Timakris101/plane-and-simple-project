@@ -2,37 +2,49 @@ using UnityEngine;
 
 public class WorkWithLobby : MonoBehaviour {
 
-    GameObject lobbyManager;
+    Lobby lobbyManager;
 
     void Start() {
-        lobbyManager = GameObject.Find("Lobby");
+        lobbyManager = GameObject.Find("Lobby").GetComponent<Lobby>();
     }
 
     public async void startMatchPublic(bool isRanked) {
-        lobbyManager.GetComponent<Lobby>().startMatchPublic(isRanked);
+        lobbyManager.startMatchPublic(isRanked);
+    }
+
+    public async void startMatchPublic() {
+        lobbyManager.startMatchPublic(LobbyInfo.Parse(lobbyManager.currentLobby.Data["Info"].Value).isRanked);
     }
 
     public async void startMatchPrivate(bool creatingLobby) {
-        lobbyManager.GetComponent<Lobby>().startMatchPrivate(creatingLobby);
+        lobbyManager.startMatchPrivate(creatingLobby);
     }
 
     public void forceLobbyUpdate() {
-        lobbyManager.GetComponent<Lobby>().forceLobbyUpdate();
+        lobbyManager.forceLobbyUpdate();
     }
 
     public async void cancel() {
-        lobbyManager.GetComponent<Lobby>().cancel();
+        lobbyManager.cancel();
     }
 
     public async void leaveLobby(bool resigned) {
-        lobbyManager.GetComponent<Lobby>().leaveLobby(resigned);
+        lobbyManager.leaveLobby(resigned);
+    }
+
+    public async void endGame(bool resigned) {
+        lobbyManager.endGame(resigned);
+    }
+
+    public void selectRematch() {
+        lobbyManager.selectRematch();
     }
 
     public void setReadiness() {
-        lobbyManager.GetComponent<Lobby>().setReadiness();
+        lobbyManager.setReadiness();
     }
 
     public void makeSelection(string str) {
-        lobbyManager.GetComponent<Lobby>().makeSelection(str);
+        lobbyManager.makeSelection(str);
     }
 }

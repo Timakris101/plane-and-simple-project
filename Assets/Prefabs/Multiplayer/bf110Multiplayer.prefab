@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3398980440
+  GlobalObjectIdHash: 769439011
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2882,7 +2882,8 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 344a764106bcc48a08fee34e4254edc6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2952,7 +2953,8 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 344a764106bcc48a08fee34e4254edc6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3034,7 +3036,8 @@ PrefabInstance:
       propertyPath: minDeflection
       value: 120
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3108,7 +3111,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 200
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5215474433882935818, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3182,7 +3186,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 200
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5215474433882935818, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3252,7 +3257,8 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 344a764106bcc48a08fee34e4254edc6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3322,7 +3328,8 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 344a764106bcc48a08fee34e4254edc6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

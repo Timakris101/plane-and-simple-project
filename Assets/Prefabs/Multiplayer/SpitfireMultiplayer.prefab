@@ -2206,7 +2206,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2276,7 +2277,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2346,7 +2348,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2416,7 +2419,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2486,7 +2490,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2556,7 +2561,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2626,7 +2632,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2696,7 +2703,8 @@ PrefabInstance:
       propertyPath: maxAmmunition
       value: 350
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

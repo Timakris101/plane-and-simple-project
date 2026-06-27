@@ -2198,7 +2198,8 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 344a764106bcc48a08fee34e4254edc6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2216,6 +2217,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7487041870876134953}
     m_Modifications:
+    - target: {fileID: -5215474433882935818, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2666857033
+      objectReference: {fileID: 0}
     - target: {fileID: 677456949592225964, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
       propertyPath: m_Name
       value: 20mmGun
@@ -2264,7 +2269,8 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 9cb0a69bc227041f3ad8cbfa7d467446, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -5215474433882935818, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2282,6 +2288,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7487041870876134953}
     m_Modifications:
+    - target: {fileID: -5215474433882935818, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1916932475
+      objectReference: {fileID: 0}
     - target: {fileID: 677456949592225964, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
       propertyPath: m_Name
       value: 20mmGun (1)
@@ -2330,7 +2340,9 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 9cb0a69bc227041f3ad8cbfa7d467446, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -4090070656791135782, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
+    - {fileID: -5215474433882935818, guid: 9e6d12fb857d4466b813b4926e66b0bd, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2396,7 +2408,9 @@ PrefabInstance:
       propertyPath: belt
       value: 
       objectReference: {fileID: 3850267047446635593, guid: 344a764106bcc48a08fee34e4254edc6, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 673446669620388681, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
+    - {fileID: 5728586218885888987, guid: cc9aef529f6a0433985776ec28781bcb, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

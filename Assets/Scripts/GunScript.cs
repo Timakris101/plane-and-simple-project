@@ -27,12 +27,12 @@ public class GunScript : NetworkBehaviour {
     
     protected virtual void shoot() {
         if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, bullet.GetComponent<Rigidbody2D>().mass / maxAncestor(gameObject).GetComponent<Rigidbody2D>().mass * bullet.GetComponent<BulletScript>().getInitSpeed() * screenShakeFactor);
-        ammunition--;
         if (IsClient) {
             float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
 
             pewPewRpc((transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * latency, bullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel, bulletFuse);
         } else {
+            ammunition--;
             GameObject newBullet = Instantiate(bullet, (transform.childCount == 0 ? transform.position : transform.Find("BulletSpawnArea").position) + baseVel * timeDif(), transform.rotation);
             newBullet.GetComponent<Rigidbody2D>().linearVelocity = newBullet.GetComponent<BulletScript>().getInitSpeed() * transform.right + baseVel;
             newBullet.GetComponent<BulletScript>().setPlaneFired(maxAncestor(gameObject));
@@ -43,6 +43,7 @@ public class GunScript : NetworkBehaviour {
     
     [Rpc(SendTo.Server)]
     void pewPewRpc(Vector3 where, Vector3 vel, float bulletFuse) {
+        ammunition--;
         GameObject newBullet = Instantiate(bullet, where, transform.rotation);
         newBullet.GetComponent<Rigidbody2D>().linearVelocity = vel;
         
