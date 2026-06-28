@@ -210,6 +210,7 @@ public class BulletScript : NetworkBehaviour {
             } else {
                 GetComponent<Collider2D>().enabled = false;
             }
+            // GetComponent<Collider2D>().enabled = IsOwner;
         } else {
             Destroy(gameObject, lifeTime);
         }

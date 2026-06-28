@@ -28,8 +28,8 @@ public class WorkWithLobby : MonoBehaviour {
         lobbyManager.cancel();
     }
 
-    public async void leaveLobby(bool resigned) {
-        lobbyManager.leaveLobby(resigned);
+    public async void leaveLobby() {
+        lobbyManager.leaveLobby();
     }
 
     public async void endGame(bool resigned) {

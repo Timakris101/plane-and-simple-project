@@ -47,7 +47,26 @@ public class Lobby : NetworkBehaviour {
         if (!signedIn) {
             InitializationOptions options = new InitializationOptions();
             // if (ClonesManager.IsClone()) {
-            //     options.SetProfile("clone");
+            //     string cloneId = ClonesManager.GetArgument();
+
+            //     switch (cloneId)
+            //     {
+            //         case "0":
+            //             options.SetProfile("clone0");
+            //             break;
+
+            //         case "1":
+            //             options.SetProfile("clone1");
+            //             break;
+
+            //         case "2":
+            //             options.SetProfile("clone2");
+            //             break;
+
+            //         default:
+            //             options.SetProfile("clone");
+            //             break;
+            //     }
             // }
 
             if (!signedIn) {
@@ -98,9 +117,11 @@ public class Lobby : NetworkBehaviour {
     private float altPerTicket = 250f;
 
     private float timeWOnePlayer;
+    private float timeInLobbyJustChillin;
 
     async void Update() {
         lobbyExists = currentLobby != null;
+        // PlayerPrefs.SetInt("Elo", 100);
         if (PlayerPrefs.GetInt("Elo", 100) < 100) PlayerPrefs.SetInt("Elo", 100);
 
         if (GameObject.Find("SelectionScreen") != null) selectionScreen = GameObject.Find("SelectionScreen");
@@ -109,39 +130,47 @@ public class Lobby : NetworkBehaviour {
             if (createInputField == null) createInputField = GameObject.Find("CreateCustomField");
             if (searchInputField == null) searchInputField = GameObject.Find("SearchCustomField");
             if (tierSlider == null) tierSlider = GameObject.Find("TierSlider");
+
+            GameObject.Find("Create").GetComponent<Button>().interactable = createInputField.GetComponent<TMP_InputField>().text != "" && !lobbyExists;
+            GameObject.Find("Search").GetComponent<Button>().interactable = searchInputField.GetComponent<TMP_InputField>().text != "" && !lobbyExists;
         }
 
-        if (lobbyExists && !leftLobby && SceneManager.GetActiveScene().name == "MultiplayerTest") {
+        if (NetworkManager.Singleton != null && lobbyExists && !leftLobby && SceneManager.GetActiveScene().name == "MultiplayerTest") {
             if (!NetworkManager.Singleton.IsListening) {
                 leftLobby = true;
                 // Debug.Log("leaving bc no players");
-                enemyResigned = true;
+                enemyResigned = roundNum != 0 || !inSelectionScreen;
                 endGame(resigned);
             }
 
             if (NetworkManager.Singleton.ConnectedClientsList.Count == 1) {
                 timeWOnePlayer += Time.deltaTime;
-                if (timeWOnePlayer > 3f) {
+                if (timeWOnePlayer > ((roundNum != 0 || !inSelectionScreen) ? 2f : 10f)) {
                     timeWOnePlayer = 0f;
                     leftLobby = true;
-                    //Debug.Log("leaving bc no players");
-                    enemyResigned = true;
+                    // Debug.Log("leaving bc no players");
+                    enemyResigned = roundNum != 0 || !inSelectionScreen;
                     endGame(resigned);
                 }
             }
         }
 
-        if (roundNum < roundAmt && lobbyExists && NetworkManager.Singleton.IsListening) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
+        if (NetworkManager.Singleton != null) {
+            if (roundNum < roundAmt && lobbyExists && NetworkManager.Singleton.IsListening) {
+                if (currentLobby.Players.Count == 2 && IsSpawned) sendEloToEnemyRpc(PlayerPrefs.GetInt("Elo"));
+            }
+        }
 
         if (selfWantsRematch && enemyWantsRematch) {
             startGame();
         }
 
         if (roundNum >= roundAmt || enemyResigned) {
-            hideScreen();
             endGame(resigned);
         }
         if (GameObject.Find("Exit") != null) hide(GameObject.Find("Exit"), roundNum >= roundAmt);
+
+        if (GameObject.Find("Cancel") != null && currentLobby != null) GameObject.Find("Cancel").GetComponent<Button>().interactable = currentLobby.Players.Count != 2;
 
         timer += Time.deltaTime;
         if (currentLobby != null && !gameStarted) {
@@ -161,7 +190,21 @@ public class Lobby : NetworkBehaviour {
                 }
                 if (!isTheOneWhoKnocks && currentLobby.Data["RelayJoinCode"].Value == "rjc") {//nullref
                     // Debug.Log("searching for cod");
-                    currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                    try {
+                        currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+                    } 
+                    catch (LobbyServiceException ex) when (ex.Reason == LobbyExceptionReason.LobbyNotFound) {
+                        if (!LobbyInfo.Parse(currentLobby.Data["Info"].Value).isPrivate) {
+                            leaveLobby();
+                            bool canJoin = await tryJoinLobby();
+                            if (!canJoin) createLobby();
+                            Debug.Log("retry");
+                            return;
+                        }
+                    }
+                    catch (System.NullReferenceException ex) {
+                        // Debug.Log(":(");
+                    }
                     // Debug.Log("curcod: " + currentLobby.Data["RelayJoinCode"].Value);
                 }
                 if (currentLobby.Data["RelayJoinCode"].Value != "rjc" && roundNum == 0) {
@@ -178,24 +221,49 @@ public class Lobby : NetworkBehaviour {
                     tickets = startTickets;
                     scoreOfMatch = 0f;
                 }
-                return;
+            } else {
+                timeInLobbyJustChillin += Time.deltaTime;
+                if (timeInLobbyJustChillin > 10f) {
+                    timeInLobbyJustChillin = 0f;
+                    if (!LobbyInfo.Parse(currentLobby.Data["Info"].Value).isPrivate) {
+                        bool canJoin = await tryJoinLobby();
+                        Debug.Log("im so lonely mark, all the other viltrumites fear me");
+                        if (canJoin) {
+                            Debug.Log("its been a while");
+                            leaveLobby();
+                        }
+                        return;
+                    }
+                }
             }
             checkUpdateCurLobbyWithNewInfo();
         }
 
-        if (inSelectionScreen) {
+        if (gameStarted && inSelectionScreen) {
             handleSelectionScreen();
             hideWinLossScreen();
         }
 
-        if (gameStarted && !inSelectionScreen && NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+        if (gameStarted && !inSelectionScreen && !scoringAppliedThisGame && NetworkManager.Singleton?.LocalClient.PlayerObject != null) {
             handleGameplay();
         }
 
         if (timer > 1f && currentLobby != null) {//nullref
-            inMoodForUpdate = true;
-            timer = 0f;
-            currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+            try {
+                currentLobby = await LobbyService.Instance.GetLobbyAsync(currentLobby.Id);
+            } 
+            catch (LobbyServiceException ex) when (ex.Reason == LobbyExceptionReason.LobbyNotFound) {
+                if (!LobbyInfo.Parse(currentLobby.Data["Info"].Value).isPrivate) {
+                    leaveLobby();
+                    bool canJoin = await tryJoinLobby();
+                    if (!canJoin) createLobby();
+                    Debug.Log("retry");
+                    return;
+                }
+            }
+            catch (System.NullReferenceException ex) {
+                // Debug.Log(":(");
+            }
         }
     }
 
@@ -206,6 +274,7 @@ public class Lobby : NetworkBehaviour {
         Invoke("goToSelectionScreen", 2f);
         gameStarted = true;
         querying = false;
+        scoringAppliedThisGame = false;
     }
 
     private void handleSelectionScreen() {
@@ -268,6 +337,7 @@ public class Lobby : NetworkBehaviour {
 //-
     [Rpc(SendTo.NotMe)]
     private void sendTicketCountToEnemyRpc(int amt) {
+        if (selectionScreen == null) return;
         selectionScreen.transform.Find("EnemyOptions").Find("Tickets").GetComponent<TMP_Text>().text = amt.ToString();
     }
 
@@ -278,6 +348,7 @@ public class Lobby : NetworkBehaviour {
 
     [Rpc(SendTo.NotMe)]
     private void sendAltToEnemyRpc(int val) {
+        if (selectionScreen == null) return;
         GameObject altitudeSlider = progenyWithScript<Slider>(selectionScreen.transform.Find("EnemyOptions").gameObject)[0];
         altitudeSlider.GetComponent<Slider>().value = val;
     }
@@ -319,6 +390,7 @@ public class Lobby : NetworkBehaviour {
     [Rpc(SendTo.NotMe)]
     public void sendSelectionToEnemyRpc(string selection) {
         enemySelection = selection;
+        if (selectionScreen == null) return;
         if (!selectionScreen.GetComponent<Image>().enabled) return;
         foreach (GameObject b in progenyWithScript<Button>(selectionScreen.transform.Find("EnemyOptions").gameObject)) {
             progenyWithScript<Image>(b)[1].GetComponent<Image>().enabled = b.transform.GetChild(0).GetComponent<TMP_Text>().text == selection;
@@ -387,9 +459,8 @@ public class Lobby : NetworkBehaviour {
             if (g != NetworkManager.Singleton.LocalClient.PlayerObject.gameObject) enemyPlayer = g;
         }
 
-        enemyPlayer.GetComponent<AllianceHolder>().setAlliance("enemy");
-
         if (enemyPlayer != null) {
+            enemyPlayer.GetComponent<AllianceHolder>().setAlliance("enemy");
             // Debug.Log("EP: " + enemyPlayer);
 
             isSelfReady = false;
@@ -426,18 +497,18 @@ public class Lobby : NetworkBehaviour {
     private bool scoringAppliedThisGame;
     private bool enemyScoringAppliedThisGame;
     float prevElo;
+    int roundGameEnded;
     public void endGame(bool resigned) {
+        Invoke("bringUpWinLossScreen", ((resigned || enemyResigned) ? 0f : 2f));
+        if (!scoringAppliedThisGame) prevElo = PlayerPrefs.GetInt("Elo");
+        if (!scoringAppliedThisGame) roundGameEnded = roundNum - (inSelectionScreen ? 1 : 0);
+
+        hideScreen();
         roundNum = roundAmt;
 
         this.resigned = resigned;
 
         gameStarted = false;
-
-        // Debug.Log("im resigning it, im resigning it");
-        if (resigned) {
-            // Debug.Log("yooooo, send it!");
-            sendResignationToOthersRpc();
-        }
 
         if (!scoringAppliedThisGame) {
             scoreOfMatch += tickets * 0.01f;
@@ -445,15 +516,23 @@ public class Lobby : NetworkBehaviour {
             if (resigned) scoreOfMatch = 0;
             if (enemyResigned && resigned) scoreOfMatch = .5f;
         }
-
-        if (!scoringAppliedThisGame) prevElo = PlayerPrefs.GetInt("Elo");
-        
-        if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked && !scoringAppliedThisGame) MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
+        if (currentLobby != null) {
+            if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked && !scoringAppliedThisGame && roundGameEnded != -1) MultiplayerDuelScoring.applyScoringToPlayer(enemyElo, scoreOfMatch);
+        }
         scoringAppliedThisGame = true;
+
+        if (NetworkManager.Singleton == null) return;
+        if (!NetworkManager.Singleton.IsListening) return;
+
+        // Debug.Log("im resigning it, im resigning it");
+        if (resigned) {
+            // Debug.Log("yooooo, send it!");
+            sendResignationToOthersRpc();
+        }
+
         sendDonenessToOthersRpc();
 
         // Debug.Log("er: " + enemyResigned + ", r: " + resigned + "; combined: " + (!enemyResigned && !resigned));
-        Invoke("bringUpWinLossScreen", ((resigned || enemyResigned) ? 0f : 2f));
     }
 
     [Rpc(SendTo.NotMe)]
@@ -469,23 +548,39 @@ public class Lobby : NetworkBehaviour {
 
     PIDController eloPid = new PIDController(.1f, 0f, 0f);
     private void bringUpWinLossScreen() {
-        bool showRematchButton = !enemyResigned && !resigned;
-
+        GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
+        GameObject.Find("Camera").transform.parent = null;
+        if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+            // Debug.Log("por favor destruirlo" + NetworkManager.Singleton.LocalClient.PlayerObject);
+            GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject, .1f);
+        }
         GameObject wlScreen = GameObject.Find("WinLossScreen");
+        if (wlScreen == null) return;
         hide(wlScreen, false);
-        hide(wlScreen.transform.Find("RematchButton").gameObject, !showRematchButton);
-        // Debug.Log("showing rmb: " + wlScreen.transform.Find("RematchButton").gameObject.GetComponent<Image>().enabled);
-
-        if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked) {
-            float elo = PlayerPrefs.GetInt("Elo");
-            prevElo += eloPid.calculate(prevElo, elo, Time.deltaTime);
-            string inBetweenString = "";
-            if (elo > prevElo) {
-                inBetweenString = "+";
-            } else {
-                inBetweenString = "-";
+        if (wlScreen.GetComponent<Image>().enabled) {
+            bool showRematchButton = !enemyResigned && !resigned && roundGameEnded != -1;
+            if (isTheOneWhoKnocks && NetworkManager.Singleton.ConnectedClientsList.Count != 2) showRematchButton = false;
+            if (!isTheOneWhoKnocks && !NetworkManager.Singleton.IsListening) showRematchButton = false;
+            hide(wlScreen.transform.Find("RematchButton").gameObject, !showRematchButton);
+            if (!showRematchButton && isTheOneWhoKnocks) {
+                if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();
             }
-            wlScreen.transform.Find("EloText").GetComponent<TMP_Text>().text = prevElo.ToString("F0") + (Mathf.Abs(elo - prevElo) >= .1f ? " " + inBetweenString + " " + (Mathf.Abs(elo - prevElo) + .9f).ToString("F0") : "");
+        }
+        // Debug.Log("showing rmb: " + wlScreen.transform.Find("RematchButton").gameObject.GetComponent<Image>().enabled);
+        if (currentLobby != null) {
+            if (LobbyInfo.Parse(currentLobby.Data["Info"].Value).isRanked) {
+                float elo = PlayerPrefs.GetInt("Elo");
+                prevElo += eloPid.calculate(prevElo, elo, Time.deltaTime);
+                string inBetweenString = "";
+                if (elo > prevElo) {
+                    inBetweenString = "+";
+                } else {
+                    inBetweenString = "-";
+                }
+                wlScreen.transform.Find("EloText").GetComponent<TMP_Text>().text = prevElo.ToString("F0") + (Mathf.Abs(elo - prevElo) >= .1f ? " " + inBetweenString + " " + (Mathf.Abs(elo - prevElo) + .9f).ToString("F0") : "");
+            } else {
+                wlScreen.transform.Find("EloText").GetComponent<TMP_Text>().text = "";
+            }
         } else {
             wlScreen.transform.Find("EloText").GetComponent<TMP_Text>().text = "";
         }
@@ -497,6 +592,8 @@ public class Lobby : NetworkBehaviour {
         if (scoreOfMatch < .5f) {
             winLossStr = "DEFEAT";
         }
+        Debug.Log("rge: " + roundGameEnded);
+        if (roundGameEnded == -1) winLossStr = "GAME CANCELLED";
         wlScreen.transform.Find("WinLossText").GetComponent<TMP_Text>().text = winLossStr;
     }
 
@@ -505,12 +602,18 @@ public class Lobby : NetworkBehaviour {
     public void selectRematch() {
         // Debug.Log("im rematching it, im rematching it");
         selfWantsRematch = true;
-        sendRematchReqToEnemyRpc();
+        sendRematchReqToEnemyRpc(true);
+    }
+
+    public void unSelectRematch() {
+        // Debug.Log("im rematching it, im rematching it");
+        selfWantsRematch = false;
+        sendRematchReqToEnemyRpc(false);
     }
 
     [Rpc(SendTo.NotMe)]
-    public void sendRematchReqToEnemyRpc() {
-        enemyWantsRematch = true;
+    public void sendRematchReqToEnemyRpc(bool wantsRematch) {
+        enemyWantsRematch = wantsRematch;
     }
 
     bool inMoodForUpdate;
@@ -545,13 +648,21 @@ public class Lobby : NetworkBehaviour {
     }
 
     private async void startMatch(bool isPrivate, bool isRanked, bool creatingLobby) {
-        // if (currentLobby != null) {
-        //     Debug.Log("nuh uh buddy");
-        //     return;
-        // }
+        if (currentLobby != null) {
+            leaveLobby();
+        }
         lobbyInfo = new LobbyInfo((int) tierSlider.GetComponent<Slider>().value, PlayerPrefs.GetInt("Elo"), isPrivate, isRanked, creatingLobby ? createInputField.GetComponent<TMP_InputField>().text : searchInputField.GetComponent<TMP_InputField>().text);
-        bool canJoin = await tryJoinLobby();
-        if (!canJoin) createLobby();
+        if (!isPrivate) {
+            bool canJoin = await tryJoinLobby();
+            if (!canJoin) createLobby();
+        } else {
+            if (creatingLobby) {
+                createLobby();
+            } else {
+                bool canJoin = await tryJoinLobby();
+                if (!canJoin) GameObject.Find("Cancel").SetActive(false);
+            }
+        }
     }
 
     LobbyInfo lobbyInfo;
@@ -572,17 +683,21 @@ public class Lobby : NetworkBehaviour {
         currentLobby = lobby;
         isTheOneWhoKnocks = true;
         leftLobby = false;
-        // Debug.Log("created lobby");
+        Debug.Log("created lobby");
     }
 
     private async Task<bool> tryJoinLobby() {
         QueryResponse queryResponse = await LobbyService.Instance.QueryLobbiesAsync();
         foreach (Unity.Services.Lobbies.Models.Lobby l in queryResponse.Results) {
+            if (l.Players.Count == 2) continue;
+            if (currentLobby != null) {
+                if (l.Id == currentLobby.Id) continue;
+            }
             if (LobbyInfo.Parse(l.Data["Info"].Value).isSuitableMatch(lobbyInfo)) {
                 await LobbyService.Instance.JoinLobbyByIdAsync(l.Id);
                 currentLobby = l;
                 isTheOneWhoKnocks = false;
-                // Debug.Log("joined lobby");
+                Debug.Log("joined lobby");
                 leftLobby = false;
                 return true;
             }
@@ -591,26 +706,27 @@ public class Lobby : NetworkBehaviour {
     }
 
     bool leftLobby;
-    public async void leaveLobby(bool resigned) {
-        if (currentLobby != null) {
-            leftLobby = true;
-            string playerId = AuthenticationService.Instance.PlayerId;
-            if (NetworkManager.Singleton != null) {
-                if (isTheOneWhoKnocks) {
-                    NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
-                } else {
-                    SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
-                }
+    public async void leaveLobby() {
+        if (NetworkManager.Singleton.IsListening) unSelectRematch();
+        isTheOneWhoKnocks = false;
+        querying = false;
+        currentLobby = null;
+        gameStarted = false;
+        if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();
+        if (NetworkManager.Singleton != null && SceneManager.GetActiveScene().name != "MultiplayerMainMenu") {
+            if (isTheOneWhoKnocks) {
+                NetworkManager.Singleton.SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
+            } else {
+                SceneManager.LoadScene("MultiplayerMainMenu", LoadSceneMode.Single);
             }
-            if (NetworkManager.Singleton != null) Unity.Netcode.NetworkManager.Singleton.Shutdown();
-            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
-            
+        }
+        resetGameVals();
+        if (currentLobby != null) {
             string lobbyId = currentLobby.Id;
             bool wasTheOneWhoKnocks = isTheOneWhoKnocks;
-            isTheOneWhoKnocks = false;
-            resetGameVals();
-            currentLobby = null;
-            gameStarted = false;
+            leftLobby = true;
+            string playerId = AuthenticationService.Instance.PlayerId;
+            await LobbyService.Instance.RemovePlayerAsync(currentLobby.Id, playerId);
 
             if (currentLobby != null && wasTheOneWhoKnocks) await LobbyService.Instance.DeleteLobbyAsync(lobbyId);
         }
@@ -618,26 +734,33 @@ public class Lobby : NetworkBehaviour {
 
     private void resetGameVals() {
         roundNum = 0;
+        inSelectionScreen = false;
         tickets = startTickets;
         scoreOfMatch = 0f;
+
         scoringAppliedThisGame = false;
+        enemyScoringAppliedThisGame = false;
+
         selfWantsRematch = false;
         enemyWantsRematch = false;
+
         enemyResigned = false;
         resigned = false;
+
         querying = false;
         enemyElo = 0;
+        timeWOnePlayer = 0f;
+        timeInLobbyJustChillin = 0f;
     }
 
     public async void cancel() {
         if (currentLobby == null) return;
         if (isTheOneWhoKnocks) {
             if (NetworkManager.Singleton != null) Unity.Netcode.NetworkManager.Singleton.Shutdown();
-            LobbyService.Instance.DeleteLobbyAsync(currentLobby.Id);
-        } else {
-            endGame(false);
+            await LobbyService.Instance.DeleteLobbyAsync(currentLobby.Id);
         }
-        // Debug.Log("cancelled");
+        leaveLobby();
+        Debug.Log("cancelled");
         currentLobby = null;
         isTheOneWhoKnocks = false;
         gameStarted = false;
@@ -650,7 +773,7 @@ public class Lobby : NetworkBehaviour {
     [Rpc(SendTo.NotMe)]
     public void sendEloToEnemyRpc(int elo) {
         enemyElo = elo;
-        Debug.Log("enemy elo sent: " + enemyElo);
+        // Debug.Log("enemy elo sent: " + enemyElo);
     }
 
     [Rpc(SendTo.NotMe)]

@@ -26,7 +26,11 @@ public class VehicleController : NetworkBehaviour {
 
     protected CustomInputs INPUTS;
 
-    
+    public override void OnNetworkDespawn() {
+        if (IsOwner && GameObject.Find("Camera") != null) GameObject.Find("Camera").transform.SetParent(null, true);
+        base.OnNetworkDespawn();
+    }
+
     public void updateLocalVehicleChache() {
         allVehicles = vcs.vehicles();
     }
