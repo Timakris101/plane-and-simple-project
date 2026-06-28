@@ -6,7 +6,7 @@ using Unity.Services.Relay;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using System.Threading.Tasks;
-// using ParrelSync;
+using ParrelSync;
 using UnityEngine.Networking;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
@@ -46,28 +46,28 @@ public class Lobby : NetworkBehaviour {
     private async void Start() {
         if (!signedIn) {
             InitializationOptions options = new InitializationOptions();
-            // if (ClonesManager.IsClone()) {
-            //     string cloneId = ClonesManager.GetArgument();
+            if (ClonesManager.IsClone()) {
+                string cloneId = ClonesManager.GetArgument();
 
-            //     switch (cloneId)
-            //     {
-            //         case "0":
-            //             options.SetProfile("clone0");
-            //             break;
+                switch (cloneId)
+                {
+                    case "0":
+                        options.SetProfile("clone0");
+                        break;
 
-            //         case "1":
-            //             options.SetProfile("clone1");
-            //             break;
+                    case "1":
+                        options.SetProfile("clone1");
+                        break;
 
-            //         case "2":
-            //             options.SetProfile("clone2");
-            //             break;
+                    case "2":
+                        options.SetProfile("clone2");
+                        break;
 
-            //         default:
-            //             options.SetProfile("clone");
-            //             break;
-            //     }
-            // }
+                    default:
+                        options.SetProfile("clone");
+                        break;
+                }
+            }
 
             if (!signedIn) {
                 await UnityServices.InitializeAsync(options);
@@ -239,7 +239,7 @@ public class Lobby : NetworkBehaviour {
             checkUpdateCurLobbyWithNewInfo();
         }
 
-        if (gameStarted && inSelectionScreen) {
+        if (gameStarted && inSelectionScreen && NetworkManager.Singleton?.IsListening == true) {
             handleSelectionScreen();
             hideWinLossScreen();
         }
@@ -550,7 +550,7 @@ public class Lobby : NetworkBehaviour {
     private void bringUpWinLossScreen() {
         GameObject.Find("Camera").GetComponent<CamScript>().uncoupleCam();
         GameObject.Find("Camera").transform.parent = null;
-        if (NetworkManager.Singleton.LocalClient.PlayerObject != null) {
+        if (NetworkManager.Singleton?.LocalClient.PlayerObject != null) {
             // Debug.Log("por favor destruirlo" + NetworkManager.Singleton.LocalClient.PlayerObject);
             GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject, .1f);
         }
@@ -559,8 +559,8 @@ public class Lobby : NetworkBehaviour {
         hide(wlScreen, false);
         if (wlScreen.GetComponent<Image>().enabled) {
             bool showRematchButton = !enemyResigned && !resigned && roundGameEnded != -1;
-            if (isTheOneWhoKnocks && NetworkManager.Singleton.ConnectedClientsList.Count != 2) showRematchButton = false;
-            if (!isTheOneWhoKnocks && !NetworkManager.Singleton.IsListening) showRematchButton = false;
+            if (isTheOneWhoKnocks && NetworkManager.Singleton != null && NetworkManager.Singleton.ConnectedClientsList.Count != 2) showRematchButton = false;
+            if (!isTheOneWhoKnocks && NetworkManager.Singleton != null && !NetworkManager.Singleton.IsListening) showRematchButton = false;
             hide(wlScreen.transform.Find("RematchButton").gameObject, !showRematchButton);
             if (!showRematchButton && isTheOneWhoKnocks) {
                 if (NetworkManager.Singleton != null) NetworkManager.Singleton.Shutdown();

@@ -139,8 +139,8 @@ public class BulletScript : NetworkBehaviour {
         }
 
         if (planeFired == null) return;
-        if (nonAiControllerOfVehicle(planeFired) == null) return;
-        if (nonAiControllerOfVehicle(planeFired).enabled && planeFired.GetComponent<BulletMessageReader>().enabled) planeFired.GetComponent<BulletMessageReader>().receivePacket(bulletMessagePacket);
+        // if (nonAiControllerOfVehicle(planeFired) == null) return;
+        if (/*nonAiControllerOfVehicle(planeFired).enabled && */planeFired.GetComponent<BulletMessageReader>().enabled) planeFired.GetComponent<BulletMessageReader>().receivePacket(bulletMessagePacket);
     }
 
     void handleArmor(Collision2D col, out int armorHitCount, out float effectiveArmorPen, out float newPenVal, out GameObject objClosestToBullet) {

@@ -14,6 +14,7 @@ public class BulletMessageReader : NetworkBehaviour {
         if (!IsOwner && IsClient && GameObject.Find("NetworkManager") != null) {
             sendPacketRpc(packet.ToString());
         } else {
+            if (aiControllerOfVehicle(gameObject).enabled) return;
             foreach (BulletMessage message in packet.getMessages()) {
                 GameObject newText = Instantiate(basicTextObj);
                 newText.transform.SetParent(GameObject.Find("Canvas").transform, false);
@@ -35,6 +36,7 @@ public class BulletMessageReader : NetworkBehaviour {
     public void receivePacket(string packetStringified) {
         foreach (string message in packetStringified.Split("\n")) {
             if (message.Length == 0) continue;
+            if (aiControllerOfVehicle(gameObject).enabled) return;
 
             GameObject newText = Instantiate(basicTextObj);
             newText.transform.SetParent(GameObject.Find("Canvas").transform, false);
