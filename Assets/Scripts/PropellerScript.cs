@@ -90,4 +90,8 @@ public class PropellerScript : MonoBehaviour {
             GetComponent<SpriteRenderer>().enabled = arrToUse[indexToUse].w != 0;
         }
     }
+
+    private void OnDisable() {
+        GetComponent<AudioSource>().volume = 0f;
+    }
 }

@@ -710,7 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 31772690
+  GlobalObjectIdHash: 1008719351
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2095,6 +2095,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8236145343874058537}
     m_Modifications:
+    - target: {fileID: -4083029275773429363, guid: 643f25500b2da4564946f633c8baae72, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2360822938
+      objectReference: {fileID: 0}
     - target: {fileID: 3877401283540829260, guid: 643f25500b2da4564946f633c8baae72, type: 3}
       propertyPath: m_Name
       value: 45mmGun
@@ -2231,6 +2235,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8236145343874058537}
     m_Modifications:
+    - target: {fileID: 4647420448104579006, guid: b304ba93c875d4b91bc57192e2562a13, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1421880014
+      objectReference: {fileID: 0}
     - target: {fileID: 4909181909800698254, guid: b304ba93c875d4b91bc57192e2562a13, type: 3}
       propertyPath: m_Name
       value: 50calGun

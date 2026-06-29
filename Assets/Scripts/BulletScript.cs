@@ -138,7 +138,7 @@ public class BulletScript : NetworkBehaviour {
             }
         }
 
-        if (planeFired == null) return;
+        if (planeFired == null && bulletMessagePacket != null) return;
         // if (nonAiControllerOfVehicle(planeFired) == null) return;
         if (/*nonAiControllerOfVehicle(planeFired).enabled && */planeFired.GetComponent<BulletMessageReader>().enabled) planeFired.GetComponent<BulletMessageReader>().receivePacket(bulletMessagePacket);
     }
