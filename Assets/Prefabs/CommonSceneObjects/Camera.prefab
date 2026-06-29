@@ -70,7 +70,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 175
+  field of view: 172
   orthographic: 0
   orthographic size: 20
   m_Depth: -1
@@ -113,11 +113,11 @@ MonoBehaviour:
     m_Extent: {x: 16000, y: 0, z: 0}
   zoomed: 0
   zoomInFoV: 150
-  zoomOutFoV: 171
+  zoomOutFoV: 170
   missionEditor: 1
   mainMenu: 0
   minP: 60
-  maxP: 175
+  maxP: 172
   freeCamSpeedScaler: 30
   vehicleToControl: {fileID: 0}
   spectatedVehicle: {fileID: 0}

@@ -341,7 +341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &700379736
 Animator:
   serializedVersion: 7
@@ -861,11 +861,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fdf1a3d26ace34e7b85261a3a5362eae, type: 3}
   - {fileID: 8300000, guid: 6c6341ca8c73640d7a2ebb87c250beb8, type: 3}
   - {fileID: 8300000, guid: 3815685f2353a4fd3a3cb046a9e8f69b, type: 3}
-  - {fileID: 8300000, guid: ed70faa8d0fff4c198cd4efd58c6fc4f, type: 3}
-  acceptableScenesToPlay:
-  - MainMenu
-  - MultiplayerMainMenu
-  - Arcade
 --- !u!4 &1641879434
 Transform:
   m_ObjectHideFlags: 0

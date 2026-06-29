@@ -2032,7 +2032,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &408900417
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4098,6 +4098,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: baseSquadronSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 1138707302472228866, guid: a9aea1be6dee1424ea67219cce36e6e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1149230780293632481, guid: a9aea1be6dee1424ea67219cce36e6e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -500
@@ -5017,7 +5021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &877997351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5454,7 +5458,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1119728518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5587,7 +5591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1132230014
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5720,7 +5724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1161211514
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5937,7 +5941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1197863656
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6256,7 +6260,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 864.09875, y: 555.49207}
+  m_SizeDelta: {x: 856.61383, y: 560.3458}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246231179
 MonoBehaviour:
@@ -7647,7 +7651,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1488831311
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8463,7 +8467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1715714037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10222,7 +10226,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1910738257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10737,6 +10741,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: baseSquadronSpawner (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1138707302472228866, guid: a9aea1be6dee1424ea67219cce36e6e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1149230780293632481, guid: a9aea1be6dee1424ea67219cce36e6e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 500
@@ -11209,7 +11217,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2034258537
 RectTransform:
   m_ObjectHideFlags: 0

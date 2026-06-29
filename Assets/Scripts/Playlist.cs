@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class Playlist : MonoBehaviour {
 
     [SerializeField] private AudioClip[] music;
-    [SerializeField] private string[] acceptableScenesToPlay = {"MainMenu", "MultiplayerMainMenu", "Arcade"};
+    private string[] acceptableScenesToPlay = {"MainMenu", "MultiplayerMainMenu", "Arcade", "LevelSelector"};
 
     void Start() {
         DontDestroyOnLoad(gameObject);
