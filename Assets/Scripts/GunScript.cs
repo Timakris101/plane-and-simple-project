@@ -80,8 +80,10 @@ public class GunScript : NetworkBehaviour {
             timer = 0;
             CancelInvoke("stopAS");
             shoot();
-        } else if (timer > fireRate) {
-            Invoke("stopAS", fireRate);
+        } else if (GetComponent<AudioSource>()?.clip != null && timer > fireRate) {
+            if (GetComponent<AudioSource>().clip.length > 7f) {
+                Invoke("stopAS", fireRate);
+            }
         }
 
         updateTimer += Time.deltaTime;

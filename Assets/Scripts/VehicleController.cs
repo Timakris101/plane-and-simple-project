@@ -72,7 +72,6 @@ public class VehicleController : NetworkBehaviour {
     protected virtual void Start() {
         INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
         vcs = GameObject.Find("VehicleCache").GetComponent<VehicleCacheScript>();
-        if (this == aiControllerOfVehicle(gameObject)) tagsToTarget = nonAiControllerOfVehicle(gameObject).tagsToTarget;
         vcs.forceUpdate();
         updateLocalVehicleChache();
         findTarget();
@@ -85,6 +84,7 @@ public class VehicleController : NetworkBehaviour {
     }
 
     protected virtual void Update() {
+        if (this == aiControllerOfVehicle(gameObject)) tagsToTarget = nonAiControllerOfVehicle(gameObject).tagsToTarget;
         if (INPUTS == null) INPUTS = GameObject.Find("Camera").GetComponent<CustomInputs>();
         if (!Object.Equals(GameObject.Find("Camera").GetComponent<CamScript>().getControlledVehicle(), gameObject)) {
             foreach (VehicleController controller in GetComponents<VehicleController>()) {
@@ -105,6 +105,12 @@ public class VehicleController : NetworkBehaviour {
         bool targetDead = false;
         if (targetedObj != null) {
             targetDead = targetedObj.GetComponent<VehicleController>().vehicleDead();
+        }
+        if (vcs == null) {
+            vcs = GameObject.Find("VehicleCache").GetComponent<VehicleCacheScript>();
+            vcs.forceUpdate();
+            updateLocalVehicleChache();
+            findTarget();
         }
         if ((frameCounter + (int) ((float) (index) * ((float) framesBeforeTargetUpdate / (float) allVehicles.Length))) % (framesBeforeTargetUpdate) == 0 || targetDead) {
             updateLocalVehicleChache();

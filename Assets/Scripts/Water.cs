@@ -24,7 +24,17 @@ public class Water : NetworkBehaviour {
             GameObject newSplash = Instantiate(splashEffect, other.transform.position, Quaternion.identity);
             Destroy(newSplash, 10f);
             var mainModule = newSplash.GetComponent<ParticleSystem>().main;
-            mainModule.startSpeed = new ParticleSystem.MinMaxCurve(splashSize(other.transform.gameObject) / 2f, splashSize(other.transform.gameObject));
+            mainModule.startSpeed = new ParticleSystem.MinMaxCurve(splashSize(other.transform.gameObject) / 5f, splashSize(other.transform.gameObject));
+            mainModule.startLifetime = Mathf.Clamp(other.GetComponent<Rigidbody2D>().mass, .1f, 5f);
+
+            var emission = newSplash.GetComponent<ParticleSystem>().emission;
+            ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
+            emission.GetBursts(bursts);
+            bursts[0].count = Mathf.Clamp(other.GetComponent<Rigidbody2D>().mass, 3, 1000);
+            emission.SetBursts(bursts);
+
+            newSplash.transform.up = Vector3.Reflect((Vector3) other.GetComponent<Rigidbody2D>().linearVelocity, transform.up);
+
             newSplash.GetComponent<AudioSource>().volume = splashSize(other.transform.gameObject);
             if (NetworkManager.Singleton.IsListening) {
                 GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newSplash, 10f);

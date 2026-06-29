@@ -71,6 +71,7 @@ public class GunnerScript : MonoBehaviour {
                         pointGunAt(positionToTarget());
                         attemptToShoot(positionToTarget(), targetInSights());
                     } else {
+                        resetAvgs();
                         attemptToShoot(false);
                     }
                 } else {
@@ -159,12 +160,33 @@ public class GunnerScript : MonoBehaviour {
         }
         return inSights;
     }
-
+    
+    List<Vector3> accels = new List<Vector3>();
+    List<Vector3> vels = new List<Vector3>();
     protected virtual Vector3 positionToTarget() {
         GameObject bullet = transform.GetChild(0).GetComponent<GunScript>().getBullet();
-        
+
         Vector3 a = targetedObj.GetComponent<AccelerationHolder>().getAccel() - parentWithScript<AccelerationHolder>(gameObject).GetComponent<AccelerationHolder>().getAccel();
+        accels.Add(a);
+        if (accels.Count > 50f) accels.RemoveAt(0);
+        a = Vector3.zero;
+        foreach (Vector3 acc in accels) {
+            a += acc;
+        }
+        a /= accels.Count;
+
         Vector3 v = targetedObj.GetComponent<Rigidbody2D>().linearVelocity - parentWithScript<Rigidbody2D>(gameObject).GetComponent<Rigidbody2D>().linearVelocity;
+        vels.Add(v);
+        if (vels.Count > 50f) vels.RemoveAt(0);
+        if ((vels[0] - vels[vels.Count - 1]).magnitude > 5f) {
+            resetAvgs();
+        }
+        v = Vector3.zero;
+        foreach (Vector3 vel in vels) {
+            v += vel;
+        }
+        v /= vels.Count;
+
         Vector3 p = targetedObj.transform.position - transform.GetChild(0).position;
         float s = bullet.GetComponent<BulletScript>().getInitSpeed();
 
@@ -179,6 +201,11 @@ public class GunnerScript : MonoBehaviour {
 
         if (timeOfFlight == -Mathf.Infinity) return targetedObj.transform.position;
         return targetedObj.transform.position + (Vector3) v * timeOfFlight + (Vector3) (a - (Vector3) Physics2D.gravity) * Mathf.Pow(timeOfFlight, 2) / 2f;
+    }
+
+    public void resetAvgs() {
+        accels = new List<Vector3>();
+        vels = new List<Vector3>();
     }
 
     public void setManualControl(bool b) {

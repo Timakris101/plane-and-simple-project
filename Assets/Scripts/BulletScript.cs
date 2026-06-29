@@ -19,7 +19,7 @@ public class BulletScript : NetworkBehaviour {
     [SerializeField] private float lifeTime;
     [SerializeField] private float damageVariation;
     [SerializeField] private bool bulletRicochets;
-    private float effectLifeTime = .2f;
+    private float effectLifeTime = 1f;
     [SerializeField] private float timer;
     private float explosiveScreenShakeFactor = 1f / 5000f;
     
@@ -184,11 +184,8 @@ public class BulletScript : NetworkBehaviour {
         if (newEffect != null) {
             var mainModule = newEffect.GetComponent<ParticleSystem>().main;
             if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
-            if (fragmentationStrength != 0) {
-                newEffect.GetComponent<AudioSource>().volume = fragmentationStrength;
-            } else {
-                newEffect.GetComponent<AudioSource>().volume = penetrationVal;
-            }
+            
+            newEffect.GetComponent<AudioSource>().minDistance = penetrationVal + fragmentationStrength;
 
             if (NetworkManager.Singleton.IsListening) {
                 GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newEffect, effectLifeTime);
