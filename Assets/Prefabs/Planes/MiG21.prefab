@@ -1514,6 +1514,7 @@ GameObject:
   - component: {fileID: 8897290893591626132}
   - component: {fileID: 7718462313004639046}
   - component: {fileID: 4027826432057747304}
+  - component: {fileID: 6051993199905463569}
   m_Layer: 3
   m_Name: EngineHitbox
   m_TagString: Untagged
@@ -1680,6 +1681,7 @@ MonoBehaviour:
   throttle: 0
   enginesOn: 0
   fuelConsumedPerUnitThrustPerSecond: 0
+  engineNoise: 0
   wepOrAbEffect: {fileID: 2226748883049470077, guid: 25806837707984f699c3c36a89f5faee, type: 3}
   enginePowerByAlt:
     serializedVersion: 2
@@ -1707,6 +1709,103 @@ MonoBehaviour:
     m_RotationOrder: 4
   thrustKn: 39.61887
   afterBurner: 72
+--- !u!82 &6051993199905463569
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4457032949114932483}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: fc4eabdf9f72343f3b64a9cb22a4d39b, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0.1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5412767384783969527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,6 +2311,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8341455162611562025}
     m_Modifications:
+    - target: {fileID: 35234473251908224, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 623130907
+      objectReference: {fileID: 0}
     - target: {fileID: 840659578395115124, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -2256,6 +2359,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 30mmGun
       objectReference: {fileID: 0}
+    - target: {fileID: 5183416668540034791, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_Pitch
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183416668540034791, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 8df0f2840017f4324a73dfda1e0ab2fe, type: 3}
     - target: {fileID: 7351872051815806782, guid: fee44d2f1bdb14d01b22aff71c1e4711, type: 3}
       propertyPath: fireRate
       value: 0.005

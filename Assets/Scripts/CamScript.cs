@@ -38,7 +38,7 @@ public class CamScript : MonoBehaviour {
     void Start() {
         if (mainMenu) return;
 
-        offset = new Vector3(0, 0, transform.position.z);
+        offset = new Vector3(0, 0, -10f);
         
         GameObject vehicleToControlAtStart = null;
         if (vehicleToControl == null) {
@@ -101,15 +101,8 @@ public class CamScript : MonoBehaviour {
 
     private void handleVolume() {
         Camera camera = gameObject.GetComponent<Camera>();
-        float curFov = camera.fieldOfView;
-        camera.fieldOfView = minP;
-        float camScaleAtMinStW = (camera.ScreenToWorldPoint(new Vector3(0,0, -transform.position.z)) - camera.ScreenToWorldPoint(new Vector3(1,0, -transform.position.z))).magnitude;
-
-        camera.fieldOfView = curFov;
         float curCamScaleStW = (camera.ScreenToWorldPoint(new Vector3(0,0, -transform.position.z)) - camera.ScreenToWorldPoint(new Vector3(1,0, -transform.position.z))).magnitude;
-
-        float volume = PlayerPrefs.GetFloat("Master Volume", 1f) * Mathf.Pow(camScaleAtMinStW / curCamScaleStW, 2f);
-        // Debug.Log("volume: " + volume);
+        float volume = (1f / (1 + .1f * (curCamScaleStW)));
         AudioListener.volume = volume;
     }
 

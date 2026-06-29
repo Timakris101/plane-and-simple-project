@@ -184,6 +184,11 @@ public class BulletScript : NetworkBehaviour {
         if (newEffect != null) {
             var mainModule = newEffect.GetComponent<ParticleSystem>().main;
             if (mainModule.startSpeed.constantMax == 0) mainModule.startSpeed = new ParticleSystem.MinMaxCurve(0, penetrationVal / mainModule.startLifetime.constant);
+            if (fragmentationStrength != 0) {
+                newEffect.GetComponent<AudioSource>().volume = fragmentationStrength;
+            } else {
+                newEffect.GetComponent<AudioSource>().volume = penetrationVal;
+            }
 
             if (NetworkManager.Singleton.IsListening) {
                 GameObject.Find("MultiplayerCreateAndDestroy").GetComponent<MultiplayerCreateAndDestroy>().destroy(newEffect, effectLifeTime);

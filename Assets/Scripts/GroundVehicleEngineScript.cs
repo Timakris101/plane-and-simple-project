@@ -1,12 +1,22 @@
 using UnityEngine;
+using static Utils;
 
 public class GroundVehicleEngineScript : EngineScript {
     [SerializeField] protected float powerHp;
     [SerializeField] private float frontGearAmt;
     [SerializeField] private float reverseGearAmt;
 
+    public override float getThrustNewtons(float speed) {
+        bool goingReverse = maxAncestor(gameObject).GetComponent<Rigidbody2D>().linearVelocity.x / transform.right.x < 0f;
+        return getThrustNewtons(speed, goingReverse);
+    }
+
     public override float getThrustNewtons(float speed, bool reverse) {
         return enginesOn ? (powerHp) / Mathf.Max(1f, speed) * 745.7f * (reverse ? reverseGearAmt / frontGearAmt : 1f) : 0f;
+    }
+
+    public override float getBaseThrustNewtons(float speed) {
+        return (powerHp) / Mathf.Max(1f, speed) * 745.7f;
     }
 
     public override void setVal(float val) {
@@ -16,4 +26,5 @@ public class GroundVehicleEngineScript : EngineScript {
     public override string getType() {return "power";}
 
     public override float getVal() {return powerHp;}
+    public override float getOverPowerVal() {return powerHp;}
 }

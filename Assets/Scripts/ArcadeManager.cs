@@ -1,6 +1,7 @@
 using UnityEngine;
 using static Utils;
 using System.Collections.Generic;
+using TMPro;
 
 public class ArcadeManager : MonoBehaviour {
     [SerializeField] private GameObject enemySquadron;
@@ -14,6 +15,11 @@ public class ArcadeManager : MonoBehaviour {
         }
         updateEnemyList("Axis");
         updateDeadEnemiesAndScore();
+
+        if (PlayerPrefs.GetInt("HighScore", 0) < score) PlayerPrefs.SetInt("HighScore", score);
+        if (GameObject.Find("FinalScore") != null) {
+            GameObject.Find("FinalScore").GetComponent<TMP_Text>().text = score < PlayerPrefs.GetInt("HighScore", 0) ? "Score: " + score + "\n" + "High Score: " + PlayerPrefs.GetInt("HighScore", 0) : "NEW HIGH SCORE: " + PlayerPrefs.GetInt("HighScore", 0) + "!";
+        }
 
         enemySquadron.transform.position = new Vector3(player.transform.position.x + 400f, 200f, 0f);
         enemySquadron.GetComponent<SquadronSpawner>().setAmount((score > 3) ? 2 : 1);

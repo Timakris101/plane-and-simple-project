@@ -15,7 +15,7 @@ public class AiGroundVehicleController : GroundVehicleController {
         }
     }
 
-    protected override Vector3 moveDir() {
+    public override Vector3 moveDir() {
         if (targetedObj == null) return new Vector3(0,0,0);
         return Vector3.Project(targetedObj.transform.position - transform.position, transform.right).normalized;
     }

@@ -72,6 +72,7 @@ public class PlaneController : VehicleController {
                 }
             }
             if (gunnersAreManual()) {
+                GetComponent<AiPlaneController>().Update();
                 return GetComponent<AiPlaneController>().wantedDir() * (unconcious ? Constants.GForceEffectConstants.unconciousPilotEffectiveness : 1f);
             } else {
                 return wantedDir() * (unconcious ? Constants.GForceEffectConstants.unconciousPilotEffectiveness : 1f);
@@ -95,11 +96,6 @@ public class PlaneController : VehicleController {
         switch (PlayerPrefs.GetString("ControlMode", "Joystick")) {
             case "Joystick": 
                 return INPUTS.directionInput();
-            case "Touch":
-                Vector3 screenToWorld = INPUTS.pointerPositionInput();
-                float input = GetComponent<AiPlaneController>().pointTowards(screenToWorld);
-                INPUTS.directionInputObj().GetComponent<SliderControl>().setVal(input);
-                return input;
             case "Joystick1":
                 float desiredTheta = INPUTS.directionInput1().y;
                 Vector3 control = transform.position + new Vector3(Mathf.Cos(desiredTheta), Mathf.Sin(desiredTheta), 0f);

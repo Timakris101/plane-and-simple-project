@@ -8,7 +8,6 @@ public class PropellerScript : MonoBehaviour {
     private float idleCoef;
     [SerializeField] private float engineAccelRate;
     private bool engineOn;
-    private bool engineBroken;
     [Tooltip("X: position x | Y: position y | Z: rotation z | W: order (0 means gone)")]
     [SerializeField] private Quaternion[] valsOfPropAtAnimIndexNonWingless;
     [Tooltip("X: position x | Y: position y | Z: rotation z | W: order (0 means gone)")]
@@ -63,9 +62,9 @@ public class PropellerScript : MonoBehaviour {
     void Update() {
         setPlaneController();
         engineOn = es.getEnginesOn();
-        engineBroken = !es.gameObject.GetComponent<DamageModel>().isAlive();
-        if (!engineBroken) {
-            if (engineOn && GetComponent<Animator>().speed <= Mathf.Min(es.getThrottle() + idleCoef, 1)) {
+        if (es.canUseEngineGeneral()) {
+            float maxSpeedYearnedFor = (pc.getInWEP() ? (es.getOverPowerVal() / es.getVal()) : 1f);
+            if (engineOn && GetComponent<Animator>().speed <= Mathf.Min(Mathf.Min(es.getThrottle() * maxSpeedYearnedFor + idleCoef, maxSpeedYearnedFor), 2f)) {
                 GetComponent<Animator>().speed *= engineAccelRate;
                 GetComponent<Animator>().speed += engineAccelRate - 1;
             } else {
@@ -79,6 +78,8 @@ public class PropellerScript : MonoBehaviour {
                 GetComponent<Animator>().speed /= engineAccelRate;
             }
         }
+        GetComponent<AudioSource>().pitch = GetComponent<Animator>().speed;
+        GetComponent<AudioSource>().volume = (.5f + .5f * GetComponent<Animator>().speed) * .8f;
 
         if (engineAmt != 1 && (!transform.parent.GetComponent<Animator>().GetBool("Tailless") || transform.parent.GetComponent<Animator>().GetBool("Wingless"))) {
             Quaternion[] arrToUse = (transform.parent.GetComponent<Animator>().GetBool("Wingless") ? valsOfPropAtAnimIndexWingless : valsOfPropAtAnimIndexNonWingless);

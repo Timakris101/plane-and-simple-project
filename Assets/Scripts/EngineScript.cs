@@ -9,6 +9,8 @@ public class EngineScript : MonoBehaviour {
     [SerializeField] protected bool enginesOn;
     [SerializeField] protected float fuelConsumedPerUnitThrustPerSecond;
 
+    [SerializeField] private float engineNoise;
+
     [SerializeField] private GameObject wepOrAbEffect;
     GameObject instantiatedEffect;
     GameObject fuelTank;
@@ -43,6 +45,14 @@ public class EngineScript : MonoBehaviour {
                 }
             }
         }
+        if (GetComponent<AudioSource>() != null) {
+            float valToGoTo = (maxAncestor(gameObject).GetComponent<PlaneController>() != null ? (((PlaneController) nonAiControllerOfVehicle(maxAncestor(gameObject))).getInWEP() ? getOverPowerVal() / getVal() : throttle) : (((GroundVehicleController) nonAiControllerOfVehicle(maxAncestor(gameObject))).moveDir().magnitude)) + 0.05f;
+            if (!enginesOn) valToGoTo = 0;
+            if (!GetComponent<DamageModel>().isAlive()) valToGoTo = 0;
+            engineNoise = Mathf.Lerp(engineNoise, valToGoTo, Time.deltaTime); 
+            GetComponent<AudioSource>().pitch = engineNoise;
+            GetComponent<AudioSource>().volume = (.5f + .5f * engineNoise);
+        }
     }
 
     public virtual float consumptionRateFuelPerSec() {return 0;}
@@ -65,10 +75,12 @@ public class EngineScript : MonoBehaviour {
     public virtual float getThrustNewtons(float speed, bool reverse) {return 0f;}
     public virtual float getThrustNewtons(float speed) {return 0f;}
     public virtual float getThrustNewtons() {return 0f;}
+    public virtual float getBaseThrustNewtons(float speed) {return 0f;}
 
     public virtual string getType() {return "";}
 
     public bool canUseEngineGeneral() {
+        if (!GetComponent<DamageModel>().isAlive()) return false;
         if (fuelTank == null) return canUseEngineSpecific();
         return canUseEngineSpecific() && !fuelTank.GetComponent<FuelTankScript>().empty();
     }

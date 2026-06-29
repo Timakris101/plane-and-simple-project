@@ -19,6 +19,10 @@ public class PistonEngineScript : EngineScript {
         return (enginesOn && canUseEngineGeneral()) ? (((PlaneController) vc).getInWEP() ? powerHp * basePowerHpToWep : powerHp) / Mathf.Max(30f, speed) * 745.7f * enginePowerByAlt.Evaluate(transform.position.y) * propEff * throttle : 0f;
     }
 
+    public override float getBaseThrustNewtons(float speed) {
+        return (powerHp) / Mathf.Max(30f, speed) * 745.7f * enginePowerByAlt.Evaluate(transform.position.y) * propEff;
+    }
+
     public override string getType() {return "power";}
 
     public override float getVal() {return powerHp;}

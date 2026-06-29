@@ -22,6 +22,10 @@ public class JetEngineScript : EngineScript {
         return (enginesOn && canUseEngineGeneral()) ? (((PlaneController) vc).getInWEP() ? thrustKn * baseThrustToAb : thrustKn) * 1000f * enginePowerByAlt.Evaluate(transform.position.y) * throttle : 0f;
     }
 
+    public override float getBaseThrustNewtons(float speed) {
+        return (thrustKn * 1000f);
+    }
+
     public override string getType() {return "thrust";}
 
     public override float getVal() {return thrustKn;}
@@ -29,5 +33,5 @@ public class JetEngineScript : EngineScript {
 
     public override float consumptionRateFuelPerSec() {return ((enginesOn && canUseEngineGeneral()) ? (((PlaneController) vc).getInWEP() ? thrustKn * baseThrustToAb : thrustKn) : 0) * throttle * fuelConsumedPerUnitThrustPerSecond;}
 
-    public override bool canUseEngineSpecific() {return true;}
+    // public override bool canUseEngineSpecific() {return true;}
 }

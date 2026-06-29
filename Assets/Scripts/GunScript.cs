@@ -26,6 +26,10 @@ public class GunScript : NetworkBehaviour {
     }
     
     protected virtual void shoot() {
+        if (GetComponent<AudioSource>() != null) {
+            if (GetComponent<AudioSource>().clip != null && !GetComponent<AudioSource>().isPlaying && GetComponent<AudioSource>().clip.length > 7f) GetComponent<AudioSource>().time = Random.Range(0f, GetComponent<AudioSource>().clip.length); 
+            if (!GetComponent<AudioSource>().isPlaying || GetComponent<AudioSource>().clip.length < 7f) GetComponent<AudioSource>().Play();
+        }
         if (GameObject.Find("Camera").GetComponent<CamScript>().getControlledOrSpectatedVehicle() == maxAncestor(gameObject)) GameObject.Find("Camera").GetComponent<CamScript>().shakeScreen(.1f, bullet.GetComponent<Rigidbody2D>().mass / maxAncestor(gameObject).GetComponent<Rigidbody2D>().mass * bullet.GetComponent<BulletScript>().getInitSpeed() * screenShakeFactor);
         if (IsClient) {
             float latency = NetworkManager.Singleton.NetworkConfig.NetworkTransport.GetCurrentRtt(NetworkManager.Singleton.NetworkConfig.NetworkTransport.ServerClientId) / 1000f;
@@ -74,10 +78,17 @@ public class GunScript : NetworkBehaviour {
         timer += Time.deltaTime;
         if (timer > fireRate && shooting && ammunition > 0) {
             timer = 0;
+            CancelInvoke("stopAS");
             shoot();
+        } else if (timer > fireRate) {
+            Invoke("stopAS", fireRate);
         }
 
         updateTimer += Time.deltaTime;
+    }
+
+    void stopAS() {
+        if (GetComponent<AudioSource>() != null) GetComponent<AudioSource>().Stop();
     }
 
     float fixedUpdateTimer;
