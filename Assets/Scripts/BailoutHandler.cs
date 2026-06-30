@@ -52,5 +52,7 @@ public class BailoutHandler : MonoBehaviour {
         crewToBail.GetComponent<BoxCollider2D>().offset = newCrew.GetComponent<BoxCollider2D>().offset;
         crewToBail.transform.rotation = newCrew.transform.rotation;
         crewToBail.transform.parent = newCrew.transform;
+
+        crewToBail.GetComponent<DamageModel>().clearDrownDps();
     }
 }

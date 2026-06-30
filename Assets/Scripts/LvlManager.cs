@@ -43,12 +43,14 @@ public class LvlManager : MonoBehaviour {
         winScreen.SetActive(true);
         winScreen.transform.localPosition += new Vector3(0f, screenPID.calculate(winScreen.transform.localPosition.y, 0f, Time.deltaTime), 0f);
         this.enabled = false;
+        CancelInvoke(nameof(bringUpLossScreen));
     }
 
     private void bringUpLossScreen() {
         lossScreen.SetActive(true);
         lossScreen.transform.localPosition += new Vector3(0f, screenPID.calculate(lossScreen.transform.localPosition.y, 0f, Time.deltaTime), 0f);
         this.enabled = false;
+        CancelInvoke(nameof(bringUpWinScreen));
     }
 
     private bool allEnemiesGone() {

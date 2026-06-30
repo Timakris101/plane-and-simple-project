@@ -52,7 +52,13 @@ public class Water : NetworkBehaviour {
             if (other.transform.GetComponent<Rigidbody2D>().linearVelocity.magnitude > .5f) other.transform.GetComponent<Rigidbody2D>().AddForce(-other.transform.GetComponent<Rigidbody2D>().linearVelocity.normalized * dragForce * Mathf.Clamp01((seaLevel - other.transform.position.y)), ForceMode2D.Force);
         }
         foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(other.transform.gameObject)) {
-            if (damageModel.transform.position.y > seaLevel) damageModel.GetComponent<DamageModel>().drown();
+            if (damageModel.transform.position.y < seaLevel) damageModel.GetComponent<DamageModel>().drown();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        foreach (GameObject damageModel in allObjectsInTreeWith<DamageModel>(other.transform.gameObject)) {
+            if (damageModel.transform.position.y < seaLevel) damageModel.GetComponent<DamageModel>().undrown();
         }
     }
 }

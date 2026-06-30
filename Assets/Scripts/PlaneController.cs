@@ -85,7 +85,7 @@ public class PlaneController : VehicleController {
         float altitude = Mathf.Infinity;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, Mathf.Abs(transform.position.y), LayerMask.GetMask("Terrain"));
         if (hit) {
-            altitude = (hit.point - (Vector2) transform.position).magnitude;
+            altitude = (new Vector2(hit.point.x, Mathf.Max(hit.point.y, Constants.Water.seaLevel)) - (Vector2) transform.position).magnitude;
         }
         return altitude;
     }

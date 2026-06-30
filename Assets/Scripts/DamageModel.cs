@@ -43,7 +43,8 @@ public class DamageModel : NetworkBehaviour {
 
     private Aerodynamics aero;
     private bool effectApplied;
-    private float drowningDps = 0f;
+    private float drowningDps;
+    private bool drowning;
 
     private List<GameObject> otherDamageModels;
 
@@ -55,12 +56,21 @@ public class DamageModel : NetworkBehaviour {
         return criticalSystem;
     }
 
+    public void undrown() {
+        drowning = false;
+    }
+
     void Awake() {
         health = maxHealth;
         if (!assym) {
             wingNeg = wingPos;
             tailNeg = tailPos;
         }
+        drowningDps = ((crewRole ? maxHealth : 0f) / 10f);
+    }
+
+    public void clearDrownDps() {
+        drowningDps = 0f;
     }
 
     void Start() {
@@ -85,6 +95,7 @@ public class DamageModel : NetworkBehaviour {
 
     float prevHealth;
     void Update() {
+        if (drowningDps != 0f && drowning) damage(drowningDps * Time.deltaTime);
         if (health > maxHealth) health = maxHealth;
         if (health <= 0) {
             //if (transform.parent.GetComponent<ObjectOnVehicleScript>() != null) transform.parent.GetComponent<ObjectOnVehicleScript>().kill();
@@ -162,7 +173,7 @@ public class DamageModel : NetworkBehaviour {
     }
 
     public void drown() {
-        if (drowningDps != 0f) damage(drowningDps * Time.deltaTime);
+        drowning = true;
     }
 
     public float getHitChance(float angle) {
