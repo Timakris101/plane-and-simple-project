@@ -7,6 +7,7 @@ public class ArcadeManager : MonoBehaviour {
     [SerializeField] private GameObject enemySquadron;
     [SerializeField] private GameObject player;
     [SerializeField] private int score;
+    private bool hsChange;
     // Update is called once per frame
     void Update() {
         if (player == null) {
@@ -16,9 +17,12 @@ public class ArcadeManager : MonoBehaviour {
         updateEnemyList("Axis");
         updateDeadEnemiesAndScore();
 
-        if (PlayerPrefs.GetInt("HighScore", 0) < score) PlayerPrefs.SetInt("HighScore", score);
+        if (PlayerPrefs.GetInt("HighScore", 0) < score) {
+            PlayerPrefs.SetInt("HighScore", score);
+            hsChange = true;
+        }
         if (GameObject.Find("FinalScore") != null) {
-            GameObject.Find("FinalScore").GetComponent<TMP_Text>().text = score < PlayerPrefs.GetInt("HighScore", 0) ? "Score: " + score + "\n" + "High Score: " + PlayerPrefs.GetInt("HighScore", 0) : "NEW HIGH SCORE: " + PlayerPrefs.GetInt("HighScore", 0) + "!";
+            GameObject.Find("FinalScore").GetComponent<TMP_Text>().text = !hsChange ? "Score: " + score + "\n" + "High Score: " + PlayerPrefs.GetInt("HighScore", 0) : "NEW HIGH SCORE: " + PlayerPrefs.GetInt("HighScore", 0) + "!";
         }
 
         enemySquadron.transform.position = new Vector3(player.transform.position.x + 400f, 200f, 0f);
