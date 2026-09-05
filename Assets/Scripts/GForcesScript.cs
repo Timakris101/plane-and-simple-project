@@ -36,29 +36,6 @@ public class GForcesScript : NetworkBehaviour {
             updateSleepy();
         }
         calculateGs();
-    }
-
-    void Update() {
-        for (int i = 0; i < GetComponent<Animator>().parameterCount; i++) {
-            if (GetComponent<Animator>().GetParameter(i).name == "yScale") GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
-        }
-        
-        if (ableToRollover() && (yearnsToRollover() || rolloverInputPressed())) {
-            rollover();
-            justRolledOver = true;
-        }
-
-        //if (!IsServer && GameObject.Find("NetworkManager") != null) return;
-
-        if (justRolledOver) {
-            counterPastRollover++;
-        }
-        if (counterPastRollover == 10) {
-            justRolledOver = false;
-            counterPastRollover = 0;
-        }
-
-        if (justRolledOver) return;
         
         if (overGPlaneToDeath() && !destroyed) {
             destroyed = true;
@@ -85,6 +62,27 @@ public class GForcesScript : NetworkBehaviour {
                 if (!dm.GetComponent<DamageModel>().isCrewRole()) continue;
                 dm.GetComponent<DamageModel>().kill();
             }
+        }
+    }
+
+    void Update() {
+        for (int i = 0; i < GetComponent<Animator>().parameterCount; i++) {
+            if (GetComponent<Animator>().GetParameter(i).name == "yScale") GetComponent<Animator>().SetInteger("yScale", (int) transform.localScale.y);
+        }
+        
+        if (ableToRollover() && (yearnsToRollover() || rolloverInputPressed())) {
+            rollover();
+            justRolledOver = true;
+        }
+
+        //if (!IsServer && GameObject.Find("NetworkManager") != null) return;
+
+        if (justRolledOver) {
+            counterPastRollover++;
+        }
+        if (counterPastRollover == 10) {
+            justRolledOver = false;
+            counterPastRollover = 0;
         }
     }
 
